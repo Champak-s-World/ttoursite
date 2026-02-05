@@ -1,0 +1,6 @@
+(function(){const $=id=>document.getElementById(id); const files=[
+["site","data/master/site.json"],["locations","data/master/locations.json"],["tours","data/master/tours.json"],["rituals","data/master/rituals.json"],["kathas","data/master/kathas.json"],["calendar","data/master/calendar.json"],["videos","data/master/videos.json"]];
+async function load(){const sel=$("ahFile"); const f=files.find(x=>x[0]===sel.value); if(!f) return; $("ahStatus").textContent="Loading…"; const r=await fetch(f[1],{cache:"no-store"}); $("ahEditor").value=r.ok?await r.text():"Failed"; $("ahStatus").textContent=f[1];}
+function fmt(){try{$("ahEditor").value=JSON.stringify(JSON.parse($("ahEditor").value),null,2); $("ahStatus").textContent="Valid JSON ✓";}catch(e){$("ahStatus").textContent="JSON error: "+e.message;}}
+function dl(){const name=$("ahFile").value+".json"; const blob=new Blob([$("ahEditor").value],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; a.click();}
+document.addEventListener("DOMContentLoaded",()=>{$("ahFile").innerHTML=files.map(x=>`<option value="${x[0]}">${x[1]}</option>`).join(""); $("ahLoad").onclick=load; $("ahFormat").onclick=fmt; $("ahDownload").onclick=dl; load();});})();

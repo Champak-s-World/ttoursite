@@ -1,0 +1,15 @@
+{
+  "videos": [
+    {
+      "id": "vid_1",
+      "title": {
+        "en": "Example YouTube Video"
+      },
+      "url": "https://www.youtube.com/watch?v=_hasaKTG3vw",
+      "thumbnail": "assets/images/placeholder/video.svg",
+      "tags": [
+        "promo"
+      ]
+    }
+  ]
+}

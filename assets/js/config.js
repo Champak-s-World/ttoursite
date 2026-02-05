@@ -1,0 +1,1 @@
+(function(){(async()=>{try{const r=await fetch("data/master/site.json",{cache:"no-store"});window.PP_CONFIG=await r.json();}catch(e){window.PP_CONFIG={brand:"Spiritual Services",contact:{phoneE164:"+919999999999",email:"info@example.com"}};}window.dispatchEvent(new CustomEvent("pp:configloaded"));})()})();

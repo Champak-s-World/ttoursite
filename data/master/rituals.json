@@ -1,0 +1,21 @@
+{
+  "rituals": [
+    {
+      "id": "rudrabhishek",
+      "title": {
+        "en": "Rudrabhishek"
+      },
+      "duration": "1\u20132 hours",
+      "tags": [
+        "shiva",
+        "puja"
+      ],
+      "images": [
+        "assets/images/placeholder/place.svg"
+      ],
+      "description": {
+        "en": "Puja with sankalp."
+      }
+    }
+  ]
+}

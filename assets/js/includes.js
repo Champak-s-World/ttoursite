@@ -1,0 +1,1 @@
+(function(){async function load(el){const src=el.getAttribute("data-include");if(!src)return;const r=await fetch(src,{cache:"no-store"});el.innerHTML=r.ok?await r.text():("Include failed: "+src)}; (async()=>{for(const el of document.querySelectorAll("[data-include]")) await load(el); window.dispatchEvent(new CustomEvent("pp:includesloaded"));})()})();

@@ -1,0 +1,4 @@
+(function(){function render(){const D=window.PP_DATA; if(!D) return; const g=document.getElementById("toursGrid"); if(g) g.innerHTML=D.tours.map(x=>window.PP_RENDER.makeCard("tours",x)).join("");
+const st=JSON.parse(localStorage.getItem("pp_tour_maker_v1")||"{}"); const it=Array.isArray(st.itinerary)?st.itinerary:[]; const my=document.getElementById("myItinerary");
+if(my) my.innerHTML=it.length?it.map(p=>`<div class="pp-card pp-pad"><b>${(p.name||"")}</b><div class="pp-mini">${(p.lat!=null&&p.lng!=null)?(Number(p.lat).toFixed(5)+", "+Number(p.lng).toFixed(5)):"No coords"}</div></div>`).join(""):`<div class="pp-muted">No saved itinerary yet. Use Tour Maker.</div>`;}
+window.addEventListener("pp:dataloaded",render); window.addEventListener("pp:includesloaded",render);})();

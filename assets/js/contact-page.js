@@ -1,0 +1,4 @@
+(function(){function render(){const c=window.PP_CONFIG||{}; document.getElementById("cPhone").textContent=c.contact?.phoneE164||"—";
+document.getElementById("cEmail").textContent=c.contact?.email||"—"; document.getElementById("cAddr").textContent=c.contact?.address||"—"; document.getElementById("cHours").textContent=c.contact?.hours||"—";
+document.getElementById("cWA").href=window.PP_RENDER.wa("Hello! I want to book / ask details."); document.getElementById("cMail").href=c.contact?.email?("mailto:"+c.contact.email):"mailto:";}
+window.addEventListener("pp:configloaded",render); window.addEventListener("pp:includesloaded",()=>{if(window.PP_CONFIG) render();});})();

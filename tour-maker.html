@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Tour Maker</title>
+<link rel="stylesheet" href="assets/css/base.css"/>
+<link rel="stylesheet" href="assets/css/popout.css"/>
+</head><body>
+<div data-include="includes/header.html"></div>
+<main class="pp-container"><section class="pp-card pp-pad" style="margin-top:12px">
+<h1 class="pp-h1">Tour Maker</h1><div class="pp-muted">Search internal locations, else OpenStreetMap fallback.</div>
+<div class="pp-actions" style="margin-top:10px"><input id="tmQuery" class="pp-btn--ghost" style="flex:1;border:1px solid var(--border);border-radius:14px;padding:10px;font-weight:900" placeholder="Search places..."><button class="pp-btn" id="tmSearch" type="button">Search</button></div>
+<div class="pp-mini" id="tmBusy" style="display:none;margin-top:8px">Searching…</div>
+<div id="tmResults" style="margin-top:10px;display:grid;gap:10px"></div>
+<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+<div class="pp-actions"><button class="pp-btn pp-btn--ghost" id="tmDownload" type="button">Download</button><button class="pp-btn" id="tmShare" type="button">Share</button><button class="pp-btn pp-btn--ghost" id="tmOpenRoute" type="button">Open Route Map</button></div>
+<div id="tmItinerary" style="margin-top:10px;display:grid;gap:10px"></div>
+</section>
+</main>
+<div data-include="includes/footer.html"></div>
+<script src="assets/js/includes.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/data-store.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/popout.js"></script>
+<script src="assets/js/master-search.js"></script>
+<script src="assets/js/thirdparty.js"></script>
+<script src="assets/js/tour-maker.js"></script>
+</body></html>

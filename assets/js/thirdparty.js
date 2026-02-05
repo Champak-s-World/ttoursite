@@ -1,0 +1,1 @@
+(function(){const src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"; if(document.querySelector('script[src="'+src+'"]')) return; const s=document.createElement("script"); s.src=src; s.async=true; document.head.appendChild(s);})();

@@ -1,0 +1,4 @@
+.pp-pop{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}.pp-pop.open{display:flex}
+.pp-pop-panel{width:min(980px,100%);max-height:88vh;overflow:hidden;border-radius:22px;border:1px solid var(--border);background:var(--card);box-shadow:0 30px 80px rgba(0,0,0,.35);display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:900px){.pp-pop-panel{grid-template-columns:1fr}}
+.pp-pop-body{padding:14px;overflow:auto}.pp-x{width:40px;height:40px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.65);cursor:pointer;font-weight:1000}

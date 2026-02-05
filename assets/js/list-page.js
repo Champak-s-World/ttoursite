@@ -1,0 +1,2 @@
+(function(){const type=document.body.getAttribute("data-type"); function render(){const D=window.PP_DATA; if(!D) return; const g=document.getElementById("pageGrid"); if(!g) return; g.innerHTML=(D[type]||[]).map(x=>window.PP_RENDER.makeCard(type,x)).join("");}
+window.addEventListener("pp:dataloaded",render); window.addEventListener("pp:includesloaded",render);})();
