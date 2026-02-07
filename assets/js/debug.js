@@ -1,3 +1,0 @@
-(function(){const $=id=>document.getElementById(id); function r(){const c=window.PP_CONFIG||{}; $("dBrand").textContent=c.brand||"—"; $("dPath").textContent=location.pathname; $("dStorage").textContent=localStorage.getItem("pp_tour_maker_v1")?"present":"empty";}
-window.addEventListener("pp:configloaded",r); window.addEventListener("pp:includesloaded",()=>{if(window.PP_CONFIG) r();});
-window.addEventListener("pp:dataloaded",(e)=>{$("dErrors").textContent=(e.detail?.errors?.length)?e.detail.errors.join("\n"):"No JSON load errors ✓";});})();

@@ -1,23 +1,57 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Route Map</title>
-<link rel="stylesheet" href="assets/css/base.css"/>
-<link rel="stylesheet" href="assets/css/popout.css"/>
-</head><body>
-<div data-include="includes/header.html"></div>
-<main class="pp-container"><section class="pp-card pp-pad" style="margin-top:12px">
-<h1 class="pp-h1">Route Map</h1><div class="pp-muted">Draws markers + polyline from Tour Maker itinerary.</div>
-<div class="pp-actions" style="margin-top:10px"><a class="pp-btn" href="tour-maker.html">Edit itinerary</a></div>
-</section><div id="rmMap" style="margin-top:12px"></div>
-</main>
-<div data-include="includes/footer.html"></div>
-<script src="assets/js/includes.js"></script>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/theme.js"></script>
-<script src="assets/js/data-store.js"></script>
-<script src="assets/js/render.js"></script>
-<script src="assets/js/popout.js"></script>
-<script src="assets/js/master-search.js"></script>
-<script src="assets/js/thirdparty.js"></script>
-<script src="assets/js/route-map.js"></script>
-</body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Route Map</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      #rmMap {
+        height: 70vh;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-include="includes/header.html"></div>
+
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-mini">
+          Reads itinerary from localStorage key: <b>pp_tour_maker_v1</b>
+        </div>
+        <h1 class="pp-h1">Route Map</h1>
+
+        <div class="pp-actions" style="margin-top: 10px">
+          <a class="pp-btn pp-btn--ghost" href="routes.html">Back to Routes</a>
+          <button class="pp-btn" id="rmRefresh" type="button">
+            Refresh From Itinerary
+          </button>
+          <span class="pp-mini" id="rmStatus">Ready.</span>
+        </div>
+
+        <div style="margin-top: 12px" id="rmMap"></div>
+      </section>
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script src="assets/js/route-map.js"></script>
+  </body>
+</html>

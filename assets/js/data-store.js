@@ -1,4 +1,25 @@
-(function(){const files={locations:"data/master/locations.json",tours:"data/master/tours.json",rituals:"data/master/rituals.json",kathas:"data/master/kathas.json",calendar:"data/master/calendar.json",videos:"data/master/videos.json"}; async function j(p){const r=await fetch(p,{cache:"no-store"}); if(!r.ok) throw new Error(p); return await r.json();}
-(async()=>{const out={}; const errs=[]; for(const [k,p] of Object.entries(files)){try{out[k]=await j(p);}catch(e){out[k]=null; errs.push(p);} }
-out.tours=out.tours?.tours||[]; out.rituals=out.rituals?.rituals||[]; out.kathas=out.kathas?.kathas||[]; out.calendar=out.calendar?.occasions||[]; out.videos=out.videos?.videos||[]; out.locations=out.locations||{cities:[]};
-window.PP_DATA=out; window.dispatchEvent(new CustomEvent("pp:dataloaded",{detail:{errors:errs}}));})();})();
+
+(function () {
+  "use strict";
+
+  const PP_DATA = (window.PP_DATA = window.PP_DATA || {});
+
+  async function loadJSON(path) {
+    const r = await fetch(path, { cache: "no-store" });
+    if (!r.ok) throw new Error(`Failed to load ${path} (${r.status})`);
+    return await r.json();
+  }
+
+  async function init() {
+    try {
+      PP_DATA.locations = await loadJSON("data/master/locations.json");
+      window.dispatchEvent(new CustomEvent("pp:dataloaded"));
+    } catch (e) {
+      console.error(e);
+      window.dispatchEvent(new CustomEvent("pp:dataloadfailed", { detail: e }));
+    }
+  }
+
+  init();
+})();
+

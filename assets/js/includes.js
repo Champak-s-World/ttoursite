@@ -1,1 +1,19 @@
-(function(){async function load(el){const src=el.getAttribute("data-include");if(!src)return;const r=await fetch(src,{cache:"no-store"});el.innerHTML=r.ok?await r.text():("Include failed: "+src)}; (async()=>{for(const el of document.querySelectorAll("[data-include]")) await load(el); window.dispatchEvent(new CustomEvent("pp:includesloaded"));})()})();
+(function () {
+  "use strict";
+
+  async function loadIncludes() {
+    const nodes = document.querySelectorAll("[data-include]");
+    for (const el of nodes) {
+      const url = el.getAttribute("data-include");
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        el.innerHTML = await r.text();
+      } catch (e) {
+        el.innerHTML = `<div style="padding:12px;color:#b91c1c;font-weight:900">Include failed: ${url}</div>`;
+      }
+    }
+  }
+
+  loadIncludes();
+})();
+

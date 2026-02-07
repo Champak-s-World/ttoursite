@@ -1,5 +1,0 @@
-(function(){function render(){const D=window.PP_DATA; if(!D) return; const g=document.getElementById("vGrid"); if(!g) return;
-g.innerHTML=D.videos.map(v=>{const title=window.PP_RENDER.pick(v.title,v.id); const thumb=v.thumbnail||"assets/images/placeholder/video.svg"; const url=v.url||"#";
-return `<article class="pp-card" data-pp-search="${window.PP_RENDER.esc(title)}"><div style="aspect-ratio:16/9;background:rgba(0,0,0,.06)"><img src="${thumb}" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-<div class="pp-pad"><b>${window.PP_RENDER.esc(title)}</b><div class="pp-actions" style="margin-top:12px"><a class="pp-btn" target="_blank" rel="noopener" href="${url}">Open</a><a class="pp-btn pp-btn--ghost" target="_blank" rel="noopener" href="${window.PP_RENDER.wa('I want details for '+title)}">WhatsApp</a></div></div></article>`;}).join("");}
-window.addEventListener("pp:dataloaded",render); window.addEventListener("pp:includesloaded",render);})();

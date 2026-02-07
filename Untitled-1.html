@@ -1,0 +1,776 @@
+Alright. I’ll give you the full site as copy-paste files so you can zip locally (permanent, no “session expired”).
+
+Below is a complete minimal-but-full working site for your scope:
+
+routes.html (search + source selector + itinerary edit + popout carousel)
+
+route.html (route map draws markers + polyline from SAME itinerary key)
+
+locations.json loader
+
+popout carousel system
+
+simple includes loader
+
+clean CSS
+
+placeholder images (use your own files)
+
+
+
+---
+
+0) Create folder structure
+
+Create a folder site/ and inside it:
+
+site/
+  index.html
+  routes.html
+  route.html
+
+  includes/
+    header.html
+    footer.html
+
+  assets/
+    css/
+      base.css
+      popout.css
+    js/
+      includes.js
+      data-store.js
+      render.js
+      popout.js
+      routes-page.js
+      route-map.js
+
+    images/
+      placeholder/
+        place.svg
+
+  data/
+    master/
+      locations.json
+
+
+---
+
+1) index.html
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Spiritual Tours — Home</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+  </head>
+  <body>
+    <div data-include="includes/header.html"></div>
+
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top:12px">
+        <div class="pp-mini">Option A rebuild • Stable storage • Stable routing</div>
+        <h1 class="pp-h1">Spiritual Tours Website</h1>
+        <p class="pp-muted">
+          Use <b>Routes</b> to search and build itinerary (locations.json / OSM / both).
+          Use <b>Route Map</b> to view markers and route line.
+        </p>
+
+        <div class="pp-actions" style="margin-top:12px">
+          <a class="pp-btn" href="routes.html">Open Routes</a>
+          <a class="pp-btn pp-btn--ghost" href="route.html">Open Route Map</a>
+        </div>
+      </section>
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+  </body>
+</html>
+
+
+---
+
+2) includes/header.html
+
+<header class="pp-top">
+  <div class="pp-container pp-top-inner">
+    <a class="pp-brand" href="index.html">
+      <span class="pp-logo">ॐ</span>
+      <span>
+        <span class="pp-brand-title">Spiritual Tours</span>
+        <span class="pp-brand-sub">Varanasi • Ayodhya • Prayagraj</span>
+      </span>
+    </a>
+
+    <nav class="pp-nav">
+      <a href="index.html">Home</a>
+      <a href="routes.html">Routes</a>
+      <a href="route.html">Route Map</a>
+    </nav>
+  </div>
+</header>
+
+
+---
+
+3) includes/footer.html
+
+<footer class="pp-foot">
+  <div class="pp-container pp-foot-inner">
+    <div class="pp-mini">© Spiritual Tours • Demo build</div>
+  </div>
+</footer>
+
+
+---
+
+4) routes.html
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Routes — Search + Itinerary</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/popout.css" />
+  </head>
+  <body>
+    <div data-include="includes/header.html"></div>
+
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-mini">Search places • Build itinerary • Syncs with Route Map</div>
+        <h1 class="pp-h1">Routes</h1>
+        <div class="pp-muted">
+          Choose search source, start typing (3+ chars) or press Search. Add places to itinerary, reorder, remove, then open Route Map.
+        </div>
+
+        <div class="pp-actions" style="margin-top: 12px">
+          <select id="rsSource" class="pp-input" title="Search source">
+            <option value="locations">Only locations.json</option>
+            <option value="osm">Only OpenStreetMap</option>
+            <option value="both">Both (locations first)</option>
+          </select>
+
+          <input
+            id="rsQuery"
+            class="pp-input"
+            style="flex:1"
+            placeholder="Type a place name… (min 3 chars for auto results)"
+            autocomplete="off"
+          />
+
+          <button class="pp-btn" id="rsSearchBtn" type="button">Search</button>
+          <button class="pp-btn pp-btn--ghost" id="rsClearBtn" type="button">Clear</button>
+
+          <a class="pp-btn pp-btn--ghost" href="route.html">Open Route Map</a>
+        </div>
+
+        <div class="pp-mini" id="rsStatus" style="margin-top: 10px">Loading data…</div>
+
+        <div style="margin-top: 12px" class="pp-grid" id="rsResults"></div>
+      </section>
+
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-split">
+          <div>
+            <div class="pp-h2">My Itinerary</div>
+            <div class="pp-mini">Saved in localStorage key: <b>pp_tour_maker_v1</b></div>
+          </div>
+
+          <div class="pp-actions">
+            <button class="pp-btn pp-btn--ghost" id="rsDownloadBtn" type="button">Download JSON</button>
+            <button class="pp-btn" id="rsShareBtn" type="button">Share WhatsApp</button>
+            <button class="pp-btn pp-btn--ghost" id="rsClearItBtn" type="button">Clear Itinerary</button>
+          </div>
+        </div>
+
+        <div id="rsItinerary" style="margin-top: 12px; display: grid; gap: 10px"></div>
+      </section>
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+    <script src="assets/js/data-store.js"></script>
+    <script src="assets/js/render.js"></script>
+    <script src="assets/js/popout.js"></script>
+    <script src="assets/js/routes-page.js"></script>
+  </body>
+</html>
+
+
+---
+
+5) route.html
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Route Map</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      #rmMap { height: 70vh; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); }
+    </style>
+  </head>
+  <body>
+    <div data-include="includes/header.html"></div>
+
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top:12px">
+        <div class="pp-mini">Reads itinerary from localStorage key: <b>pp_tour_maker_v1</b></div>
+        <h1 class="pp-h1">Route Map</h1>
+
+        <div class="pp-actions" style="margin-top:10px">
+          <a class="pp-btn pp-btn--ghost" href="routes.html">Back to Routes</a>
+          <button class="pp-btn" id="rmRefresh" type="button">Refresh From Itinerary</button>
+          <span class="pp-mini" id="rmStatus">Ready.</span>
+        </div>
+
+        <div style="margin-top:12px" id="rmMap"></div>
+      </section>
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script src="assets/js/route-map.js"></script>
+  </body>
+</html>
+
+
+---
+
+6) assets/js/includes.js
+
+(function () {
+  "use strict";
+
+  async function loadIncludes() {
+    const nodes = document.querySelectorAll("[data-include]");
+    for (const el of nodes) {
+      const url = el.getAttribute("data-include");
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        el.innerHTML = await r.text();
+      } catch (e) {
+        el.innerHTML = `<div style="padding:12px;color:#b91c1c;font-weight:900">Include failed: ${url}</div>`;
+      }
+    }
+  }
+
+  loadIncludes();
+})();
+
+
+---
+
+7) assets/js/data-store.js
+
+(function () {
+  "use strict";
+
+  const PP_DATA = (window.PP_DATA = window.PP_DATA || {});
+
+  async function loadJSON(path) {
+    const r = await fetch(path, { cache: "no-store" });
+    if (!r.ok) throw new Error(`Failed to load ${path} (${r.status})`);
+    return await r.json();
+  }
+
+  async function init() {
+    try {
+      PP_DATA.locations = await loadJSON("data/master/locations.json");
+      window.dispatchEvent(new CustomEvent("pp:dataloaded"));
+    } catch (e) {
+      console.error(e);
+      window.dispatchEvent(new CustomEvent("pp:dataloadfailed", { detail: e }));
+    }
+  }
+
+  init();
+})();
+
+
+---
+
+8) assets/js/render.js
+
+(function () {
+  "use strict";
+
+  function esc(s) {
+    return String(s ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function wa(text) {
+    return "https://wa.me/?text=" + encodeURIComponent(text || "");
+  }
+
+  window.PP_RENDER = { esc, wa };
+})();
+
+
+---
+
+9) assets/js/popout.js (carousel popout)
+
+(function () {
+  "use strict";
+
+  function ensure() {
+    let r = document.getElementById("ppPop");
+    if (r) return r;
+
+    r = document.createElement("div");
+    r.id = "ppPop";
+    r.className = "pp-pop";
+    r.innerHTML = `
+      <div class="pp-pop-panel">
+        <div id="ppPopMedia"></div>
+        <div class="pp-pop-body">
+          <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+            <div>
+              <div class="pp-h2" id="ppPopTitle">Details</div>
+              <div class="pp-muted" id="ppPopSub"></div>
+            </div>
+            <button class="pp-x" id="ppPopX" type="button">✕</button>
+          </div>
+
+          <div id="ppPopDesc" style="margin-top:10px;line-height:1.55;font-weight:800"></div>
+          <div class="pp-actions" id="ppPopCTA" style="margin-top:12px"></div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(r);
+
+    r.addEventListener("click", (e) => { if (e.target === r) close(); });
+    r.querySelector("#ppPopX").addEventListener("click", close);
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+
+    return r;
+  }
+
+  function open() { ensure().classList.add("open"); document.documentElement.style.overflow = "hidden"; }
+  function close() {
+    const r = document.getElementById("ppPop");
+    if (!r) return;
+    r.classList.remove("open");
+    document.documentElement.style.overflow = "";
+  }
+
+  function safeJSON(v, fb) { try { return JSON.parse(v || ""); } catch { return fb; } }
+
+  function renderCarousel(images) {
+    const imgs = Array.isArray(images) ? images.filter(Boolean) : [];
+    const main = imgs[0] || "assets/images/placeholder/place.svg";
+    const multi = imgs.length > 1;
+
+    return `
+      <div style="width:100%;min-height:260px;background:rgba(0,0,0,.04);position:relative">
+        <img id="ppCarImg" src="${main}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+        ${multi ? `
+          <button id="ppCarPrev" type="button" class="pp-car-btn pp-car-left">‹</button>
+          <button id="ppCarNext" type="button" class="pp-car-btn pp-car-right">›</button>
+          <div id="ppCarDots" class="pp-car-dots">
+            ${imgs.map((_, i)=>`<button type="button" data-dot="${i}" class="pp-car-dot ${i===0?"on":""}"></button>`).join("")}
+          </div>
+        ` : ``}
+      </div>
+    `;
+  }
+
+  function wireCarousel(images) {
+    const imgs = Array.isArray(images) ? images.filter(Boolean) : [];
+    if (imgs.length <= 1) return;
+
+    let idx = 0;
+    const imgEl = document.getElementById("ppCarImg");
+    const dots = document.getElementById("ppCarDots");
+
+    function set(i) {
+      idx = (i + imgs.length) % imgs.length;
+      imgEl.src = imgs[idx];
+      if (dots) {
+        dots.querySelectorAll("[data-dot]").forEach((b) => {
+          b.classList.toggle("on", Number(b.dataset.dot) === idx);
+        });
+      }
+    }
+
+    document.getElementById("ppCarPrev").onclick = () => set(idx - 1);
+    document.getElementById("ppCarNext").onclick = () => set(idx + 1);
+    if (dots) dots.querySelectorAll("[data-dot]").forEach((b) => b.onclick = () => set(Number(b.dataset.dot)));
+  }
+
+  function show(card) {
+    ensure();
+
+    const title = card.getAttribute("data-pp-title") || "Details";
+    const desc  = card.getAttribute("data-pp-desc") || "";
+    const lat   = card.getAttribute("data-pp-lat") || "";
+    const lng   = card.getAttribute("data-pp-lng") || "";
+    const images = safeJSON(card.getAttribute("data-pp-images"), []);
+
+    document.getElementById("ppPopTitle").textContent = title;
+    document.getElementById("ppPopSub").textContent =
+      lat && lng ? `Location: ${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}` : "";
+
+    document.getElementById("ppPopDesc").textContent = desc;
+
+    const media = document.getElementById("ppPopMedia");
+    media.innerHTML = renderCarousel(images);
+    wireCarousel(images);
+
+    const cta = document.getElementById("ppPopCTA");
+    cta.innerHTML = `
+      <a class="pp-btn" target="_blank" rel="noopener" href="${PP_RENDER.wa("I want details for " + title)}">WhatsApp</a>
+      <button class="pp-btn pp-btn--ghost" type="button" id="ppPopClose">Close</button>
+    `;
+    cta.querySelector("#ppPopClose").onclick = close;
+
+    open();
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-pp-pop]");
+    if (!btn) return;
+    const card = btn.closest("[data-pp-title]");
+    if (!card) return;
+    show(card);
+  });
+})();
+
+
+---
+
+10) assets/js/routes-page.js
+
+(Use the one I already gave you in the previous message — it’s long, but fully ready.) If you want, I’ll paste it again in the next message to keep things tidy.
+
+
+---
+
+11) assets/js/route-map.js (map + polyline)
+
+(function () {
+  "use strict";
+
+  const KEY = "pp_tour_maker_v1";
+  const $ = (id) => document.getElementById(id);
+
+  let map = null;
+  let poly = null;
+  let markers = [];
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { return {}; }
+  }
+
+  function getItinerary() {
+    const st = loadState();
+    return Array.isArray(st.itinerary) ? st.itinerary : [];
+  }
+
+  function setStatus(msg) {
+    const el = $("rmStatus");
+    if (el) el.textContent = msg;
+  }
+
+  function initMapOnce() {
+    if (map) return map;
+
+    const el = $("rmMap");
+    if (!el) throw new Error("Map container #rmMap not found");
+
+    map = L.map(el).setView([25.3109, 83.0107], 6);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap"
+    }).addTo(map);
+
+    return map;
+  }
+
+  function clearLayers() {
+    markers.forEach((m) => m.remove());
+    markers = [];
+    if (poly) { poly.remove(); poly = null; }
+  }
+
+  function drawFromItinerary() {
+    initMapOnce();
+    clearLayers();
+
+    const it = getItinerary().filter(p => typeof p.lat === "number" && typeof p.lng === "number");
+    if (it.length === 0) {
+      setStatus("No itinerary coords found. Add places in Routes first.");
+      return;
+    }
+
+    const pts = it.map(p => [p.lat, p.lng]);
+
+    it.forEach((p, i) => {
+      const m = L.marker([p.lat, p.lng]).addTo(map);
+      m.bindPopup(`<b>${(i+1)}. ${String(p.name || p.id)}</b>`);
+      markers.push(m);
+    });
+
+    poly = L.polyline(pts, { weight: 5, opacity: 0.9 }).addTo(map);
+
+    const bounds = L.latLngBounds(pts);
+    map.fitBounds(bounds.pad(0.2));
+
+    setStatus(`Rendered ${it.length} stops.`);
+  }
+
+  function init() {
+    $("rmRefresh").addEventListener("click", drawFromItinerary);
+    window.addEventListener("storage", (e) => { if (e.key === KEY) drawFromItinerary(); });
+
+    // initial render
+    drawFromItinerary();
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
+})();
+
+
+---
+
+12) data/master/locations.json
+
+Use the demo I gave earlier (Varanasi/Ayodhya/Prayagraj). If you want “eastern up”, tell me which states/cities you want first.
+
+
+---
+
+13) CSS files
+
+assets/css/base.css
+
+:root{
+  --bg:#fff7e6;
+  --card:rgba(255,255,255,.88);
+  --text:#1f2937;
+  --muted:#6b7280;
+  --brand:#d97706;
+  --brand2:#b45309;
+  --border:rgba(31,41,55,.14);
+  --shadow: 0 12px 30px rgba(31,41,55,.10);
+  --r:18px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+body{
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(217,119,6,.25), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(180,83,9,.18), transparent 55%),
+    linear-gradient(180deg, #fffaf2, var(--bg));
+}
+
+.pp-container{max-width:1100px;margin:0 auto;padding:16px}
+
+.pp-top{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter: blur(10px);
+  background:rgba(255,247,230,.75);
+  border-bottom:1px solid var(--border);
+}
+.pp-top-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pp-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.pp-logo{
+  width:42px;height:42px;border-radius:999px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;font-weight:1000;
+  box-shadow: var(--shadow);
+}
+.pp-brand-title{display:block;font-weight:1000}
+.pp-brand-sub{display:block;font-size:12px;color:var(--muted);font-weight:800}
+
+.pp-nav{display:flex;gap:10px;flex-wrap:wrap}
+.pp-nav a{
+  text-decoration:none;color:inherit;
+  padding:10px 12px;border-radius:999px;
+  border:1px solid transparent;
+  font-weight:900;
+}
+.pp-nav a:hover{border-color:var(--border);background:rgba(255,255,255,.6)}
+
+.pp-foot{margin-top:26px;border-top:1px solid var(--border);background:rgba(255,255,255,.5)}
+.pp-foot-inner{padding:14px 16px}
+
+.pp-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.pp-pad{padding:16px}
+
+.pp-h1{margin:10px 0 0;font-size:28px;letter-spacing:-.02em}
+.pp-h2{font-size:18px;font-weight:1000}
+.pp-mini{font-size:12px;color:var(--muted);font-weight:900}
+.pp-muted{color:var(--muted);font-weight:700;line-height:1.55}
+
+.pp-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pp-btn{
+  appearance:none;border:none;cursor:pointer;
+  padding:10px 14px;border-radius:999px;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;font-weight:1000;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.pp-btn--ghost{
+  background:rgba(255,255,255,.6);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.pp-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.pp-input{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.75);
+  font-weight:900;
+  outline:none;
+}
+
+.pp-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:12px;
+}
+@media (max-width: 900px){ .pp-grid{grid-template-columns: repeat(2, minmax(0, 1fr));} }
+@media (max-width: 560px){ .pp-grid{grid-template-columns: 1fr;} }
+
+.pp-pill{
+  display:inline-flex;padding:6px 10px;border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.55);
+  font-weight:900;font-size:12px;
+}
+
+.pp-split{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-end}
+
+assets/css/popout.css
+
+.pp-pop{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  z-index:9999;
+}
+.pp-pop.open{display:block}
+.pp-pop-panel{
+  width:min(980px, 94vw);
+  margin:4vh auto;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.25);
+}
+.pp-pop-body{padding:16px}
+.pp-x{
+  width:42px;height:42px;border-radius:999px;
+  border:1px solid rgba(31,41,55,.18);
+  background:rgba(255,255,255,.7);
+  font-weight:1000;cursor:pointer;
+}
+
+.pp-car-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(0,0,0,.35);
+  color:#fff;font-weight:1000;cursor:pointer;
+}
+.pp-car-left{left:10px}
+.pp-car-right{right:10px}
+
+.pp-car-dots{
+  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
+}
+.pp-car-dot{
+  width:10px;height:10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.7);
+  background:rgba(255,255,255,.35);
+  cursor:pointer;
+}
+.pp-car-dot.on{background:rgba(255,255,255,.95)}
+
+
+---
+
+14) Add placeholder image assets/images/placeholder/place.svg
+
+Create file place.svg:
+
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#fff7e6"/>
+  <circle cx="450" cy="270" r="120" fill="#fcd34d"/>
+  <path d="M300 420c40-80 260-80 300 0" fill="#d97706"/>
+  <text x="450" y="520" font-size="42" text-anchor="middle" fill="#92400e" font-family="Arial">Add Photo</text>
+</svg>
+
+
+---
+
+15) How to ZIP locally (works forever)
+
+Windows
+
+1. Right click the site folder
+
+
+2. Send to → Compressed (zipped) folder
+
+
+
+VS Code (optional)
+
+Install extension “zip” or just use Windows method.
+
+
+
+---
+
+Next step (so you don’t miss anything)
+
+I held back only one file to keep this message manageable:
+
+✅ assets/js/routes-page.js (long)
+Tell me: do you want it pasted now in the next message as one code block?Fu

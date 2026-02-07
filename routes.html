@@ -1,0 +1,74 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Routes — Search + Itinerary</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/popout.css" />
+  </head>
+  <body>
+    <div data-include="includes/header.html"></div>
+
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-mini">Search places • Build itinerary • Syncs with Route Map</div>
+        <h1 class="pp-h1">Routes</h1>
+        <div class="pp-muted">
+          Choose search source, start typing (3+ chars) or press Search. Add places to itinerary, reorder, remove, then open Route Map.
+        </div>
+
+        <div class="pp-actions" style="margin-top: 12px">
+          <select id="rsSource" class="pp-input" title="Search source">
+            <option value="locations">Only locations.json</option>
+            <option value="osm">Only OpenStreetMap</option>
+            <option value="both">Both (locations first)</option>
+          </select>
+
+          <input
+            id="rsQuery"
+            class="pp-input"
+            style="flex:1"
+            placeholder="Type a place name… (min 3 chars for auto results)"
+            autocomplete="off"
+          />
+
+          <button class="pp-btn" id="rsSearchBtn" type="button">Search</button>
+          <button class="pp-btn pp-btn--ghost" id="rsClearBtn" type="button">Clear</button>
+
+          <a class="pp-btn pp-btn--ghost" href="route.html">Open Route Map</a>
+        </div>
+
+        <div class="pp-mini" id="rsStatus" style="margin-top: 10px">Loading data…</div>
+
+        <div style="margin-top: 12px" class="pp-grid" id="rsResults"></div>
+      </section>
+
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-split">
+          <div>
+            <div class="pp-h2">My Itinerary</div>
+            <div class="pp-mini">Saved in localStorage key: <b>pp_tour_maker_v1</b></div>
+          </div>
+
+          <div class="pp-actions">
+            <button class="pp-btn pp-btn--ghost" id="rsDownloadBtn" type="button">Download JSON</button>
+            <button class="pp-btn" id="rsShareBtn" type="button">Share WhatsApp</button>
+            <button class="pp-btn pp-btn--ghost" id="rsClearItBtn" type="button">Clear Itinerary</button>
+          </div>
+        </div>
+
+        <div id="rsItinerary" style="margin-top: 12px; display: grid; gap: 10px"></div>
+      </section>
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+    <script src="assets/js/data-store.js"></script>
+    <script src="assets/js/render.js"></script>
+    <script src="assets/js/popout.js"></script>
+    <script src="assets/js/routes-page.js"></script>
+  </body>
+</html>

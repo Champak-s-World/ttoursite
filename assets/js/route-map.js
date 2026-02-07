@@ -1,9 +1,85 @@
-(function(){const KEY="pp_tour_maker_v1"; function load(){try{return JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){return {};}}
-function ensureLeaflet(){if(window.L) return Promise.resolve(); return new Promise((res,rej)=>{const css=document.createElement("link"); css.rel="stylesheet"; css.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"; document.head.appendChild(css);
-const s=document.createElement("script"); s.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"; s.onload=()=>res(); s.onerror=()=>rej(new Error("Leaflet failed")); document.head.appendChild(s);});}
-async function init(){await ensureLeaflet(); const st=load(); const it=Array.isArray(st.itinerary)?st.itinerary:[]; const pts=it.filter(p=>p.lat!=null&&p.lng!=null);
-const center=pts.length?[pts[0].lat,pts[0].lng]:[25.3176,82.9739]; const map=L.map("rmMap").setView(center,12);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(map);
-if(!pts.length) return; const latlngs=[]; pts.forEach((p,i)=>{const ll=[+p.lat,+p.lng]; latlngs.push(ll); L.marker(ll).addTo(map).bindPopup("<b>Stop "+(i+1)+"</b><br>"+(p.name||""));});
-const line=L.polyline(latlngs,{weight:5,opacity:.9}).addTo(map); map.fitBounds(line.getBounds(),{padding:[20,20]});}
-document.addEventListener("DOMContentLoaded",init);})();
+
+
+(function () {
+  "use strict";
+
+  const KEY = "pp_tour_maker_v1";
+  const $ = (id) => document.getElementById(id);
+
+  let map = null;
+  let poly = null;
+  let markers = [];
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { return {}; }
+  }
+
+  function getItinerary() {
+    const st = loadState();
+    return Array.isArray(st.itinerary) ? st.itinerary : [];
+  }
+
+  function setStatus(msg) {
+    const el = $("rmStatus");
+    if (el) el.textContent = msg;
+  }
+
+  function initMapOnce() {
+    if (map) return map;
+
+    const el = $("rmMap");
+    if (!el) throw new Error("Map container #rmMap not found");
+
+    map = L.map(el).setView([25.3109, 83.0107], 6);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap"
+    }).addTo(map);
+
+    return map;
+  }
+
+  function clearLayers() {
+    markers.forEach((m) => m.remove());
+    markers = [];
+    if (poly) { poly.remove(); poly = null; }
+  }
+
+  function drawFromItinerary() {
+    initMapOnce();
+    clearLayers();
+
+    const it = getItinerary().filter(p => typeof p.lat === "number" && typeof p.lng === "number");
+    if (it.length === 0) {
+      setStatus("No itinerary coords found. Add places in Routes first.");
+      return;
+    }
+
+    const pts = it.map(p => [p.lat, p.lng]);
+
+    it.forEach((p, i) => {
+      const m = L.marker([p.lat, p.lng]).addTo(map);
+      m.bindPopup(`<b>${(i+1)}. ${String(p.name || p.id)}</b>`);
+      markers.push(m);
+    });
+
+    poly = L.polyline(pts, { weight: 5, opacity: 0.9 }).addTo(map);
+
+    const bounds = L.latLngBounds(pts);
+    map.fitBounds(bounds.pad(0.2));
+
+    setStatus(`Rendered ${it.length} stops.`);
+  }
+
+  function init() {
+    $("rmRefresh").addEventListener("click", drawFromItinerary);
+    window.addEventListener("storage", (e) => { if (e.key === KEY) drawFromItinerary(); });
+
+    // initial render
+    drawFromItinerary();
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
+})();
+
