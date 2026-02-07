@@ -5,6 +5,17 @@
       "name": { "en": "Varanasi", "hi": "वाराणसी" },
       "center": { "lat": 25.3176, "lng": 82.9739 },
       "places": [
+
+         {
+          "id": "champak_roy",
+          "name": { "en": "Champak Roy", "hi": "काशी विश्वनाथ मंदिर" },
+          "lat": 25.349235,
+          "lng":  83.001014,
+          "tags": ["software", "python", "more"],
+          "images": ["assets/images/placeholder/place.svg"],
+          "videos": [],
+          "description": { "en": "Revered Shiva temple in Kashi.", "hi": "काशी का प्रमुख शिव मंदिर।" }
+        },
         {
           "id": "kashi_vishwanath",
           "name": { "en": "Kashi Vishwanath Temple", "hi": "काशी विश्वनाथ मंदिर" },
@@ -21,7 +32,7 @@
           "lat": 25.3069,
           "lng": 83.0105,
           "tags": ["ghat", "aarti", "ganga"],
-          "images": ["assets/images/placeholder/place.svg"],
+          "images": ["assets/images/placeholder/place.svg","assets/images/placeholder/place.svg"],
           "videos": [],
           "description": { "en": "Famous ghat for Ganga Aarti.", "hi": "गंगा आरती के लिए प्रसिद्ध घाट।" }
         },
