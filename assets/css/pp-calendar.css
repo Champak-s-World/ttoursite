@@ -1,0 +1,121 @@
+/* =========================================================
+   Programmer’s Picnic — Unified Calendar CSS (FIXED)
+   Matches calendar-3views.js DOM:
+   .pp-cal-grid, .pp-cal-dow, .pp-cal-cell, .pp-cal-num, .pp-cal-dot
+   ========================================================= */
+
+:root{
+  --cal-bg:#ffffff;
+  --cal-text:#1f2937;
+  --cal-muted:#6b7280;
+
+  --cal-border: rgba(31,41,55,.12);
+  --cal-card: rgba(255,255,255,.72);
+
+  --cal-accent:#d97706;         /* saffron */
+  --cal-accent-2:#f59e0b;
+  --cal-accent-soft: rgba(217,119,6,.12);
+
+  --cal-today-ring: rgba(245,158,11,.55);
+  --cal-selected-ring: rgba(217,119,6,.55);
+
+  --cal-radius: 16px;
+}
+
+/* Wrapper used in calendar.html: <div class="pp-cal"><div class="pp-cal-grid" id="monthGrid"> */
+.pp-cal{
+  background: var(--cal-card);
+  border: 1px solid var(--cal-border);
+  border-radius: var(--cal-radius);
+  padding: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.06);
+}
+
+/* MONTH GRID (7 columns) */
+.pp-cal-grid{
+  display:grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* DOW header cells injected by JS */
+.pp-cal-dow{
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: var(--cal-muted);
+  padding: 8px 6px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.03);
+  text-align: center;
+  user-select: none;
+}
+
+/* Day cells injected by JS */
+.pp-cal-cell{
+  position: relative;
+  min-height: 92px;
+  border: 1px solid var(--cal-border);
+  border-radius: 14px;
+  padding: 8px;
+  background: rgba(255,255,255,.86);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  overflow: hidden;
+}
+
+.pp-cal-cell:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+
+.pp-cal-muted{
+  opacity: .45;
+}
+
+/* Selected day */
+.pp-cal-selected{
+  border-color: rgba(217,119,6,.65);
+  box-shadow: 0 0 0 3px var(--cal-selected-ring);
+  background: rgba(253,230,138,.22);
+}
+
+/* Day number */
+.pp-cal-num{
+  font-weight: 1000;
+  font-size: 14px;
+  color: var(--cal-text);
+}
+
+/* Event dot */
+.pp-cal-dot{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--cal-accent);
+  box-shadow: 0 0 0 3px rgba(217,119,6,.18);
+}
+
+/* Optional: show “today” highlight if you later add a .pp-cal-today class */
+.pp-cal-today{
+  box-shadow: 0 0 0 3px var(--cal-today-ring);
+  border-color: rgba(245,158,11,.75);
+}
+
+/* Make month view responsive without breaking 7-column intent */
+@media (max-width: 980px){
+  .pp-cal-grid{ gap: 8px; }
+  .pp-cal-cell{ min-height: 84px; }
+}
+@media (max-width: 680px){
+  .pp-cal{ padding: 10px; }
+  .pp-cal-grid{ gap: 7px; }
+  .pp-cal-cell{ min-height: 72px; border-radius: 12px; }
+  .pp-cal-dow{ font-size: 11px; padding: 7px 4px; border-radius: 10px; }
+  .pp-cal-num{ font-size: 13px; }
+}

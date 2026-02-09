@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calendar</title>
+
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/popout.css" />
+  <link rel="stylesheet" href="assets/css/pp-calendar.css" />
+
+  <style>
+    .pp-cal-tabs{display:flex;gap:10px;flex-wrap:wrap}
+    .pp-cal-miniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media (max-width:980px){.pp-cal-miniGrid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:620px){.pp-cal-miniGrid{grid-template-columns:1fr}}
+    .pp-miniMonth{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.70)}
+    .pp-miniMonth h3{margin:0;padding:10px 12px;font-size:14px;font-weight:1000;background:rgba(0,0,0,.03)}
+    .pp-miniMonth .grid{display:grid;grid-template-columns:repeat(7,1fr)}
+    .pp-miniMonth .cell{padding:6px;border-top:1px solid var(--border);border-right:1px solid var(--border);min-height:28px;font-size:12px;position:relative;cursor:pointer}
+    .pp-miniMonth .cell:nth-child(7n){border-right:none}
+    .pp-miniMonth .muted{opacity:.45}
+    .pp-miniMonth .dot{position:absolute;right:6px;top:6px;width:7px;height:7px;border-radius:999px;background:var(--crx-accent,#d97706)}
+    .pp-week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+    @media(max-width:980px){.pp-week{grid-template-columns:repeat(2,1fr)}}
+    .pp-weekDay{border:1px solid var(--border);border-radius:16px;padding:10px;background:rgba(255,255,255,.68);cursor:pointer}
+    .pp-weekDay:hover{background:rgba(217,119,6,.08)}
+    .pp-weekDay .d{font-weight:1000}
+    .pp-weekDay .meta{font-size:12px;opacity:.75;margin-top:4px}
+  </style>
+</head>
+
+<body>
+  <div data-include="includes/header.html"></div>
+
+  <main class="pp-container">
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-split">
+        <div>
+          <div class="pp-mini">Unified Calendar</div>
+          <h1 class="pp-h1" id="calTitle">Calendar</h1>
+          <div class="pp-muted" id="calSub">Weekly • Monthly • Yearly • Synced to occasions.json</div>
+        </div>
+        <div class="pp-actions">
+          <a class="pp-btn pp-btn--ghost" href="occasions.html">Occasions</a>
+          <a class="pp-btn pp-btn--ghost" href="rituals.html">Rituals</a>
+          <a class="pp-btn pp-btn--ghost" href="kathas.html">Kathas</a>
+          <button class="pp-btn pp-btn--ghost" id="calLang" type="button">HI</button>
+        </div>
+      </div>
+
+      <div class="pp-actions" style="margin-top:12px">
+        <div class="pp-cal-tabs">
+          <button class="pp-btn" id="tabWeek" type="button">Weekly</button>
+          <button class="pp-btn pp-btn--ghost" id="tabMonth" type="button">Monthly</button>
+          <button class="pp-btn pp-btn--ghost" id="tabYear" type="button">Yearly</button>
+        </div>
+
+        <div style="flex:1"></div>
+
+        <button class="pp-btn pp-btn--ghost" id="prevYear" type="button">« Year</button>
+        <button class="pp-btn pp-btn--ghost" id="prevUnit" type="button">‹</button>
+        <div class="pp-pill" id="viewLabel">…</div>
+        <button class="pp-btn pp-btn--ghost" id="nextUnit" type="button">›</button>
+        <button class="pp-btn pp-btn--ghost" id="nextYear" type="button">Year »</button>
+        <button class="pp-btn" id="todayBtn" type="button">Today</button>
+      </div>
+    </section>
+
+    <!-- WEEK -->
+    <section class="pp-card pp-pad" id="viewWeek" style="margin-top:12px;display:none">
+      <div class="pp-h2">Week</div>
+      <div class="pp-week" id="weekGrid" style="margin-top:12px"></div>
+    </section>
+
+    <!-- MONTH -->
+    <section class="pp-card pp-pad" id="viewMonth" style="margin-top:12px;display:none">
+      <div class="pp-h2">Month</div>
+      <div class="pp-cal" style="margin-top:12px">
+        <div class="pp-cal-grid" id="monthGrid"></div>
+      </div>
+    </section>
+
+    <!-- YEAR -->
+    <section class="pp-card pp-pad" id="viewYear" style="margin-top:12px;display:none">
+      <div class="pp-h2">Year</div>
+      <div class="pp-miniMonthWrap pp-cal-miniGrid" id="yearGrid" style="margin-top:12px"></div>
+    </section>
+
+    <!-- DAY RESULTS -->
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-h2">Occasions on: <span id="dayLabel" class="pp-mini"></span></div>
+      <div class="pp-grid" id="dayList" style="margin-top:12px"></div>
+    </section>
+  </main>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script src="assets/js/includes.js"></script>
+  <script src="assets/js/site-config.js"></script>
+  <script src="assets/js/lang.js"></script>
+  <script src="assets/js/render.js"></script>
+  <script src="assets/js/popout.js?v=99"></script>
+  <script src="assets/js/calendar-3views.js?v=1"></script>
+</body>
+</html>
