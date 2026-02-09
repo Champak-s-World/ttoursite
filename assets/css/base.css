@@ -64,7 +64,7 @@ body{
 
 .pp-h1{margin:10px 0 0;font-size:28px;letter-spacing:-.02em}
 .pp-h2{font-size:18px;font-weight:1000}
-.pp-mini{font-size:12px;color:var(--muted);font-weight:900}
+.pp-mini{ font-size:12px;color:var(--muted);font-weight:900}
 .pp-muted{color:var(--muted);font-weight:700;line-height:1.55}
 
 .pp-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -156,3 +156,20 @@ assets/css/popout.css
 }
 .pp-car-dot.on{background:rgba(255,255,255,.95)}
 
+.pp-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+  vertical-align: middle;
+}
+
+.pp-marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 3px solid rgba(255,255,255,.95);
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+}

@@ -1,4 +1,3 @@
-
 (function () {
   "use strict";
 
@@ -22,7 +21,7 @@
           </div>
 
           <div id="ppPopDesc" style="margin-top:10px;line-height:1.55;font-weight:800"></div>
-          <div class="pp-actions" id="ppPopCTA" style="margin-top:12px"></div>
+          <div class="pp-actions" id="ppPopCTA" style="margin-top:12px;flex-wrap:wrap"></div>
         </div>
       </div>
     `;
@@ -35,7 +34,12 @@
     return r;
   }
 
-  function open() { ensure().classList.add("open"); document.documentElement.style.overflow = "hidden"; }
+  function open() {
+    const r = ensure();
+    r.classList.add("open");
+    document.documentElement.style.overflow = "hidden";
+  }
+
   function close() {
     const r = document.getElementById("ppPop");
     if (!r) return;
@@ -43,7 +47,30 @@
     document.documentElement.style.overflow = "";
   }
 
-  function safeJSON(v, fb) { try { return JSON.parse(v || ""); } catch { return fb; } }
+  function decodeHtmlEntities(s) {
+    const t = document.createElement("textarea");
+    t.innerHTML = s || "";
+    return t.value;
+  }
+
+  function parseImagesAttr(v) {
+    if (!v) return [];
+    const raw = decodeHtmlEntities(v).trim();
+    try {
+      const j = JSON.parse(raw);
+      return Array.isArray(j) ? j.filter(Boolean) : [];
+    } catch {
+      // fallback: allow pipe-separated
+      if (raw.includes("|")) return raw.split("|").map(x => x.trim()).filter(Boolean);
+      return [];
+    }
+  }
+function wa(text) {
+  const cfg = window.PP_CONFIG?.contact?.primary;
+  const number = cfg?.whatsapp?.replace(/\D/g, "") || "";
+  const base = number ? `https://wa.me/${number}` : "https://wa.me/";
+  return base + "?text=" + encodeURIComponent(text || "");
+}
 
   function renderCarousel(images) {
     const imgs = Array.isArray(images) ? images.filter(Boolean) : [];
@@ -88,18 +115,16 @@
   }
 
   function show(card) {
-    ensure();
-
     const title = card.getAttribute("data-pp-title") || "Details";
     const desc  = card.getAttribute("data-pp-desc") || "";
     const lat   = card.getAttribute("data-pp-lat") || "";
     const lng   = card.getAttribute("data-pp-lng") || "";
-    const images = safeJSON(card.getAttribute("data-pp-images"), []);
+    const images = parseImagesAttr(card.getAttribute("data-pp-images"));
 
+    ensure();
     document.getElementById("ppPopTitle").textContent = title;
     document.getElementById("ppPopSub").textContent =
-      lat && lng ? `Location: ${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}` : "";
-
+      (lat && lng) ? `Location: ${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}` : "";
     document.getElementById("ppPopDesc").textContent = desc;
 
     const media = document.getElementById("ppPopMedia");
@@ -108,7 +133,7 @@
 
     const cta = document.getElementById("ppPopCTA");
     cta.innerHTML = `
-      <a class="pp-btn" target="_blank" rel="noopener" href="${PP_RENDER.wa("I want details for " + title)}">WhatsApp</a>
+      <a class="pp-btn" target="_blank" rel="noopener" href="${wa("I want details for " + title)}">WhatsApp</a>
       <button class="pp-btn pp-btn--ghost" type="button" id="ppPopClose">Close</button>
     `;
     cta.querySelector("#ppPopClose").onclick = close;
@@ -121,6 +146,13 @@
     if (!btn) return;
     const card = btn.closest("[data-pp-title]");
     if (!card) return;
-    show(card);
+
+    try {
+      show(card);
+    } catch (err) {
+      console.error("[popout] failed:", err);
+    }
   });
+
+  window.PP_POPOUT = { show, close };
 })();

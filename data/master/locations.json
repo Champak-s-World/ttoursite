@@ -5,26 +5,38 @@
       "name": { "en": "Varanasi", "hi": "वाराणसी" },
       "center": { "lat": 25.3176, "lng": 82.9739 },
       "places": [
-
-         {
+        {
           "id": "champak_roy",
+          "color": "#ff0000",
           "name": { "en": "Champak Roy", "hi": "काशी विश्वनाथ मंदिर" },
           "lat": 25.349235,
-          "lng":  83.001014,
+          "lng": 83.001014,
           "tags": ["software", "python", "more"],
-          "images": ["assets/images/placeholder/place.svg"],
+          "images": [
+            "assets/images/champak/ch0.jpeg",
+            "assets/images/champak/ch1.jpeg"
+          ],
           "videos": [],
-          "description": { "en": "Revered Shiva temple in Kashi.", "hi": "काशी का प्रमुख शिव मंदिर।" }
+          "description": {
+            "en": "Revered Shiva temple in Kashi.",
+            "hi": "काशी का प्रमुख शिव मंदिर।"
+          }
         },
         {
           "id": "kashi_vishwanath",
-          "name": { "en": "Kashi Vishwanath Temple", "hi": "काशी विश्वनाथ मंदिर" },
+          "name": {
+            "en": "Kashi Vishwanath Temple",
+            "hi": "काशी विश्वनाथ मंदिर"
+          },
           "lat": 25.3109,
           "lng": 83.0107,
           "tags": ["temple", "shiva", "kashi"],
-          "images": ["assets/images/placeholder/place.svg"],
+
           "videos": [],
-          "description": { "en": "Revered Shiva temple in Kashi.", "hi": "काशी का प्रमुख शिव मंदिर।" }
+          "description": {
+            "en": "Revered Shiva temple in Kashi.",
+            "hi": "काशी का प्रमुख शिव मंदिर।"
+          }
         },
         {
           "id": "dashashwamedh_ghat",
@@ -32,9 +44,15 @@
           "lat": 25.3069,
           "lng": 83.0105,
           "tags": ["ghat", "aarti", "ganga"],
-          "images": ["assets/images/placeholder/place.svg","assets/images/placeholder/place.svg"],
+          "images": [
+            "assets/images/placeholder/place.svg",
+            "assets/images/placeholder/place.svg"
+          ],
           "videos": [],
-          "description": { "en": "Famous ghat for Ganga Aarti.", "hi": "गंगा आरती के लिए प्रसिद्ध घाट।" }
+          "description": {
+            "en": "Famous ghat for Ganga Aarti.",
+            "hi": "गंगा आरती के लिए प्रसिद्ध घाट।"
+          }
         },
         {
           "id": "assi_ghat",
@@ -44,7 +62,10 @@
           "tags": ["ghat", "sunrise", "ganga"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Popular ghat for morning walks & sunrise.", "hi": "सुबह के दृश्य और सैर के लिए प्रसिद्ध।" }
+          "description": {
+            "en": "Popular ghat for morning walks & sunrise.",
+            "hi": "सुबह के दृश्य और सैर के लिए प्रसिद्ध।"
+          }
         },
         {
           "id": "manikarnika_ghat",
@@ -54,17 +75,23 @@
           "tags": ["ghat", "kashi", "heritage"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Ancient and iconic ghat of Kashi.", "hi": "काशी का ऐतिहासिक घाट।" }
+          "description": {
+            "en": "Ancient and iconic ghat of Kashi.",
+            "hi": "काशी का ऐतिहासिक घाट।"
+          }
         },
         {
           "id": "sarnath",
           "name": { "en": "Sarnath", "hi": "सारनाथ" },
-          "lat": 25.3760,
+          "lat": 25.376,
           "lng": 83.0227,
           "tags": ["buddhism", "museum", "stupa"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Buddhist site; Dhamek Stupa & museum nearby.", "hi": "बौद्ध स्थल; धामेक स्तूप व संग्रहालय।" }
+          "description": {
+            "en": "Buddhist site; Dhamek Stupa & museum nearby.",
+            "hi": "बौद्ध स्थल; धामेक स्तूप व संग्रहालय।"
+          }
         }
       ]
     },
@@ -82,17 +109,23 @@
           "tags": ["sangam", "ganga", "kumbh"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Confluence of Ganga–Yamuna (and Saraswati tradition).", "hi": "गंगा–यमुना (और सरस्वती परंपरा) का संगम।" }
+          "description": {
+            "en": "Confluence of Ganga–Yamuna (and Saraswati tradition).",
+            "hi": "गंगा–यमुना (और सरस्वती परंपरा) का संगम।"
+          }
         },
         {
           "id": "allahabad_fort",
           "name": { "en": "Allahabad Fort", "hi": "इलाहाबाद किला" },
           "lat": 25.4339,
-          "lng": 81.8780,
+          "lng": 81.878,
           "tags": ["fort", "heritage", "history"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Historic fort near Sangam.", "hi": "संगम के पास ऐतिहासिक किला।" }
+          "description": {
+            "en": "Historic fort near Sangam.",
+            "hi": "संगम के पास ऐतिहासिक किला।"
+          }
         },
         {
           "id": "anand_bhavan",
@@ -102,7 +135,10 @@
           "tags": ["museum", "heritage"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Museum of Indian freedom movement heritage.", "hi": "स्वतंत्रता आंदोलन से जुड़ा संग्रहालय।" }
+          "description": {
+            "en": "Museum of Indian freedom movement heritage.",
+            "hi": "स्वतंत्रता आंदोलन से जुड़ा संग्रहालय।"
+          }
         },
         {
           "id": "khusro_bagh",
@@ -112,7 +148,10 @@
           "tags": ["garden", "heritage", "mughal"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Historic Mughal garden & tombs.", "hi": "मुगल कालीन बाग और मकबरे।" }
+          "description": {
+            "en": "Historic Mughal garden & tombs.",
+            "hi": "मुगल कालीन बाग और मकबरे।"
+          }
         }
       ]
     },
@@ -120,7 +159,7 @@
     {
       "id": "ayodhya",
       "name": { "en": "Ayodhya", "hi": "अयोध्या" },
-      "center": { "lat": 26.7990, "lng": 82.2044 },
+      "center": { "lat": 26.799, "lng": 82.2044 },
       "places": [
         {
           "id": "ram_janmabhoomi",
@@ -130,7 +169,10 @@
           "tags": ["ram", "temple", "ayodhya"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Major spiritual site in Ayodhya.", "hi": "अयोध्या का प्रमुख आध्यात्मिक स्थल।" }
+          "description": {
+            "en": "Major spiritual site in Ayodhya.",
+            "hi": "अयोध्या का प्रमुख आध्यात्मिक स्थल।"
+          }
         },
         {
           "id": "hanuman_garhi",
@@ -140,17 +182,23 @@
           "tags": ["hanuman", "temple", "ayodhya"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Famous Hanuman temple in Ayodhya.", "hi": "अयोध्या का प्रसिद्ध हनुमान मंदिर।" }
+          "description": {
+            "en": "Famous Hanuman temple in Ayodhya.",
+            "hi": "अयोध्या का प्रसिद्ध हनुमान मंदिर।"
+          }
         },
         {
           "id": "kanak_bhawan",
           "name": { "en": "Kanak Bhawan", "hi": "कनक भवन" },
-          "lat": 26.8010,
+          "lat": 26.801,
           "lng": 82.2007,
           "tags": ["ram", "temple"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Beautiful temple dedicated to Ram–Sita.", "hi": "राम–सीता को समर्पित सुंदर मंदिर।" }
+          "description": {
+            "en": "Beautiful temple dedicated to Ram–Sita.",
+            "hi": "राम–सीता को समर्पित सुंदर मंदिर।"
+          }
         },
         {
           "id": "saryu_ghat",
@@ -160,7 +208,10 @@
           "tags": ["ghat", "saryu", "aarti"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Riverfront ghat for aarti & evening visit.", "hi": "आरती और संध्या दर्शन हेतु नदी घाट।" }
+          "description": {
+            "en": "Riverfront ghat for aarti & evening visit.",
+            "hi": "आरती और संध्या दर्शन हेतु नदी घाट।"
+          }
         }
       ]
     },
@@ -174,11 +225,14 @@
           "id": "gorakhnath_temple",
           "name": { "en": "Gorakhnath Temple", "hi": "गोरखनाथ मंदिर" },
           "lat": 26.7635,
-          "lng": 83.3730,
+          "lng": 83.373,
           "tags": ["temple", "nath", "yogi"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Major Nath tradition temple complex.", "hi": "नाथ परंपरा का प्रमुख मंदिर परिसर।" }
+          "description": {
+            "en": "Major Nath tradition temple complex.",
+            "hi": "नाथ परंपरा का प्रमुख मंदिर परिसर।"
+          }
         },
         {
           "id": "railway_museum_gkp",
@@ -188,7 +242,10 @@
           "tags": ["museum", "family"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Local museum (family visit).", "hi": "स्थानीय संग्रहालय (परिवार हेतु)।" }
+          "description": {
+            "en": "Local museum (family visit).",
+            "hi": "स्थानीय संग्रहालय (परिवार हेतु)।"
+          }
         },
         {
           "id": "ramgarh_tal",
@@ -198,7 +255,10 @@
           "tags": ["lake", "evening", "walk"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Lake area for evening walks.", "hi": "शाम की सैर हेतु झील क्षेत्र।" }
+          "description": {
+            "en": "Lake area for evening walks.",
+            "hi": "शाम की सैर हेतु झील क्षेत्र।"
+          }
         }
       ]
     },
@@ -206,17 +266,23 @@
     {
       "id": "kushinagar",
       "name": { "en": "Kushinagar", "hi": "कुशीनगर" },
-      "center": { "lat": 26.7400, "lng": 83.8900 },
+      "center": { "lat": 26.74, "lng": 83.89 },
       "places": [
         {
           "id": "mahaparinirvana_temple",
-          "name": { "en": "Mahaparinirvana Temple", "hi": "महापरिनिर्वाण मंदिर" },
+          "name": {
+            "en": "Mahaparinirvana Temple",
+            "hi": "महापरिनिर्वाण मंदिर"
+          },
           "lat": 26.7409,
           "lng": 83.8884,
           "tags": ["buddhism", "temple", "stupa"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Buddha’s Mahaparinirvana site area.", "hi": "भगवान बुद्ध के महापरिनिर्वाण स्थल का क्षेत्र।" }
+          "description": {
+            "en": "Buddha’s Mahaparinirvana site area.",
+            "hi": "भगवान बुद्ध के महापरिनिर्वाण स्थल का क्षेत्र।"
+          }
         },
         {
           "id": "ramabhar_stupa",
@@ -226,7 +292,10 @@
           "tags": ["buddhism", "stupa"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Stupa in Kushinagar pilgrimage circuit.", "hi": "कुशीनगर परिक्रमा मार्ग का स्तूप।" }
+          "description": {
+            "en": "Stupa in Kushinagar pilgrimage circuit.",
+            "hi": "कुशीनगर परिक्रमा मार्ग का स्तूप।"
+          }
         }
       ]
     },
@@ -234,7 +303,7 @@
     {
       "id": "jaunpur",
       "name": { "en": "Jaunpur", "hi": "जौनपुर" },
-      "center": { "lat": 25.7490, "lng": 82.6980 },
+      "center": { "lat": 25.749, "lng": 82.698 },
       "places": [
         {
           "id": "shahi_qila_jaunpur",
@@ -244,7 +313,10 @@
           "tags": ["fort", "heritage"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Historic fort area in Jaunpur.", "hi": "जौनपुर का ऐतिहासिक किला क्षेत्र।" }
+          "description": {
+            "en": "Historic fort area in Jaunpur.",
+            "hi": "जौनपुर का ऐतिहासिक किला क्षेत्र।"
+          }
         },
         {
           "id": "shahi_bridge",
@@ -254,7 +326,10 @@
           "tags": ["bridge", "heritage", "river"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Iconic old bridge of Jaunpur.", "hi": "जौनपुर का प्रसिद्ध पुराना पुल।" }
+          "description": {
+            "en": "Iconic old bridge of Jaunpur.",
+            "hi": "जौनपुर का प्रसिद्ध पुराना पुल।"
+          }
         }
       ]
     },
@@ -262,27 +337,36 @@
     {
       "id": "ghazipur",
       "name": { "en": "Ghazipur", "hi": "गाजीपुर" },
-      "center": { "lat": 25.5790, "lng": 83.5720 },
+      "center": { "lat": 25.579, "lng": 83.572 },
       "places": [
         {
           "id": "ghazipur_ghat",
           "name": { "en": "Ganga Ghat (Ghazipur)", "hi": "गाजीपुर गंगा घाट" },
           "lat": 25.5853,
-          "lng": 83.5810,
+          "lng": 83.581,
           "tags": ["ganga", "ghat"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Riverfront ghat area in Ghazipur.", "hi": "गाजीपुर का नदी घाट क्षेत्र।" }
+          "description": {
+            "en": "Riverfront ghat area in Ghazipur.",
+            "hi": "गाजीपुर का नदी घाट क्षेत्र।"
+          }
         },
         {
           "id": "afim_kothi",
-          "name": { "en": "Afim Kothi (Heritage Area)", "hi": "अफ़ीम कोठी (विरासत क्षेत्र)" },
-          "lat": 25.5830,
-          "lng": 83.5800,
+          "name": {
+            "en": "Afim Kothi (Heritage Area)",
+            "hi": "अफ़ीम कोठी (विरासत क्षेत्र)"
+          },
+          "lat": 25.583,
+          "lng": 83.58,
           "tags": ["heritage", "history"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Historic heritage area (visit as per access).", "hi": "ऐतिहासिक विरासत क्षेत्र (प्रवेश अनुसार)।" }
+          "description": {
+            "en": "Historic heritage area (visit as per access).",
+            "hi": "ऐतिहासिक विरासत क्षेत्र (प्रवेश अनुसार)।"
+          }
         }
       ]
     },
@@ -290,27 +374,36 @@
     {
       "id": "azamgarh",
       "name": { "en": "Azamgarh", "hi": "आजमगढ़" },
-      "center": { "lat": 26.0730, "lng": 83.1850 },
+      "center": { "lat": 26.073, "lng": 83.185 },
       "places": [
         {
           "id": "azamgarh_city_center",
           "name": { "en": "Azamgarh City Center", "hi": "आजमगढ़ सिटी" },
-          "lat": 26.0730,
-          "lng": 83.1850,
+          "lat": 26.073,
+          "lng": 83.185,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Central area reference point.", "hi": "संदर्भ हेतु केंद्रीय क्षेत्र।" }
+          "description": {
+            "en": "Central area reference point.",
+            "hi": "संदर्भ हेतु केंद्रीय क्षेत्र।"
+          }
         },
         {
           "id": "chandrika_devi_temple_azm",
-          "name": { "en": "Chandrika Devi Temple (Area)", "hi": "चंद्रिका देवी मंदिर (क्षेत्र)" },
-          "lat": 26.0800,
-          "lng": 83.1900,
+          "name": {
+            "en": "Chandrika Devi Temple (Area)",
+            "hi": "चंद्रिका देवी मंदिर (क्षेत्र)"
+          },
+          "lat": 26.08,
+          "lng": 83.19,
           "tags": ["temple", "devi"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Popular local Devi temple area (dummy pin).", "hi": "स्थानीय देवी मंदिर क्षेत्र (डमी पिन)।" }
+          "description": {
+            "en": "Popular local Devi temple area (dummy pin).",
+            "hi": "स्थानीय देवी मंदिर क्षेत्र (डमी पिन)।"
+          }
         }
       ]
     },
@@ -318,17 +411,20 @@
     {
       "id": "mau",
       "name": { "en": "Mau", "hi": "मऊ" },
-      "center": { "lat": 25.9410, "lng": 83.5610 },
+      "center": { "lat": 25.941, "lng": 83.561 },
       "places": [
         {
           "id": "mau_city_center",
           "name": { "en": "Mau City Center", "hi": "मऊ सिटी" },
-          "lat": 25.9410,
-          "lng": 83.5610,
+          "lat": 25.941,
+          "lng": 83.561,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Central reference point for Mau.", "hi": "मऊ हेतु केंद्रीय संदर्भ बिंदु।" }
+          "description": {
+            "en": "Central reference point for Mau.",
+            "hi": "मऊ हेतु केंद्रीय संदर्भ बिंदु।"
+          }
         }
       ]
     },
@@ -336,27 +432,33 @@
     {
       "id": "ballia",
       "name": { "en": "Ballia", "hi": "बलिया" },
-      "center": { "lat": 25.7580, "lng": 84.1480 },
+      "center": { "lat": 25.758, "lng": 84.148 },
       "places": [
         {
           "id": "ballia_city_center",
           "name": { "en": "Ballia City Center", "hi": "बलिया सिटी" },
-          "lat": 25.7580,
-          "lng": 84.1480,
+          "lat": 25.758,
+          "lng": 84.148,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Central reference point for Ballia.", "hi": "बलिया हेतु केंद्रीय संदर्भ बिंदु।" }
+          "description": {
+            "en": "Central reference point for Ballia.",
+            "hi": "बलिया हेतु केंद्रीय संदर्भ बिंदु।"
+          }
         },
         {
           "id": "surha_tal",
           "name": { "en": "Surha Tal (Lake Area)", "hi": "सुरहा ताल" },
-          "lat": 25.8200,
-          "lng": 84.0700,
+          "lat": 25.82,
+          "lng": 84.07,
           "tags": ["lake", "nature"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Famous lake area near Ballia (approx pin).", "hi": "बलिया के पास प्रसिद्ध ताल (अनुमानित पिन)।" }
+          "description": {
+            "en": "Famous lake area near Ballia (approx pin).",
+            "hi": "बलिया के पास प्रसिद्ध ताल (अनुमानित पिन)।"
+          }
         }
       ]
     },
@@ -364,27 +466,36 @@
     {
       "id": "mirzapur",
       "name": { "en": "Mirzapur", "hi": "मिर्जापुर" },
-      "center": { "lat": 25.1460, "lng": 82.5690 },
+      "center": { "lat": 25.146, "lng": 82.569 },
       "places": [
         {
           "id": "vindhyachal_temple",
-          "name": { "en": "Vindhyachal Devi Temple", "hi": "विंध्याचल देवी मंदिर" },
-          "lat": 25.1640,
-          "lng": 82.5230,
+          "name": {
+            "en": "Vindhyachal Devi Temple",
+            "hi": "विंध्याचल देवी मंदिर"
+          },
+          "lat": 25.164,
+          "lng": 82.523,
           "tags": ["devi", "temple", "shaktipeeth"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Major Shakti worship center.", "hi": "शक्ति उपासना का प्रमुख केंद्र।" }
+          "description": {
+            "en": "Major Shakti worship center.",
+            "hi": "शक्ति उपासना का प्रमुख केंद्र।"
+          }
         },
         {
           "id": "mirzapur_ghat",
           "name": { "en": "Ganga Ghat (Mirzapur)", "hi": "मिर्जापुर गंगा घाट" },
-          "lat": 25.1480,
-          "lng": 82.5710,
+          "lat": 25.148,
+          "lng": 82.571,
           "tags": ["ganga", "ghat"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Riverfront ghat area in Mirzapur.", "hi": "मिर्जापुर का नदी घाट क्षेत्र।" }
+          "description": {
+            "en": "Riverfront ghat area in Mirzapur.",
+            "hi": "मिर्जापुर का नदी घाट क्षेत्र।"
+          }
         }
       ]
     },
@@ -392,27 +503,39 @@
     {
       "id": "chandauli",
       "name": { "en": "Chandauli", "hi": "चंदौली" },
-      "center": { "lat": 25.2580, "lng": 83.2680 },
+      "center": { "lat": 25.258, "lng": 83.268 },
       "places": [
         {
           "id": "chandraprabha_wls",
-          "name": { "en": "Chandraprabha Wildlife Sanctuary", "hi": "चंद्रप्रभा वन्यजीव अभयारण्य" },
-          "lat": 25.2650,
-          "lng": 83.3350,
+          "name": {
+            "en": "Chandraprabha Wildlife Sanctuary",
+            "hi": "चंद्रप्रभा वन्यजीव अभयारण्य"
+          },
+          "lat": 25.265,
+          "lng": 83.335,
           "tags": ["nature", "waterfall", "sanctuary"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Nature spot with nearby waterfalls (approx pin).", "hi": "झरनों के पास प्रकृति स्थल (अनुमानित पिन)।" }
+          "description": {
+            "en": "Nature spot with nearby waterfalls (approx pin).",
+            "hi": "झरनों के पास प्रकृति स्थल (अनुमानित पिन)।"
+          }
         },
         {
           "id": "ramnagar_border_ref",
-          "name": { "en": "Chandauli (City Reference)", "hi": "चंदौली (संदर्भ बिंदु)" },
-          "lat": 25.2580,
-          "lng": 83.2680,
+          "name": {
+            "en": "Chandauli (City Reference)",
+            "hi": "चंदौली (संदर्भ बिंदु)"
+          },
+          "lat": 25.258,
+          "lng": 83.268,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Reference point.", "hi": "संदर्भ हेतु बिंदु।" }
+          "description": {
+            "en": "Reference point.",
+            "hi": "संदर्भ हेतु बिंदु।"
+          }
         }
       ]
     },
@@ -420,27 +543,39 @@
     {
       "id": "sonbhadra",
       "name": { "en": "Sonbhadra", "hi": "सोनभद्र" },
-      "center": { "lat": 24.6860, "lng": 83.0650 },
+      "center": { "lat": 24.686, "lng": 83.065 },
       "places": [
         {
           "id": "renukeshwar_mahadev",
-          "name": { "en": "Renukeshwar Mahadev (Area)", "hi": "रेणुकेश्वर महादेव (क्षेत्र)" },
-          "lat": 24.6900,
-          "lng": 83.0700,
+          "name": {
+            "en": "Renukeshwar Mahadev (Area)",
+            "hi": "रेणुकेश्वर महादेव (क्षेत्र)"
+          },
+          "lat": 24.69,
+          "lng": 83.07,
           "tags": ["shiva", "temple"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Local Shiva worship area (approx pin).", "hi": "स्थानीय शिव आराधना क्षेत्र (अनुमानित पिन)।" }
+          "description": {
+            "en": "Local Shiva worship area (approx pin).",
+            "hi": "स्थानीय शिव आराधना क्षेत्र (अनुमानित पिन)।"
+          }
         },
         {
           "id": "robertsganj_ref",
-          "name": { "en": "Robertsganj (City Reference)", "hi": "रॉबर्ट्सगंज (संदर्भ)" },
-          "lat": 24.6860,
-          "lng": 83.0650,
+          "name": {
+            "en": "Robertsganj (City Reference)",
+            "hi": "रॉबर्ट्सगंज (संदर्भ)"
+          },
+          "lat": 24.686,
+          "lng": 83.065,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Reference point for Sonbhadra HQ.", "hi": "सोनभद्र मुख्यालय का संदर्भ बिंदु।" }
+          "description": {
+            "en": "Reference point for Sonbhadra HQ.",
+            "hi": "सोनभद्र मुख्यालय का संदर्भ बिंदु।"
+          }
         }
       ]
     },
@@ -448,17 +583,20 @@
     {
       "id": "deoria",
       "name": { "en": "Deoria", "hi": "देवरिया" },
-      "center": { "lat": 26.5010, "lng": 83.7790 },
+      "center": { "lat": 26.501, "lng": 83.779 },
       "places": [
         {
           "id": "deoria_city_center",
           "name": { "en": "Deoria City Center", "hi": "देवरिया सिटी" },
-          "lat": 26.5010,
-          "lng": 83.7790,
+          "lat": 26.501,
+          "lng": 83.779,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Central reference point.", "hi": "केंद्रीय संदर्भ बिंदु।" }
+          "description": {
+            "en": "Central reference point.",
+            "hi": "केंद्रीय संदर्भ बिंदु।"
+          }
         }
       ]
     },
@@ -466,17 +604,20 @@
     {
       "id": "basti",
       "name": { "en": "Basti", "hi": "बस्ती" },
-      "center": { "lat": 26.8140, "lng": 82.7630 },
+      "center": { "lat": 26.814, "lng": 82.763 },
       "places": [
         {
           "id": "basti_city_center",
           "name": { "en": "Basti City Center", "hi": "बस्ती सिटी" },
-          "lat": 26.8140,
-          "lng": 82.7630,
+          "lat": 26.814,
+          "lng": 82.763,
           "tags": ["city", "hub"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Central reference point.", "hi": "केंद्रीय संदर्भ बिंदु।" }
+          "description": {
+            "en": "Central reference point.",
+            "hi": "केंद्रीय संदर्भ बिंदु।"
+          }
         }
       ]
     },
@@ -484,17 +625,23 @@
     {
       "id": "sant_kabir_nagar",
       "name": { "en": "Sant Kabir Nagar", "hi": "संत कबीर नगर" },
-      "center": { "lat": 26.7750, "lng": 83.0600 },
+      "center": { "lat": 26.775, "lng": 83.06 },
       "places": [
         {
           "id": "maghar_kabir",
-          "name": { "en": "Maghar (Sant Kabir’s place)", "hi": "मगहर (संत कबीर स्थल)" },
-          "lat": 26.7600,
-          "lng": 83.0900,
+          "name": {
+            "en": "Maghar (Sant Kabir’s place)",
+            "hi": "मगहर (संत कबीर स्थल)"
+          },
+          "lat": 26.76,
+          "lng": 83.09,
           "tags": ["kabir", "heritage", "spiritual"],
           "images": ["assets/images/placeholder/place.svg"],
           "videos": [],
-          "description": { "en": "Spiritual heritage place associated with Sant Kabir.", "hi": "संत कबीर से जुड़ा आध्यात्मिक स्थल।" }
+          "description": {
+            "en": "Spiritual heritage place associated with Sant Kabir.",
+            "hi": "संत कबीर से जुड़ा आध्यात्मिक स्थल।"
+          }
         }
       ]
     }

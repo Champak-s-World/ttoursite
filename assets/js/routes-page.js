@@ -53,7 +53,7 @@
     const cities = D?.locations?.cities || [];
 
     for (const city of cities) {
-      for (const place of (city.places || [])) {
+      for (const place of city.places || []) {
         out.push({
           id: place.id,
           name: pickName(place.name) || place.id,
@@ -63,7 +63,7 @@
           tags: place.tags || [],
           images: place.images || [],
           description: pickName(place.description) || "",
-          source: "locations"
+          source: "locations",
         });
       }
     }
@@ -75,10 +75,12 @@
   ========================================================= */
   function searchLocations(query) {
     const q = query.toLowerCase();
-    return getAllLocations().filter(p => {
-      const hay = `${p.name} ${p.cityName} ${p.tags.join(" ")}`.toLowerCase();
-      return hay.includes(q);
-    }).slice(0, 40);
+    return getAllLocations()
+      .filter((p) => {
+        const hay = `${p.name} ${p.cityName} ${p.tags.join(" ")}`.toLowerCase();
+        return hay.includes(q);
+      })
+      .slice(0, 40);
   }
 
   async function searchOSM(query) {
@@ -90,7 +92,7 @@
     const res = await fetch(url, { headers: { "Accept-Language": "en" } });
     const data = await res.json();
 
-    return data.map(x => ({
+    return data.map((x) => ({
       id: "osm_" + x.place_id,
       name: x.display_name,
       cityName: "",
@@ -99,7 +101,7 @@
       tags: ["osm"],
       images: [],
       description: "OpenStreetMap result",
-      source: "osm"
+      source: "osm",
     }));
   }
 
@@ -107,6 +109,7 @@
      CARD RENDERING
   ========================================================= */
   function renderCard(item) {
+    // alert(item);
     const img = item.images[0] || "assets/images/placeholder/place.svg";
 
     return `
@@ -130,7 +133,11 @@
 
           <div class="pp-actions" style="margin-top:10px">
             <button class="pp-btn" data-add="${item.id}">Add</button>
-            <button class="pp-btn pp-btn--ghost" data-pp-pop="1">Pop out</button>
+           <button class="pp-btn pp-btn--ghost" data-pp-pop="1" style="outline:3px solid red">
+  Pop out (DEBUG)
+</button>
+
+            
           </div>
         </div>
       </article>
@@ -149,7 +156,9 @@
       return;
     }
 
-    box.innerHTML = it.map((p, i) => `
+    box.innerHTML = it
+      .map(
+        (p, i) => `
       <div class="pp-card pp-pad"
         data-pp-title="${PP_RENDER.esc(p.name)}"
         data-pp-desc="${PP_RENDER.esc(p.description)}"
@@ -167,9 +176,11 @@
           <button class="pp-btn pp-btn--ghost" data-pp-pop="1">Pop out</button>
         </div>
       </div>
-    `).join("");
+    `,
+      )
+      .join("");
 
-    box.querySelectorAll("[data-up]").forEach(btn => {
+    box.querySelectorAll("[data-up]").forEach((btn) => {
       btn.onclick = () => {
         const i = +btn.dataset.up;
         const arr = getItinerary();
@@ -179,7 +190,7 @@
       };
     });
 
-    box.querySelectorAll("[data-down]").forEach(btn => {
+    box.querySelectorAll("[data-down]").forEach((btn) => {
       btn.onclick = () => {
         const i = +btn.dataset.down;
         const arr = getItinerary();
@@ -189,7 +200,7 @@
       };
     });
 
-    box.querySelectorAll("[data-remove]").forEach(btn => {
+    box.querySelectorAll("[data-remove]").forEach((btn) => {
       btn.onclick = () => {
         const arr = getItinerary();
         arr.splice(+btn.dataset.remove, 1);
@@ -230,17 +241,19 @@
       results.map(renderCard).join("") ||
       `<div class="pp-muted">No results</div>`;
 
-    $("rsResults").querySelectorAll("[data-add]").forEach(btn => {
-      btn.onclick = () => {
-        const item = lastResults.find(x => x.id === btn.dataset.add);
-        if (!item) return;
+    $("rsResults")
+      .querySelectorAll("[data-add]")
+      .forEach((btn) => {
+        btn.onclick = () => {
+          const item = lastResults.find((x) => x.id === btn.dataset.add);
+          if (!item) return;
 
-        const it = getItinerary();
-        it.push(item);
-        setItinerary(it);
-        renderItinerary();
-      };
-    });
+          const it = getItinerary();
+          it.push(item);
+          setItinerary(it);
+          renderItinerary();
+        };
+      });
   }
 
   /* =========================================================
@@ -263,10 +276,9 @@
     };
 
     $("rsDownloadBtn").onclick = () => {
-      const blob = new Blob(
-        [JSON.stringify(loadState(), null, 2)],
-        { type: "application/json" }
-      );
+      const blob = new Blob([JSON.stringify(loadState(), null, 2)], {
+        type: "application/json",
+      });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "itinerary.json";
@@ -285,5 +297,4 @@
 
   window.addEventListener("pp:dataloaded", init);
   window.addEventListener("pp:itinerarychange", renderItinerary);
-
 })();

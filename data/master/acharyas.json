@@ -1,0 +1,20 @@
+{
+  "acharyas": [
+    {
+      "id": "acharya_1",
+      "name": { "en": "Acharya Vishnu Sharma", "hi": "आचार्य विष्णु शर्मा" },
+      "summary": { "en": "Expert in Rudrabhishek and Mahamrityunjay Jaap.", "hi": "रुद्राभिषेक व महामृत्युंजय जाप में विशेषज्ञ।" },
+      "languages": ["hi", "en"],
+      "specialties": ["rudrabhishek", "mahamrityunjay_jaap", "narayani_jaap"],
+      "cities": ["varanasi", "prayagraj"],
+      "experienceYears": 15,
+      "images": ["assets/images/placeholder/place.svg"],
+      "videos": [],
+      "tags": ["acharya", "shiv", "jaap"],
+      "ctaText": { "en": "Request Acharya", "hi": "आचार्य बुक करें" },
+      "whatsappText": { "en": "I want to book an Acharya for:", "hi": "मुझे आचार्य चाहिए:" },
+      "featured": true,
+      "featuredRank": 3
+    }
+  ]
+}

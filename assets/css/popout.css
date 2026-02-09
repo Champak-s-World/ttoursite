@@ -1,0 +1,84 @@
+/* ==== HARD RESET POP OUT MODAL ==== */
+
+body.pp-pop-lock {
+  overflow: hidden !important;
+}
+
+.pp-pop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+
+  background: rgba(0,0,0,0.55) !important;
+
+  display: none !important;
+  z-index: 2147483647 !important; /* MAX SAFE Z */
+}
+
+.pp-pop.open {
+  display: block !important;
+}
+
+.pp-pop-panel {
+  position: relative;
+  width: min(960px, 96vw);
+  margin: 5vh auto;
+
+  background: #fffdf8;
+  border-radius: 22px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+/* Header close button */
+.pp-x {
+  border: none;
+  background: #fff;
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Carousel */
+.pp-car-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.pp-car-left { left: 12px; }
+.pp-car-right { right: 12px; }
+
+.pp-car-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.pp-car-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.5);
+  border: none;
+}
+
+.pp-car-dot.on {
+  background: white;
+}

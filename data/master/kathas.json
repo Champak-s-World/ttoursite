@@ -1,0 +1,18 @@
+{
+  "kathas": [
+    {
+      "id": "ramkatha",
+      "title": { "en": "Shri Ram/ Shyam Katha", "hi": "श्री रामकथा" },
+      "summary": { "en": "7-day Ramkatha by renowned kathavachaks.", "hi": "प्रसिद्ध वक्ताओं द्वारा 7 दिवसीय रामकथा।" },
+      "description": { "en": "Stage, sound, travel, and full arrangement available.", "hi": "स्टेज, साउंड, यात्रा, पूर्ण व्यवस्था उपलब्ध।" },
+      "kathaType": "ram",
+      "durationDays": 7,
+      "tags": ["ram", "katha", "ayodhya"],
+      "images": ["assets/images/placeholder/place.svg"],
+      "ctaText": { "en": "Arrange Ramkatha", "hi": "रामकथा कराएँ" },
+      "whatsappText": { "en": "I want details for arranging Ramkatha.", "hi": "मुझे रामकथा की व्यवस्था की जानकारी चाहिए।" },
+      "featured": true,
+      "featuredRank": 1
+    }
+  ]
+}

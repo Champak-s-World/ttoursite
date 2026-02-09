@@ -1,0 +1,17 @@
+{
+  "yagyas": [
+    {
+      "id": "shatchandi_mahayagya",
+      "title": { "en": "Shatchandi Mahayagya", "hi": "शतचंडी महायज्ञ" },
+      "summary": { "en": "Durga saptashati based mahayagya.", "hi": "दुर्गा सप्तशती आधारित महायज्ञ।" },
+      "description": { "en": "Full pandit team, samagri, and havan arrangements.", "hi": "पूर्ण आचार्य मंडली, सामग्री और हवन व्यवस्था।" },
+      "tags": ["devi", "yagya", "havan"],
+      "durationDays": 2,
+      "images": ["assets/images/placeholder/place.svg"],
+      "ctaText": { "en": "Arrange Shatchandi", "hi": "शतचंडी कराएँ" },
+      "whatsappText": { "en": "I want Shatchandi Mahayagya details.", "hi": "मुझे शतचंडी महायज्ञ की जानकारी चाहिए।" },
+      "featured": false,
+      "featuredRank": 99
+    }
+  ]
+}

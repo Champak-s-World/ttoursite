@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kathas</title>
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/popout.css?v=99" />
+</head>
+
+<body data-collection="kathas" data-json="data/master/kathas.json">
+  <div data-include="includes/header.html"></div>
+
+  <main class="pp-container">
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-split">
+        <div>
+          <div class="pp-mini" id="cpStatus">…</div>
+          <h1 class="pp-h1" id="cpTitle"></h1>
+          <div class="pp-muted" id="cpSubtitle"></div>
+        </div>
+
+        <div class="pp-actions">
+          <button class="pp-btn pp-btn--ghost" id="cpLang" type="button">HI</button>
+        </div>
+      </div>
+
+      <div class="pp-actions" style="margin-top:12px">
+        <input id="cpQuery" class="pp-input" style="flex:1" placeholder="Type 3+ characters to search…" />
+        <select id="cpTagFilter" class="pp-input">
+          <option value="">All tags</option>
+          <option value="ram">ram</option>
+          <option value="shiv">shiv</option>
+          <option value="katha">katha</option>
+        </select>
+        <button class="pp-btn" id="cpSearchBtn" type="button">Search</button>
+        <button class="pp-btn pp-btn--ghost" id="cpClearBtn" type="button">Clear</button>
+      </div>
+    </section>
+
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-h2">Featured</div>
+      <div class="pp-grid" id="cpFeatured" style="margin-top:12px"></div>
+    </section>
+
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-h2">Tags</div>
+      <div id="cpTags" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"></div>
+    </section>
+
+    <section class="pp-card pp-pad" style="margin-top:12px">
+      <div class="pp-h2">All Kathas</div>
+      <div class="pp-grid" id="cpList" style="margin-top:12px"></div>
+    </section>
+  </main>
+
+  <div data-include="includes/footer.html"></div>
+
+  <script>
+    window.__CP_PAGE_TITLE = { en: "Kathas", hi: "कथाएँ" };
+    window.__CP_PAGE_SUB = { en: "Ramkatha, Bhagwat Katha, Shiv Mahapuran and more.", hi: "रामकथा, भागवत कथा, शिवमहापुराण आदि।" };
+  </script>
+
+  <script src="assets/js/includes.js"></script>
+  <script src="assets/js/site-config.js"></script>
+  <script src="assets/js/lang.js"></script>
+  <script src="assets/js/render.js"></script>
+  <script src="assets/js/popout.js"></script>
+  <script src="assets/js/content-pages.js"></script>
+</body>
+</html>
