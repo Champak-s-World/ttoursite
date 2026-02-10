@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Quicksort Visualization | Programmer’s Picnic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+  :root {
+    --bg: #fff7e6;
+    --card: #ffffff;
+    --pivot: #f97316;
+    --left: #3b82f6;
+    --right: #8b5cf6;
+    --bar: #fbbf24;
+    --sorted: #22c55e;
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: #1f2937;
+  }
+
+  header {
+    text-align: center;
+    padding: 16px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+  }
+
+  button, input {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+  }
+
+  button {
+    background: #d97706;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #b45309;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    height: 300px;
+    gap: 4px;
+    width: 90%;
+    max-width: 900px;
+  }
+
+  .bar {
+    flex: 1;
+    background: var(--bar);
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+  }
+
+  .pivot { background: var(--pivot); }
+  .left { background: var(--left); }
+  .right { background: var(--right); }
+  .sorted { background: var(--sorted); }
+</style>
+</head>
+
+<body>
+
+<header>
+  ⚡ Quicksort Visualization — Programmer’s Picnic
+</header>
+
+<div class="controls">
+  <button onclick="generateArray()">Generate Array</button>
+  <button onclick="startSort()">Start Quicksort</button>
+  <label>
+    Speed:
+    <input type="range" min="10" max="500" value="150" id="speed">
+  </label>
+</div>
+
+<div class="container">
+  <div class="bars" id="bars"></div>
+</div>
+
+<script>
+  const barsContainer = document.getElementById("bars");
+  const speedInput = document.getElementById("speed");
+  let values = [];
+  let delay = 150;
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function generateArray(size = 30) {
+    values = [];
+    barsContainer.innerHTML = "";
+
+    for (let i = 0; i < size; i++) {
+      const val = Math.floor(Math.random() * 90) + 10;
+      values.push(val);
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.height = val * 3 + "px";
+      barsContainer.appendChild(bar);
+    }
+  }
+
+  async function startSort() {
+    delay = Number(speedInput.value);
+    await quickSort(0, values.length - 1);
+    markSorted();
+  }
+
+  async function quickSort(low, high) {
+    if (low < high) {
+      const pi = await partition(low, high);
+      await quickSort(low, pi - 1);
+      await quickSort(pi + 1, high);
+    }
+  }
+
+  async function partition(low, high) {
+    const bars = document.querySelectorAll(".bar");
+    let pivot = values[high];
+    bars[high].classList.add("pivot");
+
+    let i = low - 1;
+
+    for (let j = low; j < high; j++) {
+      bars[j].classList.add("left");
+      await sleep(delay);
+
+      if (values[j] < pivot) {
+        i++;
+        swap(i, j);
+        updateBars();
+        await sleep(delay);
+      }
+
+      bars[j].classList.remove("left");
+    }
+
+    swap(i + 1, high);
+    updateBars();
+
+    bars[high].classList.remove("pivot");
+    bars[i + 1].classList.add("sorted");
+
+    await sleep(delay);
+    return i + 1;
+  }
+
+  function swap(i, j) {
+    [values[i], values[j]] = [values[j], values[i]];
+  }
+
+  function updateBars() {
+    const bars = document.querySelectorAll(".bar");
+    bars.forEach((bar, i) => {
+      bar.style.height = values[i] * 3 + "px";
+      bar.className = "bar";
+    });
+  }
+
+  function markSorted() {
+    document.querySelectorAll(".bar").forEach(bar => {
+      bar.classList.add("sorted");
+    });
+  }
+
+  generateArray();
+</script>
+
+</body>
+</html>

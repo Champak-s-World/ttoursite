@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,17 +12,29 @@
 
     <main class="pp-container">
       <section class="pp-card pp-pad" style="margin-top: 12px">
-        <div class="pp-mini">Search places • Build itinerary • Syncs with Route Map</div>
-        <h1 class="pp-h1">Routes</h1>
-        <div class="pp-muted">
-          Choose search source, start typing (3+ chars) or press Search. Add places to itinerary, reorder, remove, then open Route Map.
+        <div class="pp-split">
+          <div>
+            <div class="pp-mini" data-i18n="routesMini">
+              Search places • Build itinerary • Syncs with Route Map
+            </div>
+            <h1 class="pp-h1" data-i18n="routesTitle">Routes</h1>
+            <div class="pp-muted" data-i18n="routesSubtitle">
+              Choose search source, start typing (3+ chars) or press Search. Add places to itinerary, reorder,
+              remove, then open Route Map.
+            </div>
+          </div>
+
+          <!-- Language Toggle -->
+          <div class="pp-actions" style="align-items:flex-start">
+            <button class="pp-btn pp-btn--ghost" id="ppLangBtn" type="button">HI</button>
+          </div>
         </div>
 
         <div class="pp-actions" style="margin-top: 12px">
-          <select id="rsSource" class="pp-input" title="Search source">
-            <option value="locations">Only locations.json</option>
-            <option value="osm">Only OpenStreetMap</option>
-            <option value="both">Both (locations first)</option>
+          <select id="rsSource" class="pp-input" title="Search source" data-i18n-title="routesSourceTitle">
+            <option value="locations" data-i18n="routesSourceLocations">Only locations.json</option>
+            <option value="osm" data-i18n="routesSourceOSM">Only OpenStreetMap</option>
+            <option value="both" data-i18n="routesSourceBoth">Both (locations first)</option>
           </select>
 
           <input
@@ -31,16 +42,19 @@
             class="pp-input"
             style="flex:1"
             placeholder="Type a place name… (min 3 chars for auto results)"
+            data-i18n-placeholder="routesSearchPlaceholder"
             autocomplete="off"
           />
 
-          <button class="pp-btn" id="rsSearchBtn" type="button">Search</button>
-          <button class="pp-btn pp-btn--ghost" id="rsClearBtn" type="button">Clear</button>
+          <button class="pp-btn" id="rsSearchBtn" type="button" data-i18n="routesSearchBtn">Search</button>
+          <button class="pp-btn pp-btn--ghost" id="rsClearBtn" type="button" data-i18n="routesClearBtn">Clear</button>
 
-          <a class="pp-btn pp-btn--ghost" href="route.html">Open Route Map</a>
+          <a class="pp-btn pp-btn--ghost" href="route.html" data-i18n="routesOpenMapBtn">Open Route Map</a>
         </div>
 
-        <div class="pp-mini" id="rsStatus" style="margin-top: 10px">Loading data…</div>
+        <div class="pp-mini" id="rsStatus" style="margin-top: 10px" data-i18n="routesStatusLoading">
+          Loading data…
+        </div>
 
         <div style="margin-top: 12px" class="pp-grid" id="rsResults"></div>
       </section>
@@ -48,14 +62,22 @@
       <section class="pp-card pp-pad" style="margin-top: 12px">
         <div class="pp-split">
           <div>
-            <div class="pp-h2">My Itinerary</div>
-            <div class="pp-mini">Saved in localStorage key: <b>pp_tour_maker_v1</b></div>
+            <div class="pp-h2" data-i18n="routesItineraryTitle">My Itinerary</div>
+            <div class="pp-mini" data-i18n="routesItineraryStorage">
+              Saved in localStorage key: <b>pp_tour_maker_v1</b>
+            </div>
           </div>
 
           <div class="pp-actions">
-            <button class="pp-btn pp-btn--ghost" id="rsDownloadBtn" type="button">Download JSON</button>
-            <button class="pp-btn" id="rsShareBtn" type="button">Share WhatsApp</button>
-            <button class="pp-btn pp-btn--ghost" id="rsClearItBtn" type="button">Clear Itinerary</button>
+            <button class="pp-btn pp-btn--ghost" id="rsDownloadBtn" type="button" data-i18n="routesDownloadBtn">
+              Download JSON
+            </button>
+            <button class="pp-btn" id="rsShareBtn" type="button" data-i18n="routesShareBtn">
+              Share WhatsApp
+            </button>
+            <button class="pp-btn pp-btn--ghost" id="rsClearItBtn" type="button" data-i18n="routesClearItBtn">
+              Clear Itinerary
+            </button>
           </div>
         </div>
 
@@ -68,10 +90,39 @@
     <script src="assets/js/includes.js"></script>
     <script src="assets/js/site-config.js"></script>
 
+    <!-- Hindi/English core -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/i18n.js"></script>
+
     <script src="assets/js/data-store.js"></script>
     <script src="assets/js/render.js"></script>
     <script src="assets/js/popout.js"></script>
     <script src="assets/js/routes-page.js"></script>
 
+    <!-- Toggle + apply translations after includes load -->
+    <script>
+      (function () {
+        const btn = document.getElementById("ppLangBtn");
+        if (!btn || !window.PP_LANG) return;
+
+        function sync() {
+          btn.textContent = (PP_LANG.getLang() === "hi") ? "EN" : "HI";
+        }
+
+        btn.addEventListener("click", () => {
+          PP_LANG.setLang(PP_LANG.getLang() === "hi" ? "en" : "hi");
+        });
+
+        // Apply translations now + whenever language or includes change
+        function applyNow() {
+          if (window.PP_I18N && typeof PP_I18N.apply === "function") PP_I18N.apply(document);
+          sync();
+        }
+
+        window.addEventListener("pp:langchange", applyNow);
+        window.addEventListener("pp:includesloaded", applyNow);
+        document.addEventListener("DOMContentLoaded", applyNow);
+      })();
+    </script>
   </body>
 </html>

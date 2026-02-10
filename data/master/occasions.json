@@ -1,5 +1,18 @@
 {
   "occasions": [
+     {
+      "id": "today",
+      "title": { "en": "Today", "hi": "महाशिवरात्रि" },
+      "dateRule": { "type": "fixed", "month": 2, "day": 10 },
+      "summary": { "en": "Today.", "hi": "शिव उपासना का महापर्व।" },
+      "description": { "en": "Rudrabhishek, jaap, and special puja arrangements.", "hi": "रुद्राभिषेक, जाप और विशेष पूजन व्यवस्था।" },
+      "tags": ["shiv", "festival", "fasting", "puja"],
+      "images": ["assets/images/placeholder/place.svg"],
+      "ctaText": { "en": "Book Shivratri Service", "hi": "शिवरात्रि सेवा बुक करें" },
+      "whatsappText": { "en": "I want Shivratri puja arrangements.", "hi": "मुझे शिवरात्रि पूजा की व्यवस्था चाहिए।" },
+      "featured": true,
+      "featuredRank": 1
+    },
     {
       "id": "mahashivratri",
       "title": { "en": "Maha Shivratri", "hi": "महाशिवरात्रि" },
