@@ -9,11 +9,20 @@
       "places": [
         {
           "id": "kashi_vishwanath",
-          "name": { "en": "Kashi Vishwanath Temple", "hi": "काशी विश्वनाथ मंदिर" },
+          "name": {
+            "en": "Kashi Vishwanath Temple",
+            "hi": "काशी विश्वनाथ मंदिर"
+          },
           "lat": 25.3109,
           "lng": 83.0107,
+          "featured": true,
+          "featuredRank": 1,
+          "featuredNote": {
+            "en": "Most visited spiritual destination",
+            "hi": "सबसे लोकप्रिय तीर्थ स्थल"
+          },
           "tags": ["temple", "shiv", "jyotirlinga"],
-       
+
           "description": {
             "en": "One of the 12 Jyotirlingas of Lord Shiva.",
             "hi": "भगवान शिव के 12 ज्योतिर्लिंगों में से एक।"
@@ -25,6 +34,14 @@
           "lat": 25.3069,
           "lng": 83.0105,
           "tags": ["ghat", "ganga", "aarti"],
+ "featured": true,
+  "featuredRank": 1,
+  "featuredNote": {
+    "en": "Most visited spiritual destination",
+    "hi": "सबसे लोकप्रिय तीर्थ स्थल"
+  },
+
+
           "images": ["assets/images/varanasi/dashashwamedh.jpg"],
           "description": {
             "en": "Famous ghat for daily Ganga Aarti.",
@@ -34,7 +51,7 @@
         {
           "id": "assi_ghat",
           "name": { "en": "Assi Ghat", "hi": "अस्सी घाट" },
-          "lat": 25.2880,
+          "lat": 25.288,
           "lng": 83.0065,
           "tags": ["ghat", "yoga", "sunrise"],
           "images": ["assets/images/varanasi/assi.jpg"],
@@ -104,8 +121,8 @@
         {
           "id": "kanak_bhawan",
           "name": { "en": "Kanak Bhawan", "hi": "कनक भवन" },
-          "lat": 26.7950,
-          "lng": 82.1980,
+          "lat": 26.795,
+          "lng": 82.198,
           "tags": ["ram", "sita", "temple"],
           "images": ["assets/images/ayodhya/kanak_bhawan.jpg"],
           "description": {
@@ -116,7 +133,7 @@
         {
           "id": "sarayu_ghat",
           "name": { "en": "Sarayu Ghat", "hi": "सरयू घाट" },
-          "lat": 26.7920,
+          "lat": 26.792,
           "lng": 82.2001,
           "tags": ["ghat", "river", "aarti"],
           "images": ["assets/images/ayodhya/sarayu.jpg"],
@@ -151,7 +168,7 @@
           "id": "hanuman_mandir",
           "name": { "en": "Bade Hanuman Mandir", "hi": "बड़े हनुमान मंदिर" },
           "lat": 25.4358,
-          "lng": 81.8660,
+          "lng": 81.866,
           "tags": ["hanuman", "temple"],
           "images": ["assets/images/prayagraj/hanuman.jpg"],
           "description": {
