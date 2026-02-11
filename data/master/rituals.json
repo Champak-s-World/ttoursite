@@ -1,0 +1,11 @@
+{
+  "rituals": [
+    {
+      "id": "rudrabhishek",
+      "featured": true,
+      "featuredRank": 1,
+      "featuredNote": { "en": "Most requested in Kashi.", "hi": "काशी में सबसे अधिक मांग।" },
+      "title": { "en": "Rudrabhishek", "hi": "रुद्राभिषेक" }
+    }
+  ]
+}
