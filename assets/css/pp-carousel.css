@@ -252,6 +252,87 @@
   color:#fff;
 }
 
+
+
+
+/* ---- Thumbnail tooltip (title on hover/focus) ---- */
+.ppc-thumb{
+  position:relative; /* needed for tooltip */
+}
+
+/* tooltip bubble */
+.ppc-thumb::before{
+  content: attr(data-tip);
+  position:absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding: 7px 10px;
+  border-radius: 999px;
+
+  color:#fff;
+  font-weight:1000;
+  font-size:12px;
+
+  background: rgba(17,24,39,.72);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.20);
+
+  opacity: 0;
+  pointer-events:none;
+  transition: opacity .12s ease, transform .12s ease;
+}
+
+/* tooltip arrow */
+.ppc-thumb::after{
+  /* keep your existing overlay already; so we use a nested element instead */
+}
+
+/* create arrow using an inner span */
+.ppc-thumb .ppc-tip-arrow{
+  position:absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: rgba(17,24,39,.72);
+  border-left: 1px solid rgba(255,255,255,.18);
+  border-bottom: 1px solid rgba(255,255,255,.18);
+  transform: translateX(-50%) rotate(45deg);
+  opacity: 0;
+  pointer-events:none;
+  transition: opacity .12s ease;
+}
+
+/* show tooltip */
+.ppc-thumb:hover::before,
+.ppc-thumb:focus-visible::before{
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.ppc-thumb:hover .ppc-tip-arrow,
+.ppc-thumb:focus-visible .ppc-tip-arrow{
+  opacity: 1;
+}
+
+/* mobile: show tooltip briefly on tap focus */
+@media (hover: none){
+  .ppc-thumb:active::before{ opacity: 1; }
+  .ppc-thumb:active .ppc-tip-arrow{ opacity: 1; }
+}
+
+
+
+
+
 /* optional bar under carousel */
 .ppc-bar{
   padding: 12px 14px;
@@ -286,6 +367,35 @@
 }
 .ppc-action:hover{ transform: translateY(-1px); }
 .ppc-action:active{ transform: translateY(0px) scale(.99); }
+
+/* ---- Counter pill (top-right) ---- */
+.ppc-count{
+  position:absolute;
+  right: 10px;
+  top: 10px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-weight:1000;
+  font-size:12px;
+  backdrop-filter: blur(12px);
+  text-shadow: 0 10px 22px rgba(0,0,0,.30);
+}
+.ppc-count b{ font-weight:1000; }
+
+/* ---- Captions helper: ensure captions sit above overlays ---- */
+.ppc-caption{ z-index: 3; }
+.ppc-progress{ z-index: 4; }
+.ppc-count{ z-index: 4; }
+.ppc-controls{ z-index: 5; }
+.ppc-dots{ z-index: 5; }
+
+
 
 @media (max-width: 680px){
   .ppc-caption .title{ font-size:18px; }
