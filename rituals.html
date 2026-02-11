@@ -1,53 +1,75 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Rituals</title>
-<link rel="stylesheet" href="assets/css/base.css"/><link rel="stylesheet" href="assets/css/popout.css?v=99"/>
-<link rel="stylesheet" href="assets/css/pp-nav.css" />
-</head>
-<body data-collection="rituals" data-json="data/master/rituals.json">
-<div data-include="includes/header.html"></div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rituals</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/popout.css?v=99" />
+    <link rel="stylesheet" href="assets/css/pp-nav.css" />
+  </head>
+  <body data-collection="rituals" data-json="data/master/rituals.json">
+    <div data-include="includes/header.html"></div>
 
-<main class="pp-container">
-  <section class="pp-card pp-pad" style="margin-top:12px">
-    <div class="pp-split">
-      <div>
-        <div class="pp-mini" id="cpStatus">…</div>
-        <h1 class="pp-h1" id="cpTitle"></h1>
-        <div class="pp-muted" id="cpSubtitle"></div>
-      </div>
-      <div class="pp-actions"><button class="pp-btn pp-btn--ghost" id="cpLang" type="button">HI</button></div>
-    </div>
-    <div class="pp-actions" style="margin-top:12px">
-      <input id="cpQuery" class="pp-input" style="flex:1" placeholder="Type 3+ characters to search…"/>
-      <select id="cpTagFilter" class="pp-input"><option value="">All tags</option></select>
-      <button class="pp-btn" id="cpSearchBtn" type="button">Search</button>
-      <button class="pp-btn pp-btn--ghost" id="cpClearBtn" type="button">Clear</button>
-    </div>
-  </section>
+    <main class="pp-container">
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-split">
+          <div>
+            <div class="pp-mini" id="cpStatus">…</div>
+            <h1 class="pp-h1" id="cpTitle"></h1>
+            <div class="pp-muted" id="cpSubtitle"></div>
+          </div>
+          <div class="pp-actions">
+            <button class="pp-btn pp-btn--ghost" id="cpLang" type="button">
+              HI
+            </button>
+          </div>
+        </div>
+        <div class="pp-actions" style="margin-top: 12px">
+          <input
+            id="cpQuery"
+            class="pp-input"
+            style="flex: 1"
+            placeholder="Type 3+ characters to search…"
+          />
+          <select id="cpTagFilter" class="pp-input">
+            <option value="">All tags</option>
+          </select>
+          <button class="pp-btn" id="cpSearchBtn" type="button">Search</button>
+          <button class="pp-btn pp-btn--ghost" id="cpClearBtn" type="button">
+            Clear
+          </button>
+        </div>
+      </section>
 
-  <section class="pp-card pp-pad" style="margin-top:12px">
-    <div class="pp-h2">Featured</div>
-    <div class="pp-grid" id="cpFeatured" style="margin-top:12px"></div>
-  </section>
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-h2">Featured</div>
+        <div class="pp-grid" id="cpFeatured" style="margin-top: 12px"></div>
+      </section>
 
-  <section class="pp-card pp-pad" style="margin-top:12px">
-    <div class="pp-h2">All Rituals</div>
-    <div class="pp-grid" id="cpList" style="margin-top:12px"></div>
-  </section>
-</main>
+      <section class="pp-card pp-pad" style="margin-top: 12px">
+        <div class="pp-h2">All Rituals</div>
+        <div class="pp-grid" id="cpList" style="margin-top: 12px"></div>
+      </section>
+    </main>
 
-<div data-include="includes/footer.html"></div>
+    <div data-include="includes/footer.html"></div>
 
-<script>
-  window.__CP_PAGE_TITLE = { en: "Rituals & Pujas", hi: "अनुष्ठान व पूजा" };
-  window.__CP_PAGE_SUB = { en: "Rudrabhishek, Tripindi Shraddh, Narayani Jaap and more.", hi: "रुद्राभिषेक, त्रिपिंडी श्राद्ध, नारायणी जाप आदि।" };
-</script>
+    <script>
+      window.__CP_PAGE_TITLE = { en: "Rituals & Pujas", hi: "अनुष्ठान व पूजा" };
+      window.__CP_PAGE_SUB = {
+        en: "Rudrabhishek, Tripindi Shraddh, Narayani Jaap and more.",
+        hi: "रुद्राभिषेक, त्रिपिंडी श्राद्ध, नारायणी जाप आदि।",
+      };
+    </script>
 
-<script src="assets/js/includes.js"></script>
-<script src="assets/js/site-config.js"></script>
-<script src="assets/js/lang.js"></script>
-<script src="assets/js/render.js"></script>
-<script src="assets/js/popout.js"></script>
-<script src="assets/js/content-pages.js"></script>
-<script src="assets/js/pp-nav.js"></script>
-</body></html>
+    <script src="assets/js/includes.js"></script>
+    <script src="assets/js/pp-nav.js"></script>
+    <script src="assets/js/site-config.js"></script>
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/render.js"></script>
+    <script src="assets/js/popout.js"></script>
+    <script src="assets/js/content-pages.js"></script>
+    <script src="assets/js/pp-nav.js"></script>
+  </body>
+</html>
