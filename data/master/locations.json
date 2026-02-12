@@ -22,7 +22,15 @@
             "hi": "सबसे लोकप्रिय तीर्थ स्थल"
           },
           "tags": ["temple", "shiv", "jyotirlinga"],
+"images": [
+  "assets/images/varanasi/kashi-viswanath/0.jpg",
+  "assets/images/varanasi/kashi-viswanath/1.jpg",
+  "assets/images/varanasi/kashi-viswanath/2.jpg",
+  "assets/images/varanasi/kashi-viswanath/3.jpg",
+  "assets/images/varanasi/kashi-viswanath/4.jpg",
+  "assets/images/varanasi/kashi-viswanath/5.jpg"
 
+],
           "description": {
             "en": "One of the 12 Jyotirlingas of Lord Shiva.",
             "hi": "भगवान शिव के 12 ज्योतिर्लिंगों में से एक।"
