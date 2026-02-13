@@ -6,6 +6,19 @@
       "featuredRank": 1,
       "featuredNote": { "en": "Most requested in Kashi.", "hi": "काशी में सबसे अधिक मांग।" },
       "title": { "en": "Rudrabhishek", "hi": "रुद्राभिषेक" }
+    },
+    {
+      "id": "vivaha",
+      "featured": true,
+      "featuredRank": 2,
+      "featuredNote": { 
+        "en": "Sacred Hindu wedding ceremony.", 
+        "hi": "पवित्र हिंदू विवाह संस्कार।" 
+      },
+      "title": { 
+        "en": "Vivaha (Wedding Ceremony)", 
+        "hi": "विवाह" 
+      }
     }
   ]
 }

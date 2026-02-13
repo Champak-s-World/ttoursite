@@ -2,17 +2,73 @@
   "kathas": [
     {
       "id": "ramkatha",
-      "title": { "en": "Shri Ram/ Shyam Katha", "hi": "श्री रामकथा" },
+      "title": { "en": "Shri Ram Katha", "hi": "श्री रामकथा" },
       "summary": { "en": "7-day Ramkatha by renowned kathavachaks.", "hi": "प्रसिद्ध वक्ताओं द्वारा 7 दिवसीय रामकथा।" },
       "description": { "en": "Stage, sound, travel, and full arrangement available.", "hi": "स्टेज, साउंड, यात्रा, पूर्ण व्यवस्था उपलब्ध।" },
       "kathaType": "ram",
       "durationDays": 7,
       "tags": ["ram", "katha", "ayodhya"],
-      "images": ["assets/images/placeholder/place.svg"],
+      "images": ["assets/images/kathas/ram/0.jpg"],
       "ctaText": { "en": "Arrange Ramkatha", "hi": "रामकथा कराएँ" },
       "whatsappText": { "en": "I want details for arranging Ramkatha.", "hi": "मुझे रामकथा की व्यवस्था की जानकारी चाहिए।" },
       "featured": true,
       "featuredRank": 1
+    },
+    {
+      "id": "bhagwat_katha",
+      "title": { "en": "Shrimad Bhagwat Katha", "hi": "श्रीमद्भागवत कथा" },
+      "summary": { "en": "7-day Shrimad Bhagwat Katha based on Srimad Bhagavatam.", "hi": "भागवत पुराण पर आधारित 7 दिवसीय कथा।" },
+      "description": { "en": "Complete arrangements for Bhagwat Saptah including stage, decoration, sound and prasad.", "hi": "भागवत सप्ताह हेतु स्टेज, सजावट, साउंड और प्रसाद सहित संपूर्ण व्यवस्था।" },
+      "kathaType": "krishna",
+      "durationDays": 7,
+      "tags": ["krishna", "bhagwat", "katha"],
+      "images": ["assets/images/kathas/bhagwat/0.jpg"],
+      "ctaText": { "en": "Arrange Bhagwat Katha", "hi": "भागवत कथा कराएँ" },
+      "whatsappText": { "en": "I want details for arranging Bhagwat Katha.", "hi": "मुझे भागवत कथा की जानकारी चाहिए।" },
+      "featured": true,
+      "featuredRank": 2
+    },
+    {
+      "id": "shiv_mahapuran",
+      "title": { "en": "Shiv Mahapuran Katha", "hi": "शिव महापुराण कथा" },
+      "summary": { "en": "Sacred discourse based on Shiv Mahapuran.", "hi": "शिव महापुराण पर आधारित दिव्य कथा।" },
+      "description": { "en": "Spiritual narration of Lord Shiva's glories and rituals.", "hi": "भगवान शिव की महिमा एवं अनुष्ठानों का वर्णन।" },
+      "kathaType": "shiv",
+      "durationDays": 7,
+      "tags": ["shiv", "mahapuran", "katha"],
+      "images": ["assets/images/kathas/shiv/0.jpg"],
+      "ctaText": { "en": "Arrange Shiv Mahapuran", "hi": "शिव महापुराण कराएँ" },
+      "whatsappText": { "en": "I want details for Shiv Mahapuran Katha.", "hi": "मुझे शिव महापुराण कथा की जानकारी चाहिए।" },
+      "featured": true,
+      "featuredRank": 3
+    },
+    {
+      "id": "devi_bhagwat",
+      "title": { "en": "Devi Bhagwat Katha", "hi": "देवी भागवत कथा" },
+      "summary": { "en": "Divine narration of Goddess Durga's glory.", "hi": "माँ दुर्गा की महिमा का दिव्य वर्णन।" },
+      "description": { "en": "Ideal during Navratri and special Shakti occasions.", "hi": "नवरात्रि एवं विशेष शक्ति पर्वों के लिए उपयुक्त।" },
+      "kathaType": "devi",
+      "durationDays": 7,
+      "tags": ["durga", "shakti", "navratri"],
+      "images": ["assets/images/kathas/devi/0.jpg"],
+      "ctaText": { "en": "Arrange Devi Bhagwat", "hi": "देवी भागवत कराएँ" },
+      "whatsappText": { "en": "I want details for Devi Bhagwat Katha.", "hi": "मुझे देवी भागवत कथा की जानकारी चाहिए।" },
+      "featured": false,
+      "featuredRank": 4
+    },
+    {
+      "id": "sundarkand",
+      "title": { "en": "Sundarkand Path / Katha", "hi": "सुंदरकांड पाठ" },
+      "summary": { "en": "Sacred recitation of Sundarkand from Ramcharitmanas.", "hi": "रामचरितमानस के सुंदरकांड का पाठ।" },
+      "description": { "en": "Conducted for peace, prosperity and removal of obstacles.", "hi": "शांति, समृद्धि और बाधा निवारण हेतु।" },
+      "kathaType": "ram",
+      "durationDays": 1,
+      "tags": ["hanuman", "ram", "sundarkand"],
+      "images": ["assets/images/kathas/sundarkand/0.jpg"],
+      "ctaText": { "en": "Arrange Sundarkand", "hi": "सुंदरकांड कराएँ" },
+      "whatsappText": { "en": "I want Sundarkand Path arrangement.", "hi": "मुझे सुंदरकांड पाठ की व्यवस्था चाहिए।" },
+      "featured": false,
+      "featuredRank": 5
     }
   ]
 }
