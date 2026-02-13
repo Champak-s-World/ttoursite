@@ -1,28 +1,66 @@
 {
   "occasions": [
-     {
+    {
       "id": "today",
       "title": { "en": "Today", "hi": "महाशिवरात्रि" },
-      "dateRule": { "type": "fixed", "month": 2, "day": 10 },
-      "summary": { "en": "Today.", "hi": "शिव उपासना का महापर्व।" },
-      "description": { "en": "Rudrabhishek, jaap, and special puja arrangements.", "hi": "रुद्राभिषेक, जाप और विशेष पूजन व्यवस्था।" },
+      "dateRule": { "type": "fixed", "month": 2, "day": 15 },
+      "summary": {
+        "en": "Special Shiva worship and Rudrabhishek.",
+        "hi": "शिव उपासना का महापर्व।"
+      },
+      "description": {
+        "en": "Rudrabhishek, chanting, and special puja arrangements.",
+        "hi": "रुद्राभिषेक, जाप और विशेष पूजन व्यवस्था।"
+      },
       "tags": ["shiv", "festival", "fasting", "puja"],
       "images": ["assets/images/placeholder/place.svg"],
       "ctaText": { "en": "Book Shivratri Service", "hi": "शिवरात्रि सेवा बुक करें" },
-      "whatsappText": { "en": "I want Shivratri puja arrangements.", "hi": "मुझे शिवरात्रि पूजा की व्यवस्था चाहिए।" },
+      "whatsappText": {
+        "en": "I want Shivratri puja arrangements.",
+        "hi": "मुझे शिवरात्रि पूजा की व्यवस्था चाहिए।"
+      },
       "featured": true,
       "featuredRank": 1
     },
+
     {
       "id": "mahashivratri",
       "title": { "en": "Maha Shivratri", "hi": "महाशिवरात्रि" },
-      "dateRule": { "type": "fixed", "month": 2, "day": 18 },
-      "summary": { "en": "Auspicious day for Shiva worship.", "hi": "शिव उपासना का महापर्व।" },
-      "description": { "en": "Rudrabhishek, jaap, and special puja arrangements.", "hi": "रुद्राभिषेक, जाप और विशेष पूजन व्यवस्था।" },
-      "tags": ["shiv", "festival", "fasting", "puja"],
-      "images": ["assets/images/placeholder/place.svg"],
-      "ctaText": { "en": "Book Shivratri Service", "hi": "शिवरात्रि सेवा बुक करें" },
-      "whatsappText": { "en": "I want Shivratri puja arrangements.", "hi": "मुझे शिवरात्रि पूजा की व्यवस्था चाहिए।" },
+      "dateRule": { "type": "fixed", "month": 2, "day": 15 },
+
+      "summary": {
+        "en": "Grand Maha Rudrabhishek in Kashi with night vigil and bhajan program.",
+        "hi": "काशी में विशेष महारुद्राभिषेक एवं रात्रि जागरण कार्यक्रम।"
+      },
+
+      "description": {
+        "en": "On the sacred occasion of Maha Shivratri, perform special Maha Rudrabhishek in the holy city of Lord Shiva – Kashi. This powerful ritual removes sorrow and poverty, and brings peace, prosperity, wealth and good health. For the first time, learned Vedic scholars will perform Rudrabhishek in all four prahars (night phases) using sacred materials: milk for knowledge, honey for healing, sugarcane juice for prosperity, kush water for disease removal, sweetened curd for strength, and Ganga jal for liberation. The event concludes with night vigil (Jaagran) and devotional bhajan evening.",
+        "hi": "महाशिवरात्रि के पावन अवसर पर आशुतोष, पापनाशक भगवान महादेव की नगरी काशी में विशेष महारुद्राभिषेक का आयोजन किया जाएगा। अपने कल्याण के लिए महारुद्राभिषेक करवाएं, जो आपके सभी दुख-दरिद्रता को दूर कर सुख, शांति, धन और आरोग्यता प्रदान करेगा। पहली बार चारों वेदों के विद्वान वैदिक ब्राह्मण चारों प्रहर में रुद्राभिषेक करेंगे। रुद्राभिषेक निम्नलिखित सामग्रियों से किया जाएगा — दुग्ध से ज्ञान प्राप्ति हेतु, मधु (शहद) से मधुमेह निवारण हेतु, गन्ने के रस से धन-वैभव हेतु, कुशा के जल से रोग निवारण हेतु, खांड मिश्रित दधि से बल-वृद्धि हेतु, तथा गंगाजल से मोक्ष प्राप्ति हेतु। रात्रि जागरण एवं भजन संध्या कार्यक्रम के साथ आयोजन सम्पन्न होगा।"
+      },
+
+      "tags": [
+        "shiv",
+        "mahashivratri",
+        "rudrabhishek",
+        "kashi",
+        "festival",
+        "vedic"
+      ],
+
+      "images": [
+        "assets/images/placeholder/place.svg"
+      ],
+
+      "ctaText": {
+        "en": "Book Maha Rudrabhishek",
+        "hi": "महारुद्राभिषेक बुक करें"
+      },
+
+      "whatsappText": {
+        "en": "I want to book Maha Rudrabhishek for Maha Shivratri in Kashi.",
+        "hi": "मैं काशी में महाशिवरात्रि के लिए महारुद्राभिषेक बुक करना चाहता/चाहती हूँ।"
+      },
+
       "featured": true,
       "featuredRank": 1
     }
