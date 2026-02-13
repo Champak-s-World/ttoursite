@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en" data-theme="saffron">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#d97706" />
+  <title>Theme + Mobile Menu Test</title>
+
+  <style>
+    /* =========================
+       THEME TOKENS
+       ========================= */
+    :root{
+      --bg-0:#fff7e6; --bg-1:#fff1d6;
+      --card:rgba(255,255,255,.90);
+      --text:#1f2937; --muted:#6b7280;
+      --border:rgba(31,41,55,.12);
+      --brand:#d97706; --brand2:#f59e0b;
+      --shadow: 0 16px 40px rgba(17,24,39,.10);
+      --ring: 0 0 0 4px rgba(245,158,11,.18);
+    }
+
+    html[data-theme="saffron"]{
+      --bg-0:#fff7e6; --bg-1:#fff1d6;
+      --card:rgba(255,255,255,.90);
+      --text:#1f2937; --muted:#6b7280;
+      --border:rgba(31,41,55,.12);
+      --brand:#d97706; --brand2:#f59e0b;
+      --shadow: 0 16px 40px rgba(17,24,39,.10);
+      --ring: 0 0 0 4px rgba(245,158,11,.18);
+    }
+
+    html[data-theme="midnight"]{
+      --bg-0:#0b1220; --bg-1:#0f1b33;
+      --card:rgba(17,24,39,.78);
+      --text:#e5e7eb; --muted:#9ca3af;
+      --border:rgba(255,255,255,.10);
+      --brand:#f59e0b; --brand2:#fb923c;
+      --shadow: 0 18px 60px rgba(0,0,0,.40);
+      --ring: 0 0 0 4px rgba(245,158,11,.22);
+    }
+
+    html[data-theme="mint"]{
+      --bg-0:#ecfdf5; --bg-1:#d1fae5;
+      --card:rgba(255,255,255,.88);
+      --text:#064e3b; --muted:#0f766e;
+      --border:rgba(6,78,59,.14);
+      --brand:#059669; --brand2:#10b981;
+      --shadow: 0 16px 44px rgba(6,78,59,.12);
+      --ring: 0 0 0 4px rgba(16,185,129,.20);
+    }
+
+    /* =========================
+       PAGE BASE
+       ========================= */
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 520px at 10% 0%, color-mix(in srgb, var(--brand2) 28%, transparent), transparent 60%),
+        radial-gradient(900px 420px at 90% 20%, color-mix(in srgb, var(--brand) 22%, transparent), transparent 62%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      min-height: 100vh;
+    }
+
+    .wrap{ max-width: 1100px; margin: 0 auto; padding: 18px; }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .muted{ color: var(--muted); }
+
+    /* =========================
+       HEADER / NAV (simple but close to your structure)
+       ========================= */
+    .pp-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: color-mix(in srgb, var(--card) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .pp-nav__inner{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .pp-brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--text);
+    }
+    .pp-brand__logo{
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 22%, transparent), transparent);
+      font-size: 20px;
+    }
+    .pp-brand__name{ font-weight: 900; letter-spacing: .2px; }
+    .pp-brand__tag{ font-size: 12px; color: var(--muted); margin-top:2px; }
+
+    .pp-nav__right{ display:flex; align-items:center; gap: 10px; }
+
+    .pp-links{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+
+    .pp-link{
+      text-decoration:none;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: transform .12s ease, border-color .12s ease;
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .pp-link:hover{
+      border-color: var(--border);
+      transform: translateY(-1px);
+      color: var(--brand);
+    }
+
+    .pp-navbtn{
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 800;
+      box-shadow: 0 6px 16px rgba(0,0,0,.06);
+    }
+    .pp-navbtn:focus{ outline:none; box-shadow: var(--ring); }
+
+    .pp-burger{ font-size: 16px; padding: 8px 12px; }
+
+    /* hide desktop links on small screens */
+    @media (max-width: 860px){
+      .pp-links{ display:none; }
+    }
+
+    /* =========================
+       MOBILE DRAWER
+       ========================= */
+    .pp-mobile{ position: fixed; inset: 0; z-index: 999999; }
+    .pp-mobile__backdrop{
+      position:absolute; inset:0;
+      background: rgba(0,0,0,.35);
+    }
+    .pp-mobile__panel{
+      position:absolute; right: 10px; top: 10px;
+      width: min(92vw, 380px);
+      max-height: calc(100vh - 20px);
+      overflow:auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      padding: 12px;
+    }
+    .pp-mobile__top{
+      display:flex; align-items:center; gap:10px;
+      position: sticky; top: 0;
+      background: var(--card);
+      padding: 6px 2px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pp-mobile__title{ font-weight: 900; margin-right:auto; }
+    .pp-mobile__links{
+      display:flex; flex-direction:column;
+      gap: 6px;
+      padding: 10px 2px;
+    }
+    .pp-mobile__links .pp-link{
+      border-radius: 14px;
+      padding: 10px 12px;
+      border-color: transparent;
+    }
+
+    .pp-theme-select{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--card) 92%, transparent);
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    /* demo chips */
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--brand2) 10%, var(--card));
+      font-weight: 800;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="pp-nav" id="ppHeader">
+    <div class="pp-nav__inner">
+      <a class="pp-brand" href="#" style="text-decoration:none">
+        <div class="pp-brand__logo">ॐ</div>
+        <div class="pp-brand__text">
+          <div class="pp-brand__name">Spiritual Tours</div>
+          <div class="pp-brand__tag">Routes • Rituals • Kathas • Calendar</div>
+        </div>
+      </a>
+
+      <div class="pp-nav__right">
+        <nav class="pp-links" id="ppNavLinks" aria-label="Primary">
+          <a class="pp-link" href="#">Home</a>
+          <a class="pp-link" href="#">Routes</a>
+          <a class="pp-link" href="#">Route Map</a>
+          <a class="pp-link" href="#">Calendar</a>
+          <a class="pp-link" href="#">Tours</a>
+          <a class="pp-link" href="#">Kathas</a>
+          <a class="pp-link" href="#">Admin</a>
+        </nav>
+
+        <!-- Always visible theme cycle button -->
+        <button class="pp-navbtn" type="button" id="ppThemeBtn" aria-label="Theme">🔶</button>
+
+        <button class="pp-navbtn" type="button">HI</button>
+        <button class="pp-navbtn pp-burger" type="button" id="ppBurger"
+          aria-label="Menu" aria-expanded="false" aria-controls="ppMobileMenu">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="pp-mobile" id="ppMobileMenu" hidden>
+      <div class="pp-mobile__panel" role="dialog" aria-label="Menu">
+        <div class="pp-mobile__top">
+          <div class="pp-mobile__title">Menu</div>
+
+          <select id="ppThemeSelectMobile" class="pp-theme-select" aria-label="Theme">
+            <option value="saffron">🔶 Saffron</option>
+            <option value="midnight">🌙 Midnight</option>
+            <option value="mint">🌿 Mint</option>
+          </select>
+
+          <button class="pp-navbtn" type="button" id="ppCloseMobile" aria-label="Close">✕</button>
+        </div>
+
+        <div class="pp-mobile__links">
+          <a class="pp-link" href="#">Home</a>
+          <a class="pp-link" href="#">Routes</a>
+          <a class="pp-link" href="#">Route Map</a>
+          <a class="pp-link" href="#">Calendar</a>
+          <a class="pp-link" href="#">Tours</a>
+          <a class="pp-link" href="#">Kathas</a>
+          <a class="pp-link" href="#">Admin</a>
+        </div>
+      </div>
+      <div class="pp-mobile__backdrop" id="ppMobileBackdrop" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="wrap">
+    <div class="card">
+      <h2 style="margin:0 0 6px 0;">Theme + Mobile Menu Test</h2>
+      <div class="muted">Try: (1) Click 🔶 button to cycle themes. (2) Open ☰ menu on mobile and use the dropdown.</div>
+      <div style="height:12px"></div>
+      <div class="chip">Current theme: <span id="curThemeText">saffron</span></div>
+
+      <div style="height:16px"></div>
+      <div class="muted">
+        If this works here, we’ll integrate the same logic into your real <code>pp-nav.css</code> + your existing burger JS.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      "use strict";
+
+      const KEY = "pp_theme";
+      const THEMES = ["saffron","midnight","mint"];
+      const ICON = { saffron:"🔶", midnight:"🌙", mint:"🌿" };
+
+      const $ = (id)=>document.getElementById(id);
+
+      const themeBtn = $("ppThemeBtn");
+      const themeSelM = $("ppThemeSelectMobile");
+      const curThemeText = $("curThemeText");
+
+      function setMetaThemeColor(hex){
+        const m = document.querySelector('meta[name="theme-color"]');
+        if(m) m.setAttribute("content", hex);
+      }
+      function themeToColor(t){
+        if(t==="midnight") return "#0b1220";
+        if(t==="mint") return "#059669";
+        return "#d97706";
+      }
+
+      function applyTheme(t){
+        const theme = THEMES.includes(t) ? t : "saffron";
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem(KEY, theme);
+        if(themeBtn) themeBtn.textContent = ICON[theme] || "🔶";
+        if(themeSelM) themeSelM.value = theme;
+        if(curThemeText) curThemeText.textContent = theme;
+        setMetaThemeColor(themeToColor(theme));
+      }
+
+      // Load saved theme
+      applyTheme(localStorage.getItem(KEY) || "saffron");
+
+      // Cycle theme from button
+      if(themeBtn){
+        themeBtn.addEventListener("click", ()=>{
+          const cur = document.documentElement.getAttribute("data-theme") || "saffron";
+          const idx = THEMES.indexOf(cur);
+          applyTheme(THEMES[(idx+1) % THEMES.length]);
+        });
+      }
+
+      // Mobile select change
+      if(themeSelM){
+        themeSelM.addEventListener("change", (e)=> applyTheme(e.target.value));
+      }
+
+      // Mobile drawer
+      const burger = $("ppBurger");
+      const drawer = $("ppMobileMenu");
+      const closeBtn = $("ppCloseMobile");
+      const backdrop = $("ppMobileBackdrop");
+
+      function openDrawer(){
+        if(!drawer) return;
+        drawer.hidden = false;
+        if(burger) burger.setAttribute("aria-expanded","true");
+      }
+      function closeDrawer(){
+        if(!drawer) return;
+        drawer.hidden = true;
+        if(burger) burger.setAttribute("aria-expanded","false");
+      }
+
+      if(burger) burger.addEventListener("click", ()=>{
+        if(!drawer) return;
+        drawer.hidden ? openDrawer() : closeDrawer();
+      });
+      if(closeBtn) closeBtn.addEventListener("click", closeDrawer);
+      if(backdrop) backdrop.addEventListener("click", closeDrawer);
+      document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeDrawer(); });
+    })();
+  </script>
+</body>
+</html>

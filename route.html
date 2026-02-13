@@ -54,6 +54,50 @@
         flex-wrap: wrap;
         align-items: flex-end;
       }
+      /* ===== Leaflet: ensure custom circular markers look correct ===== */
+
+/* If you use L.divIcon for circles */
+.leaflet-div-icon{
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Our circular marker (use this class in your divIcon HTML) */
+.rm-pin,
+.rm-circle,
+.route-pin,
+.route-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 1000;
+  font-size: 14px;
+  line-height: 1;
+  color: #fff;
+
+  background: var(--brand);
+  border: 2px solid rgba(255,255,255,.95);
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+
+  transform: translate(-50%, -50%); /* helps if positioned at latlng center */
+}
+
+/* If you draw circleMarker (SVG), force visible styling */
+.leaflet-interactive{
+  stroke: var(--brand) !important;
+  fill: color-mix(in srgb, var(--brand2) 45%, transparent) !important;
+  stroke-width: 3 !important;
+  fill-opacity: .55 !important;
+}
+
+/* Prevent theme transitions from glitching Leaflet layers */
+html.theme-animate .leaflet-container *,
+html.theme-animate .leaflet-container{
+  transition: none !important;
+}
+
     </style>
   </head>
 
@@ -174,6 +218,8 @@
     <!-- Includes -->
     <script src="assets/js/includes.js"></script>
     <script src="assets/js/pp-nav.js"></script>
+    <script src="assets/js/pp-theme.js"></script>
+
 
     <!-- Leaflet -->
     <script
@@ -192,5 +238,35 @@
 
     <!-- NEW: combined editor + map -->
     <script src="assets/js/route-editor.js"></script>
+    <script>
+(function(){
+  // Tries to find a Leaflet map instance exposed as window.map / window.rmMap / window._map
+  function getAnyMap(){
+    return window.rmMap || window.map || window._map || null;
+  }
+
+  function invalidate(){
+    const m = getAnyMap();
+    if (m && typeof m.invalidateSize === "function") {
+      m.invalidateSize(true);
+    }
+  }
+
+  // After initial render + includes injection + any fonts/layout settle
+  window.addEventListener("load", () => setTimeout(invalidate, 250));
+  window.addEventListener("resize", () => setTimeout(invalidate, 120));
+
+  // When burger opens (your header uses data-pp-burger)
+  document.addEventListener("click", (e)=>{
+    if (e.target.closest("[data-pp-burger], .pp-burger")) {
+      setTimeout(invalidate, 250);
+    }
+    if (e.target.closest("#ppThemeBtn")) {
+      setTimeout(invalidate, 250);
+    }
+  });
+})();
+</script>
+
   </body>
 </html>

@@ -1,6 +1,9 @@
-
 :root{
-  --bg:#fff7e6;
+  /* base tokens (saffron defaults) */
+  --bg-0:#fff7e6;
+  --bg-1:#fff1d6;
+
+  --bg:#fff7e6; /* kept for backward compatibility */
   --card:rgba(255,255,255,.88);
   --text:#1f2937;
   --muted:#6b7280;
@@ -9,16 +12,20 @@
   --border:rgba(31,41,55,.14);
   --shadow: 0 12px 30px rgba(31,41,55,.10);
   --r:18px;
+
+  --ring: 0 0 0 4px rgba(245,158,11,.18);
 }
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+
+/* THEME-AWARE PAGE BACKGROUND */
 body{
   color:var(--text);
   background:
-    radial-gradient(1200px 600px at 20% -10%, rgba(217,119,6,.25), transparent 60%),
-    radial-gradient(900px 500px at 90% 0%, rgba(180,83,9,.18), transparent 55%),
-    linear-gradient(180deg, #fffaf2, var(--bg));
+    radial-gradient(1200px 600px at 20% -10%, color-mix(in srgb, var(--brand) 24%, transparent), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, color-mix(in srgb, var(--brand2) 18%, transparent), transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-0) 96%, #fff), var(--bg-1));
 }
 
 .pp-container{max-width:1100px;margin:0 auto;padding:16px}
@@ -26,7 +33,7 @@ body{
 .pp-top{
   position:sticky;top:0;z-index:50;
   backdrop-filter: blur(10px);
-  background:rgba(255,247,230,.75);
+  background:color-mix(in srgb, var(--card) 85%, transparent);
   border-bottom:1px solid var(--border);
 }
 .pp-top-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -48,9 +55,9 @@ body{
   border:1px solid transparent;
   font-weight:900;
 }
-.pp-nav a:hover{border-color:var(--border);background:rgba(255,255,255,.6)}
+.pp-nav a:hover{border-color:var(--border);background:color-mix(in srgb, var(--card) 70%, transparent)}
 
-.pp-foot{margin-top:26px;border-top:1px solid var(--border);background:rgba(255,255,255,.5)}
+.pp-foot{margin-top:26px;border-top:1px solid var(--border);background:color-mix(in srgb, var(--card) 70%, transparent)}
 .pp-foot-inner{padding:14px 16px}
 
 .pp-card{
@@ -76,20 +83,23 @@ body{
   text-decoration:none;display:inline-flex;align-items:center;gap:8px;
 }
 .pp-btn--ghost{
-  background:rgba(255,255,255,.6);
+  background:color-mix(in srgb, var(--card) 70%, transparent);
   color:var(--text);
   border:1px solid var(--border);
 }
 .pp-btn:disabled{opacity:.5;cursor:not-allowed}
+.pp-btn:focus{ outline:none; box-shadow: var(--ring); }
 
 .pp-input{
   border:1px solid var(--border);
   border-radius:14px;
   padding:10px 12px;
-  background:rgba(255,255,255,.75);
+  background:color-mix(in srgb, var(--card) 78%, transparent);
   font-weight:900;
   outline:none;
+  color: var(--text);
 }
+.pp-input:focus{ box-shadow: var(--ring); }
 
 .pp-grid{
   display:grid;
@@ -102,74 +112,160 @@ body{
 .pp-pill{
   display:inline-flex;padding:6px 10px;border-radius:999px;
   border:1px solid var(--border);
-  background:rgba(255,255,255,.55);
+  background:color-mix(in srgb, var(--card) 65%, transparent);
   font-weight:900;font-size:12px;
 }
 
 .pp-split{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-end}
 
-assets/css/popout.css
+/* ==============================
+   THEME SYSTEM (3 themes)
+   ============================== */
 
-.pp-pop{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.45);
-  display:none;
-  z-index:9999;
-}
-.pp-pop.open{display:block}
-.pp-pop-panel{
-  width:min(980px, 94vw);
-  margin:4vh auto;
-  background:rgba(255,255,255,.92);
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,.25);
-}
-.pp-pop-body{padding:16px}
-.pp-x{
-  width:42px;height:42px;border-radius:999px;
-  border:1px solid rgba(31,41,55,.18);
-  background:rgba(255,255,255,.7);
-  font-weight:1000;cursor:pointer;
+html { color-scheme: light; }
+html[data-theme="midnight"]{ color-scheme: dark; }
+
+html[data-theme="saffron"]{
+  --bg-0:#fff7e6;
+  --bg-1:#fff1d6;
+  --card:rgba(255,255,255,.90);
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:rgba(31,41,55,.12);
+  --brand:#d97706;
+  --brand2:#f59e0b;
+  --shadow: 0 16px 40px rgba(17,24,39,.10);
+  --ring: 0 0 0 4px rgba(245,158,11,.18);
 }
 
-.pp-car-btn{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:44px;height:44px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.45);
-  background:rgba(0,0,0,.35);
-  color:#fff;font-weight:1000;cursor:pointer;
-}
-.pp-car-left{left:10px}
-.pp-car-right{right:10px}
-
-.pp-car-dots{
-  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
-  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
-}
-.pp-car-dot{
-  width:10px;height:10px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.7);
-  background:rgba(255,255,255,.35);
-  cursor:pointer;
-}
-.pp-car-dot.on{background:rgba(255,255,255,.95)}
-
-.pp-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  display: inline-block;
-  border: 2px solid rgba(255,255,255,.9);
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
-  vertical-align: middle;
+html[data-theme="midnight"]{
+  --bg-0:#0b1220;
+  --bg-1:#0f1b33;
+  --card:rgba(17,24,39,.78);
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --border:rgba(255,255,255,.10);
+  --brand:#f59e0b;
+  --brand2:#fb923c;
+  --shadow: 0 18px 60px rgba(0,0,0,.40);
+  --ring: 0 0 0 4px rgba(245,158,11,.22);
 }
 
-.pp-marker {
+html[data-theme="mint"]{
+  --bg-0:#ecfdf5;
+  --bg-1:#d1fae5;
+  --card:rgba(255,255,255,.88);
+  --text:#064e3b;
+  --muted:#0f766e;
+  --border:rgba(6,78,59,.14);
+  --brand:#059669;
+  --brand2:#10b981;
+  --shadow: 0 16px 44px rgba(6,78,59,.12);
+  --ring: 0 0 0 4px rgba(16,185,129,.20);
+}
+
+/* 2) Smooth Theme Transitions (after initial paint) */
+@media (prefers-reduced-motion: no-preference){
+  html.theme-animate, html.theme-animate *{
+    transition:
+      background-color .25s ease,
+      color .25s ease,
+      border-color .25s ease,
+      box-shadow .25s ease,
+      fill .25s ease,
+      stroke .25s ease;
+  }
+}
+/* =========================
+   Leaflet marker circle (Route Map)
+   ========================= */
+
+/* Prevent Leaflet default div icon box */
+.leaflet-div-icon{
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Your custom marker created in route-editor.js */
+.pp-marker{
   width: 18px;
   height: 18px;
   border-radius: 999px;
-  border: 3px solid rgba(255,255,255,.95);
-  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+  border: 2px solid rgba(255,255,255,.95);
+  box-shadow: 0 10px 22px rgba(0,0,0,.28);
+  position: relative;
+}
+
+/* Optional: add a small “glow” ring for visibility on tiles */
+.pp-marker::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:999px;
+  background: radial-gradient(circle, color-mix(in srgb, currentColor 0%, transparent) 0%, transparent 70%);
+  opacity: .0; /* keep off by default */
+}
+
+/* Make sure markers stay crisp even with global transitions */
+html.theme-animate .leaflet-container *,
+html.theme-animate .leaflet-container{
+  transition: none !important;
+}
+.pp-marker{
+  width:26px;height:26px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,.95);
+  box-shadow:0 12px 26px rgba(0,0,0,.30);
+  display:grid;
+  place-items:center;
+}
+.pp-marker__txt{
+  color:#fff;
+  font-weight:1000;
+  font-size:12px;
+  line-height:1;
+  text-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+/* ===================================================
+   AUTO-INVERT MARKERS (Inverse of page background)
+   =================================================== */
+
+/* Remove leaflet default square */
+.leaflet-div-icon{
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Core circular marker */
+.pp-marker{
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+
+  /* Invert entire page color under it */
+  background: transparent !important;
+  backdrop-filter: invert(1);
+  -webkit-backdrop-filter: invert(1);
+
+  border: 2px solid currentColor;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+
+  display: block;
+}
+
+/* Ensure text/icons use opposite contrast */
+.pp-marker,
+.pp-dot{
+  color: var(--text);
+}
+
+/* If using small dot in itinerary list */
+.pp-dot{
+  width:12px;
+  height:12px;
+  border-radius:999px;
+  display:inline-block;
+  border:2px solid currentColor;
+  backdrop-filter: invert(1);
+  -webkit-backdrop-filter: invert(1);
 }

@@ -16,15 +16,22 @@ function getMarkerColor(stop) {
   return cfg[key] || cfg.default || "#7c3aed";
 }
 
-function makeColoredDivIcon(color) {
+function makeColoredDivIcon(color, label) {
+  const text = label != null ? String(label) : "";
+
   return L.divIcon({
-    className: "", // prevent default leaflet styles
-    html: `<div class="pp-marker" style="background:${color}"></div>`,
-    iconSize: [18, 18],
-    iconAnchor: [9, 9],
-    popupAnchor: [0, -10]
+    className: "",
+    html: `
+      <div class="pp-marker">
+        <span class="pp-marker__inner">${text}</span>
+      </div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16]
   });
 }
+
 
 
 
@@ -273,7 +280,8 @@ map = L.map(el).setView([lat, lng], zoom);
      it.forEach((p, i) => {
   const title = `${i + 1}. ${p.name || p.id}`;
   const color = getMarkerColor(p);
-  const icon = makeColoredDivIcon(color);
+  const icon = makeColoredDivIcon(color, i + 1);
+
 
   const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
 

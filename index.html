@@ -3,33 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#d97706" />
     <title>Home</title>
 
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/popout.css" />
     <link rel="stylesheet" href="assets/css/pp-nav.css" />
+
     <style>
-      /* ---- home-only polish (light saffron) ---- */
+      /* ---- home-only polish (theme-aware) ---- */
       .hp-hero {
         margin-top: 12px;
-        border: 1px solid rgba(31, 41, 55, 0.12);
+        border: 1px solid var(--border);
         border-radius: 22px;
         overflow: hidden;
         background:
           radial-gradient(
             1200px 500px at 10% 0%,
-            rgba(245, 158, 11, 0.28),
+            color-mix(in srgb, var(--brand2) 28%, transparent),
             transparent 60%
           ),
           radial-gradient(
             900px 420px at 90% 20%,
-            rgba(217, 119, 6, 0.2),
+            color-mix(in srgb, var(--brand) 20%, transparent),
             transparent 58%
           ),
           linear-gradient(
             145deg,
-            rgba(255, 247, 230, 0.95),
-            rgba(255, 241, 214, 0.82)
+            color-mix(in srgb, var(--bg-0) 95%, transparent),
+            color-mix(in srgb, var(--bg-1) 82%, transparent)
           );
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
         position: relative;
@@ -59,8 +61,8 @@
         gap: 8px;
         padding: 8px 10px;
         border-radius: 999px;
-        border: 1px solid rgba(31, 41, 55, 0.12);
-        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--card) 70%, transparent);
         font-weight: 900;
         font-size: 12px;
       }
@@ -83,9 +85,9 @@
         }
       }
       .hp-panel {
-        border: 1px solid rgba(31, 41, 55, 0.12);
+        border: 1px solid var(--border);
         border-radius: 20px;
-        background: rgba(255, 255, 255, 0.72);
+        background: color-mix(in srgb, var(--card) 72%, transparent);
         padding: 14px;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
       }
@@ -101,8 +103,8 @@
         align-items: center;
         padding: 8px 10px;
         border-radius: 999px;
-        background: rgba(0, 0, 0, 0.03);
-        border: 1px solid rgba(31, 41, 55, 0.1);
+        background: color-mix(in srgb, var(--card) 60%, transparent);
+        border: 1px solid var(--border);
         font-weight: 1000;
       }
       .hp-searchRow {
@@ -121,9 +123,9 @@
         gap: 10px;
       }
       .hp-item {
-        border: 1px solid rgba(31, 41, 55, 0.12);
+        border: 1px solid var(--border);
         border-radius: 18px;
-        background: rgba(255, 255, 255, 0.86);
+        background: color-mix(in srgb, var(--card) 86%, transparent);
         overflow: hidden;
       }
       .hp-item .top {
@@ -136,7 +138,7 @@
         width: 56px;
         height: 56px;
         border-radius: 14px;
-        background: rgba(0, 0, 0, 0.03);
+        background: color-mix(in srgb, var(--card) 60%, transparent);
         flex: 0 0 auto;
         display: grid;
         place-items: center;
@@ -187,7 +189,7 @@
       }
       .hp-divider {
         height: 1px;
-        background: rgba(31, 41, 55, 0.1);
+        background: color-mix(in srgb, var(--border) 75%, transparent);
         margin: 12px 0;
       }
       .hp-footnote {
@@ -257,6 +259,7 @@
         </div>
 
         <div
+          class="ppc-slide"
           data-kicker="City of Light • Varanasi"
           data-title="Begin Your Journey to Kashi Vishwanath"
           data-sub="Plan temple visit, Ganga snan, and evening aarti in one seamless route."
@@ -486,7 +489,6 @@
     <!-- Core -->
     <script src="assets/js/includes.js"></script>
     <script src="assets/js/pp-nav.js"></script>
-
     <script src="assets/js/site-config.js"></script>
     <script src="assets/js/lang.js"></script>
 
@@ -498,11 +500,12 @@
     <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
     <script src="assets/js/pp-carousel.js"></script>
 
+    <!-- Your existing page logic (UNCHANGED) -->
     <script>
       (function () {
         const LOC_PATH = "data/master/locations.json";
         const OCC_PATH = "data/master/occasions.json";
-        const STORE_KEY = "pp_tour_maker_v1"; // keep consistent with your routes system
+        const STORE_KEY = "pp_tour_maker_v1";
 
         const $ = (id) => document.getElementById(id);
         const pad2 = (n) => String(n).padStart(2, "0");
@@ -576,7 +579,6 @@
         function norm(s) {
           return (s || "").toString().trim().toLowerCase();
         }
-
         function pill(tag) {
           return `<span class="pp-pill">${tag}</span>`;
         }
@@ -594,8 +596,7 @@
               WhatsApp</a>`
                 : ""
             }
-          </div>
-        `;
+          </div>`;
           const html = document.createElement("div");
           html.className = "hp-item";
           html.innerHTML = `
@@ -607,11 +608,8 @@
               <div class="chips">${tagHtml}</div>
             </div>
           </div>
-          ${btns}
-        `;
-          if (onAdd) {
-            html.querySelector('[data-add="1"]').onclick = onAdd;
-          }
+          ${btns}`;
+          if (onAdd) html.querySelector('[data-add="1"]').onclick = onAdd;
           return html;
         }
 
@@ -625,6 +623,7 @@
         function saveIt(obj) {
           localStorage.setItem(STORE_KEY, JSON.stringify(obj));
         }
+
         function addToItinerary(place) {
           const db = loadIt();
           db.itinerary = Array.isArray(db.itinerary) ? db.itinerary : [];
@@ -656,12 +655,11 @@
             (o.dates || []).includes(todayISO),
           );
           const monthList = (OCC?.occasions || [])
-            .filter((o) => {
-              const ds = o.dates || [];
-              return ds.some(
+            .filter((o) =>
+              (o.dates || []).some(
                 (x) => x && x.startsWith(`${year}-${pad2(month)}-`),
-              );
-            })
+              ),
+            )
             .slice(0, 6);
 
           const hi = PP_LANG.getLang() === "hi";
@@ -801,7 +799,6 @@
           const stEl = $("ssStatus");
 
           function matchText(obj) {
-            // match both langs regardless of current lang
             if (!obj) return "";
             if (typeof obj === "string") return obj;
             return `${obj.en || ""} ${obj.hi || ""}`.trim();
@@ -829,9 +826,8 @@
                   const hay = norm(
                     `${c.id} ${matchText(p.name)} ${matchText(p.description)} ${(p.tags || []).join(" ")}`,
                   );
-                  if (hay.includes(q)) {
+                  if (hay.includes(q))
                     hits.push({ kind: "place", city: c, place: p });
-                  }
                 });
               });
             }
@@ -841,9 +837,7 @@
                 const hay = norm(
                   `${o.id} ${matchText(o.title)} ${matchText(o.summary)} ${matchText(o.description)} ${(o.tags || []).join(" ")} ${(o.dates || []).join(" ")}`,
                 );
-                if (hay.includes(q)) {
-                  hits.push({ kind: "occasion", occ: o });
-                }
+                if (hay.includes(q)) hits.push({ kind: "occasion", occ: o });
               });
             }
 
@@ -854,7 +848,6 @@
                   : "No results";
               return;
             }
-
             stEl.textContent =
               PP_LANG.getLang() === "hi"
                 ? `${hits.length} परिणाम`
@@ -878,6 +871,7 @@
                   lng: p.lng,
                   meta: { cityId: c.id, placeId: p.id },
                 };
+
                 resEl.appendChild(
                   card({
                     type: "Place",
@@ -907,6 +901,7 @@
                     ? o.images[0]
                     : "assets/images/placeholder/place.svg";
                 const tags = o.tags || [];
+
                 resEl.appendChild(
                   card({
                     type: "Occasion",
@@ -939,7 +934,6 @@
           });
 
           window.addEventListener("pp:langchange", () => {
-            // re-render texts and rerun search if query exists
             setLangTexts();
             renderHighlights();
             citySpotlight();
@@ -948,7 +942,6 @@
         }
 
         async function init() {
-          // Toggle
           const btn = $("ppLangBtn");
           btn.onclick = () =>
             PP_LANG.setLang(PP_LANG.getLang() === "hi" ? "en" : "hi");
@@ -978,6 +971,172 @@
         }
 
         document.addEventListener("DOMContentLoaded", init);
+      })();
+    </script>
+
+    <!-- THEME ENGINE (1,2,3,4) -->
+    <script>
+      (function () {
+        "use strict";
+
+        const KEY = "pp_theme";
+        const THEMES = ["saffron", "midnight", "mint"];
+        const ICON = { saffron: "🔶", midnight: "🌙", mint: "🌿" };
+
+        function nowHour() {
+          try {
+            return new Date().getHours();
+          } catch {
+            return 12;
+          }
+        }
+
+        // 3) Auto-Midnight after 7PM (only if user hasn't chosen theme)
+        function pickDefaultTheme() {
+          const saved = localStorage.getItem(KEY);
+          if (saved && THEMES.includes(saved)) return saved;
+
+          const h = nowHour();
+          if (h >= 19 || h < 6) return "midnight";
+          return "saffron";
+        }
+
+        // 2) Smooth transitions (start after first paint)
+        function enableTransitions() {
+          requestAnimationFrame(() => {
+            document.documentElement.classList.add("theme-animate");
+          });
+        }
+
+        function setMetaThemeColor(theme) {
+          let m = document.querySelector('meta[name="theme-color"]');
+          if (!m) {
+            m = document.createElement("meta");
+            m.setAttribute("name", "theme-color");
+            document.head.appendChild(m);
+          }
+          const color =
+            theme === "midnight"
+              ? "#0b1220"
+              : theme === "mint"
+                ? "#059669"
+                : "#d97706";
+          m.setAttribute("content", color);
+        }
+
+        function applyTheme(theme, persist) {
+          const t = THEMES.includes(theme) ? theme : "saffron";
+          document.documentElement.setAttribute("data-theme", t);
+          if (persist) localStorage.setItem(KEY, t);
+          setMetaThemeColor(t);
+
+          const btn = document.getElementById("ppThemeBtn");
+          if (btn) btn.textContent = ICON[t] || "🔶";
+
+          const sel = document.getElementById("ppThemeSelectMobile");
+          if (sel) sel.value = t;
+        }
+
+        function cycleTheme() {
+          const cur =
+            document.documentElement.getAttribute("data-theme") || "saffron";
+          const idx = THEMES.indexOf(cur);
+          applyTheme(THEMES[(idx + 1) % THEMES.length], true);
+        }
+
+        // 4) Inject dropdown into mobile burger menu (works even if pp-nav.js builds the menu)
+        function ensureMobileThemeDropdown() {
+          const host =
+            document.querySelector(".pp-mobile__panel") ||
+            document.querySelector(".pp-nav__drawer") ||
+            document.querySelector(".pp-nav__sheet") ||
+            document.querySelector(".pp-nav__menu") ||
+            document.querySelector(".pp-nav__mobile") ||
+            document.querySelector("[data-pp-mobilemenu]") ||
+            document.querySelector(".pp-popout") ||
+            document.querySelector(".popout");
+
+          if (!host) return;
+          if (document.getElementById("ppThemeSelectMobile")) return;
+
+          const wrap = document.createElement("div");
+          wrap.style.display = "flex";
+          wrap.style.gap = "10px";
+          wrap.style.alignItems = "center";
+          wrap.style.padding = "10px 12px";
+          wrap.style.borderBottom = "1px solid var(--border)";
+
+          const lbl = document.createElement("div");
+          lbl.textContent = "Theme";
+          lbl.style.fontWeight = "900";
+          lbl.style.color = "var(--muted)";
+
+          const sel = document.createElement("select");
+          sel.id = "ppThemeSelectMobile";
+          sel.className = "pp-theme-select";
+          sel.innerHTML = `
+            <option value="saffron">🔶 Saffron</option>
+            <option value="midnight">🌙 Midnight</option>
+            <option value="mint">🌿 Mint</option>
+          `;
+          sel.addEventListener("change", (e) =>
+            applyTheme(e.target.value, true),
+          );
+
+          wrap.appendChild(lbl);
+          wrap.appendChild(sel);
+
+          host.prepend(wrap);
+          sel.value =
+            document.documentElement.getAttribute("data-theme") || "saffron";
+        }
+
+        function injectSelectStyleOnce() {
+          if (document.getElementById("ppThemeSelectStyle")) return;
+          const s = document.createElement("style");
+          s.id = "ppThemeSelectStyle";
+          s.textContent = `
+            .pp-theme-select{
+              padding: 8px 10px;
+              border-radius: 12px;
+              border: 1px solid var(--border);
+              background: var(--card);
+              color: var(--text);
+              font-weight: 900;
+              max-width: 220px;
+            }
+          `;
+          document.head.appendChild(s);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          injectSelectStyleOnce();
+          enableTransitions();
+
+          // Apply default (auto) theme without persisting (so user can still "choose" later)
+          applyTheme(pickDefaultTheme(), false);
+
+          // If user has already chosen, apply it (no extra write)
+          const saved = localStorage.getItem(KEY);
+          if (saved && THEMES.includes(saved)) applyTheme(saved, false);
+        });
+
+        // Delegated clicks: header is injected via includes.js
+        document.addEventListener("click", (e) => {
+          const tbtn = e.target.closest("#ppThemeBtn");
+          if (tbtn) {
+            cycleTheme();
+            return;
+          }
+
+          const burger = e.target.closest(
+            "[data-pp-burger], .pp-burger, #ppBurger",
+          );
+          if (burger) {
+            setTimeout(ensureMobileThemeDropdown, 60);
+            setTimeout(ensureMobileThemeDropdown, 260);
+          }
+        });
       })();
     </script>
   </body>
