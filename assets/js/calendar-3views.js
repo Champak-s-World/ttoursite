@@ -13,7 +13,9 @@
   };
 
   function t(obj) {
-    return window.PP_LANG?.t ? window.PP_LANG.t(obj) : (typeof obj === "string" ? obj : (obj?.en || obj?.hi || ""));
+    return window.PP_LANG?.t
+      ? window.PP_LANG.t(obj)
+      : (typeof obj === "string" ? obj : (obj?.en || obj?.hi || ""));
   }
 
   function waLink(text) {
@@ -57,6 +59,16 @@
         idx.get(dayISO).push(occ);
       });
     });
+
+    // sort each day list by featuredRank if present
+    idx.forEach((arr) => {
+      arr.sort((a, b) => {
+        const ar = Number(a.featuredRank ?? 999);
+        const br = Number(b.featuredRank ?? 999);
+        return ar - br;
+      });
+    });
+
     return idx;
   }
 
@@ -74,31 +86,41 @@
       const title = t(occ.title) || occ.id;
       const desc = t(occ.description) || t(occ.summary) || "";
       const img = (occ.images && occ.images[0]) ? occ.images[0] : "assets/images/placeholder/place.svg";
-      const tags = (occ.tags || []).slice(0, 8);
+      const tags = (occ.tags || []).slice(0, 10);
+      const featured = !!occ.featured;
+      const fRank = Number(occ.featuredRank ?? 999);
+
       const cta = t(occ.ctaText) || (PP_LANG.getLang() === "hi" ? "व्हाट्सएप करें" : "WhatsApp");
       const msg = (t(occ.whatsappText) || (PP_LANG.getLang() === "hi" ? "मुझे जानकारी चाहिए:" : "I want details for:"))
         + ` ${title} (${dayISO})`;
 
       return `
-        <article class="pp-card"
+        <article class="pp-card pp-occ-card ${featured ? "pp-occ-featured" : ""}"
           data-pp-title="${PP_RENDER?.esc ? PP_RENDER.esc(title) : title}"
           data-pp-desc="${PP_RENDER?.esc ? PP_RENDER.esc(desc) : desc}"
           data-pp-images='${JSON.stringify(occ.images || [])}'
         >
-          <div style="aspect-ratio:16/10;background:rgba(0,0,0,.03)">
-            <img src="${img}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+          <div class="pp-occ-media">
+            <img src="${img}" alt="" class="pp-occ-img">
+            ${featured ? `<div class="pp-occ-ribbon">★ Featured</div>` : ``}
           </div>
-          <div class="pp-pad">
-            <div style="font-weight:1000">${title}</div>
-            <div class="pp-mini" style="margin-top:6px">${dayISO}</div>
 
-            ${tags.length ? `<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <div class="pp-pad">
+            <div class="pp-occ-top">
+              <div style="font-weight:1000">${title}</div>
+              <span class="pp-occ-date">${dayISO}</span>
+            </div>
+
+            ${desc ? `<div class="pp-mini" style="margin-top:8px;line-height:1.5">${desc}</div>` : ""}
+
+            ${tags.length ? `<div class="pp-occ-tags">
               ${tags.map((x)=>`<span class="pp-pill">${x}</span>`).join("")}
             </div>` : ""}
 
             <div class="pp-actions" style="margin-top:12px">
               <a class="pp-btn" target="_blank" rel="noopener" href="${waLink(msg)}">${cta}</a>
               <button class="pp-btn pp-btn--ghost" type="button" data-pp-pop="1">Pop out</button>
+              ${featured ? `<span class="pp-occ-rank">Rank: ${fRank}</span>` : ``}
             </div>
           </div>
         </article>
@@ -111,7 +133,7 @@
   let viewMode = VIEW.WEEK;
 
   let OCC = [];
-  let base = new Date(); // the anchor date for week/month/year
+  let base = new Date(); // anchor date (WEEK = start day)
 
   function viewYear() { return base.getFullYear(); }
   function viewMonth0() { return base.getMonth(); }
@@ -123,68 +145,84 @@
     $("viewMonth").style.display = (mode === VIEW.MONTH) ? "" : "none";
     $("viewYear").style.display = (mode === VIEW.YEAR) ? "" : "none";
 
-    // buttons look
     $("tabWeek").className = "pp-btn" + (mode === VIEW.WEEK ? "" : " pp-btn--ghost");
     $("tabMonth").className = "pp-btn" + (mode === VIEW.MONTH ? "" : " pp-btn--ghost");
-    $("tabYear").className = "pp-btn" + (mode === VIEW.YEAR ? "" : " pp-btn--ghost");
-
-    refresh();
+    $("tabYear").className = "pp-btn" + (mode === VIEW.YEARYEAR ? "" : " pp-btn--ghost");
   }
+
+  // Fix typo-safe: (some pages might have older code)
+  const VIEW_YEAR_ID = "tabYear";
 
   function label() {
     if (viewMode === VIEW.YEAR) return `${viewYear()}`;
     if (viewMode === VIEW.MONTH) return `${monthName(viewMonth0())} ${viewYear()}`;
 
-    // week label: start - end
-    const start = weekStart(base);
+    // ✅ 7 days from base (today-style)
+    const start = startOfDay(base);
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
-    return `Week: ${iso(start.getFullYear(), start.getMonth()+1, start.getDate())} → ${iso(end.getFullYear(), end.getMonth()+1, end.getDate())}`;
+    return `Next 7 days: ${iso(start.getFullYear(), start.getMonth()+1, start.getDate())} → ${iso(end.getFullYear(), end.getMonth()+1, end.getDate())}`;
   }
 
-  function weekStart(d) {
-    // Sunday start
+  function startOfDay(d) {
     const x = new Date(d);
     x.setHours(0,0,0,0);
-    x.setDate(x.getDate() - x.getDay());
     return x;
   }
 
-  // ----- render WEEK -----
+  // ----- render WEEK (7 days from today/base) -----
   function renderWeek(idx) {
     const host = $("weekGrid");
-    const start = weekStart(base);
-    const cells = [];
+    const start = startOfDay(base);
 
+    const cells = [];
     for (let i = 0; i < 7; i++) {
       const day = new Date(start);
       day.setDate(start.getDate() + i);
+
       const dayISO = iso(day.getFullYear(), day.getMonth()+1, day.getDate());
-      const count = (idx.get(dayISO) || []).length;
+      const list = idx.get(dayISO) || [];
+      const count = list.length;
+
+      const chips = list.slice(0, 2).map(o => `<span class="pp-oc-chip">${t(o.title) || o.id}</span>`).join("");
+      const more = count > 2 ? `<span class="pp-oc-chip pp-oc-chip--more">+${count - 2}</span>` : "";
+
+      const isToday = isSameDay(day, new Date());
+      const has = count > 0;
 
       cells.push(`
-        <div class="pp-weekDay" data-iso="${dayISO}">
-          <div class="d">${dowName(day.getDay())} • ${day.getDate()}</div>
+        <div class="pp-weekDay ${has ? "pp-weekDay--has" : ""} ${isToday ? "pp-weekDay--today" : ""}"
+             data-iso="${dayISO}">
+          <div class="pp-weekTop">
+            <div class="d">${dowName(day.getDay())} • ${day.getDate()}</div>
+            ${has ? `<span class="pp-oc-badge">${count}</span>` : `<span class="pp-oc-badge pp-oc-badge--off">0</span>`}
+          </div>
           <div class="meta">${monthName(day.getMonth())} ${day.getFullYear()}</div>
-          <div class="meta">${count ? `🎉 ${count} occasion(s)` : "—"}</div>
+          ${has ? `<div class="pp-oc-chips">${chips}${more}</div>` : `<div class="pp-oc-empty">No occasions</div>`}
         </div>
       `);
     }
 
     host.innerHTML = cells.join("");
+
     host.querySelectorAll("[data-iso]").forEach((el) => {
       el.onclick = () => {
         const dayISO = el.dataset.iso;
         renderDayList(idx.get(dayISO) || [], dayISO);
+
+        host.querySelectorAll(".pp-weekDay").forEach(x => x.classList.remove("pp-weekDay--selected"));
+        el.classList.add("pp-weekDay--selected");
       };
     });
 
-    // auto-select today if in this week
-    const now = new Date();
-    const nowISO = iso(now.getFullYear(), now.getMonth()+1, now.getDate());
-    const pick = host.querySelector(`[data-iso="${nowISO}"]`);
-    if (pick) pick.click();
-    else host.querySelector("[data-iso]")?.click();
+    // auto-select first day (base day)
+    host.querySelector("[data-iso]")?.click();
+  }
+
+  function isSameDay(a, b) {
+    return a.getFullYear() === b.getFullYear()
+      && a.getMonth() === b.getMonth()
+      && a.getDate() === b.getDate();
   }
 
   // ----- render MONTH -----
@@ -192,7 +230,6 @@
     const grid = $("monthGrid");
     grid.innerHTML = "";
 
-    // DOW headers
     ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach((d) => {
       grid.insertAdjacentHTML("beforeend", `<div class="pp-cal-dow">${d}</div>`);
     });
@@ -228,12 +265,17 @@
       }
 
       const dayISO = iso(yy, mm, d);
-      const hasEvent = idx.has(dayISO);
+      const list = idx.get(dayISO) || [];
+      const hasEvent = list.length > 0;
+
+      const today = new Date();
+      const isToday = (yy === today.getFullYear() && (mm-1) === today.getMonth() && d === today.getDate());
 
       grid.insertAdjacentHTML("beforeend", `
-        <div class="pp-cal-cell ${muted ? "pp-cal-muted" : ""}" data-iso="${dayISO}">
+        <div class="pp-cal-cell ${muted ? "pp-cal-muted" : ""} ${isToday ? "pp-cal-today" : ""} ${hasEvent ? "pp-cal-has" : ""}"
+             data-iso="${dayISO}">
           <div class="pp-cal-num">${d}</div>
-          ${hasEvent ? `<span class="pp-cal-dot"></span>` : ""}
+          ${hasEvent ? `<span class="pp-cal-dot"></span><span class="pp-cal-count">${list.length}</span>` : ""}
         </div>
       `);
     }
@@ -247,7 +289,6 @@
       };
     });
 
-    // auto-select today if in view month
     const now = new Date();
     const nowISO = iso(now.getFullYear(), now.getMonth()+1, now.getDate());
     const auto = grid.querySelector(`.pp-cal-cell[data-iso="${nowISO}"]`);
@@ -295,12 +336,13 @@
         }
 
         const dayISO = iso(yy, mm, d);
-        const hasEvent = idx.has(dayISO);
+        const list = idx.get(dayISO) || [];
+        const hasEvent = list.length > 0;
 
         inner += `
-          <div class="cell ${muted ? "muted" : ""}" data-iso="${dayISO}">
+          <div class="cell ${muted ? "muted" : ""} ${hasEvent ? "has" : ""}" data-iso="${dayISO}">
             ${d}
-            ${hasEvent ? `<span class="dot"></span>` : ""}
+            ${hasEvent ? `<span class="dot"></span><span class="count">${list.length}</span>` : ""}
           </div>
         `;
       }
@@ -318,7 +360,6 @@
       };
     });
 
-    // auto-select today
     const now = new Date();
     const nowISO = iso(now.getFullYear(), now.getMonth()+1, now.getDate());
     host.querySelector(`[data-iso="${nowISO}"]`)?.click();
@@ -336,9 +377,24 @@
     else renderYear(idx);
   }
 
+  function setViewMode(mode) {
+    viewMode = mode;
+
+    $("viewWeek").style.display = (mode === VIEW.WEEK) ? "" : "none";
+    $("viewMonth").style.display = (mode === VIEW.MONTH) ? "" : "none";
+    $("viewYear").style.display = (mode === VIEW.YEAR) ? "" : "none";
+
+    $("tabWeek").className = "pp-btn" + (mode === VIEW.WEEK ? "" : " pp-btn--ghost");
+    $("tabMonth").className = "pp-btn" + (mode === VIEW.MONTH ? "" : " pp-btn--ghost");
+    const ty = document.getElementById(VIEW_YEAR_ID);
+    if (ty) ty.className = "pp-btn" + (mode === VIEW.YEAR ? "" : " pp-btn--ghost");
+
+    refresh();
+  }
+
   // ----- navigation -----
   function shiftUnit(delta) {
-    if (viewMode === VIEW.WEEK) base.setDate(base.getDate() + (7 * delta));
+    if (viewMode === VIEW.WEEK) base.setDate(base.getDate() + (7 * delta)); // ✅ 7-days shift
     else if (viewMode === VIEW.MONTH) base.setMonth(base.getMonth() + delta);
     else base.setFullYear(base.getFullYear() + delta);
     refresh();
@@ -350,7 +406,7 @@
   }
 
   function goToday() {
-    base = new Date();
+    base = new Date(); // ✅ week will start from today
     refresh();
   }
 
@@ -375,9 +431,9 @@
 
       OCC = await loadOccasions();
 
-      $("tabWeek").onclick = () => setView(VIEW.WEEK);
-      $("tabMonth").onclick = () => setView(VIEW.MONTH);
-      $("tabYear").onclick = () => setView(VIEW.YEAR);
+      $("tabWeek").onclick = () => setViewMode(VIEW.WEEK);
+      $("tabMonth").onclick = () => setViewMode(VIEW.MONTH);
+      $("tabYear").onclick = () => setViewMode(VIEW.YEAR);
 
       $("prevUnit").onclick = () => shiftUnit(-1);
       $("nextUnit").onclick = () => shiftUnit(1);
@@ -389,8 +445,9 @@
         PP_LANG.setLang(PP_LANG.getLang() === "hi" ? "en" : "hi");
       };
 
-      // default view
-      setView(VIEW.WEEK);
+      // ✅ default view: WEEK starting today
+      base = new Date();
+      setViewMode(VIEW.WEEK);
 
       // initial day list = today
       const now = new Date();
@@ -405,15 +462,17 @@
 
   window.addEventListener("pp:langchange", () => {
     syncLangBtn();
+
     // re-render current selected day list
     const dayISO = ($("dayLabel").textContent || "").trim();
-    if (!dayISO) return;
-    const d = parseISO(dayISO);
-    if (!d) return;
-    const idx = buildIndex(OCC, d.y);
-    renderDayList(idx.get(dayISO) || [], dayISO);
+    if (dayISO) {
+      const d = parseISO(dayISO);
+      if (d) {
+        const idx = buildIndex(OCC, d.y);
+        renderDayList(idx.get(dayISO) || [], dayISO);
+      }
+    }
 
-    // refresh the visible calendar (labels)
     refresh();
   });
 
