@@ -298,13 +298,13 @@
 
       // keep active thumb in view
       const activeThumb = thumbEls[index];
-      if (activeThumb && activeThumb.scrollIntoView) {
-        activeThumb.scrollIntoView({
-          block: "nearest",
-          inline: "nearest",
-          behavior: "smooth",
-        });
-      }
+      // if (activeThumb && activeThumb.scrollIntoView) {
+      //   activeThumb.scrollIntoView({
+      //     block: "nearest",
+      //     inline: "nearest",
+      //     behavior: "smooth",
+      //   });
+      // }
 
       updateCounter();
       ensureYT(index);
