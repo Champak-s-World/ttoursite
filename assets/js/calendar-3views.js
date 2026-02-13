@@ -32,9 +32,20 @@
     return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d];
   }
 
+  function startOfDay(d) {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
+  function isSameDay(a, b) {
+    return a.getFullYear() === b.getFullYear()
+      && a.getMonth() === b.getMonth()
+      && a.getDate() === b.getDate();
+  }
+
   // ----- occasion date resolver -----
   function datesForOccasion(occ, year) {
-    // explicit dates (best for lunar-based festivals)
     if (Array.isArray(occ.dates) && occ.dates.length) {
       return occ.dates
         .map(parseISO)
@@ -43,7 +54,6 @@
         .map(x => iso(x.y, x.m, x.d));
     }
 
-    // fixed date rule
     const dr = occ.dateRule;
     if (dr && dr.type === "fixed" && dr.month && dr.day) {
       return [iso(year, dr.month, dr.day)];
@@ -60,7 +70,6 @@
       });
     });
 
-    // sort each day list by featuredRank if present
     idx.forEach((arr) => {
       arr.sort((a, b) => {
         const ar = Number(a.featuredRank ?? 999);
@@ -70,6 +79,21 @@
     });
 
     return idx;
+  }
+
+  function chipsHTML(list, max = 2) {
+    if (!list || !list.length) return "";
+    const chips = list.slice(0, max).map(o => {
+      const label = t(o.title) || o.id;
+      return `<span class="pp-oc-chip" title="${label}">${label}</span>`;
+    }).join("");
+    const more = list.length > max ? `<span class="pp-oc-chip pp-oc-chip--more">+${list.length - max}</span>` : "";
+    return `<div class="pp-oc-chips">${chips}${more}</div>`;
+  }
+
+  function tooltipText(list) {
+    if (!list || !list.length) return "";
+    return list.map((o, i) => `${i + 1}. ${t(o.title) || o.id}`).join("\n");
   }
 
   // ----- render day list cards -----
@@ -133,44 +157,23 @@
   let viewMode = VIEW.WEEK;
 
   let OCC = [];
-  let base = new Date(); // anchor date (WEEK = start day)
+  let base = new Date(); // anchor (MONTH/YEAR are normal calendars; WEEK is rolling 7)
 
   function viewYear() { return base.getFullYear(); }
   function viewMonth0() { return base.getMonth(); }
-
-  function setView(mode) {
-    viewMode = mode;
-
-    $("viewWeek").style.display = (mode === VIEW.WEEK) ? "" : "none";
-    $("viewMonth").style.display = (mode === VIEW.MONTH) ? "" : "none";
-    $("viewYear").style.display = (mode === VIEW.YEAR) ? "" : "none";
-
-    $("tabWeek").className = "pp-btn" + (mode === VIEW.WEEK ? "" : " pp-btn--ghost");
-    $("tabMonth").className = "pp-btn" + (mode === VIEW.MONTH ? "" : " pp-btn--ghost");
-    $("tabYear").className = "pp-btn" + (mode === VIEW.YEARYEAR ? "" : " pp-btn--ghost");
-  }
-
-  // Fix typo-safe: (some pages might have older code)
-  const VIEW_YEAR_ID = "tabYear";
 
   function label() {
     if (viewMode === VIEW.YEAR) return `${viewYear()}`;
     if (viewMode === VIEW.MONTH) return `${monthName(viewMonth0())} ${viewYear()}`;
 
-    // ✅ 7 days from base (today-style)
+    // WEEK = rolling 7 days from base
     const start = startOfDay(base);
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
     return `Next 7 days: ${iso(start.getFullYear(), start.getMonth()+1, start.getDate())} → ${iso(end.getFullYear(), end.getMonth()+1, end.getDate())}`;
   }
 
-  function startOfDay(d) {
-    const x = new Date(d);
-    x.setHours(0,0,0,0);
-    return x;
-  }
-
-  // ----- render WEEK (7 days from today/base) -----
+  // ----- render WEEK (rolling 7 days) -----
   function renderWeek(idx) {
     const host = $("weekGrid");
     const start = startOfDay(base);
@@ -184,9 +187,6 @@
       const list = idx.get(dayISO) || [];
       const count = list.length;
 
-      const chips = list.slice(0, 2).map(o => `<span class="pp-oc-chip">${t(o.title) || o.id}</span>`).join("");
-      const more = count > 2 ? `<span class="pp-oc-chip pp-oc-chip--more">+${count - 2}</span>` : "";
-
       const isToday = isSameDay(day, new Date());
       const has = count > 0;
 
@@ -198,7 +198,7 @@
             ${has ? `<span class="pp-oc-badge">${count}</span>` : `<span class="pp-oc-badge pp-oc-badge--off">0</span>`}
           </div>
           <div class="meta">${monthName(day.getMonth())} ${day.getFullYear()}</div>
-          ${has ? `<div class="pp-oc-chips">${chips}${more}</div>` : `<div class="pp-oc-empty">No occasions</div>`}
+          ${has ? chipsHTML(list, 2) : `<div class="pp-oc-empty">No occasions</div>`}
         </div>
       `);
     }
@@ -215,17 +215,10 @@
       };
     });
 
-    // auto-select first day (base day)
     host.querySelector("[data-iso]")?.click();
   }
 
-  function isSameDay(a, b) {
-    return a.getFullYear() === b.getFullYear()
-      && a.getMonth() === b.getMonth()
-      && a.getDate() === b.getDate();
-  }
-
-  // ----- render MONTH -----
+  // ----- render MONTH (NORMAL month grid, improved highlighting) -----
   function renderMonth(idx) {
     const grid = $("monthGrid");
     grid.innerHTML = "";
@@ -271,11 +264,19 @@
       const today = new Date();
       const isToday = (yy === today.getFullYear() && (mm-1) === today.getMonth() && d === today.getDate());
 
+      // NEW: chips + badge like weekly
+      const badge = hasEvent
+        ? `<span class="pp-cal-count">${list.length}</span>`
+        : "";
+
+      const chipBlock = hasEvent ? chipsHTML(list, 1) : "";
+
       grid.insertAdjacentHTML("beforeend", `
         <div class="pp-cal-cell ${muted ? "pp-cal-muted" : ""} ${isToday ? "pp-cal-today" : ""} ${hasEvent ? "pp-cal-has" : ""}"
-             data-iso="${dayISO}">
+             data-iso="${dayISO}" title="${hasEvent ? tooltipText(list) : ""}">
           <div class="pp-cal-num">${d}</div>
-          ${hasEvent ? `<span class="pp-cal-dot"></span><span class="pp-cal-count">${list.length}</span>` : ""}
+          ${badge}
+          ${chipBlock}
         </div>
       `);
     }
@@ -289,6 +290,7 @@
       };
     });
 
+    // auto-select today if it's in this grid; else first day
     const now = new Date();
     const nowISO = iso(now.getFullYear(), now.getMonth()+1, now.getDate());
     const auto = grid.querySelector(`.pp-cal-cell[data-iso="${nowISO}"]`);
@@ -296,7 +298,7 @@
     else grid.querySelector(".pp-cal-cell[data-iso]")?.click();
   }
 
-  // ----- render YEAR -----
+  // ----- render YEAR (NORMAL Jan–Dec, improved highlighting) -----
   function renderYear(idx) {
     const host = $("yearGrid");
     const y = viewYear();
@@ -339,8 +341,14 @@
         const list = idx.get(dayISO) || [];
         const hasEvent = list.length > 0;
 
+        const today = new Date();
+        const isToday = (yy === today.getFullYear() && (mm-1) === today.getMonth() && d === today.getDate());
+
+        // NEW: tooltip and stronger event marking (count is already shown)
         inner += `
-          <div class="cell ${muted ? "muted" : ""} ${hasEvent ? "has" : ""}" data-iso="${dayISO}">
+          <div class="cell ${muted ? "muted" : ""} ${hasEvent ? "has" : ""} ${isToday ? "today" : ""}"
+               data-iso="${dayISO}"
+               title="${hasEvent ? tooltipText(list) : ""}">
             ${d}
             ${hasEvent ? `<span class="dot"></span><span class="count">${list.length}</span>` : ""}
           </div>
@@ -365,11 +373,9 @@
     host.querySelector(`[data-iso="${nowISO}"]`)?.click();
   }
 
-  // ----- refresh for current view -----
+  // ----- refresh -----
   function refresh() {
-    const y = viewYear();
-    const idx = buildIndex(OCC, y);
-
+    const idx = buildIndex(OCC, viewYear());
     $("viewLabel").textContent = label();
 
     if (viewMode === VIEW.WEEK) renderWeek(idx);
@@ -386,17 +392,16 @@
 
     $("tabWeek").className = "pp-btn" + (mode === VIEW.WEEK ? "" : " pp-btn--ghost");
     $("tabMonth").className = "pp-btn" + (mode === VIEW.MONTH ? "" : " pp-btn--ghost");
-    const ty = document.getElementById(VIEW_YEAR_ID);
-    if (ty) ty.className = "pp-btn" + (mode === VIEW.YEAR ? "" : " pp-btn--ghost");
+    $("tabYear").className = "pp-btn" + (mode === VIEW.YEAR ? "" : " pp-btn--ghost");
 
     refresh();
   }
 
-  // ----- navigation -----
+  // ----- navigation (UNCHANGED for month/year calendars) -----
   function shiftUnit(delta) {
-    if (viewMode === VIEW.WEEK) base.setDate(base.getDate() + (7 * delta)); // ✅ 7-days shift
-    else if (viewMode === VIEW.MONTH) base.setMonth(base.getMonth() + delta);
-    else base.setFullYear(base.getFullYear() + delta);
+    if (viewMode === VIEW.WEEK) base.setDate(base.getDate() + (7 * delta)); // rolling week
+    else if (viewMode === VIEW.MONTH) base.setMonth(base.getMonth() + delta); // normal calendar month
+    else base.setFullYear(base.getFullYear() + delta); // normal calendar year
     refresh();
   }
 
@@ -406,7 +411,7 @@
   }
 
   function goToday() {
-    base = new Date(); // ✅ week will start from today
+    base = new Date();
     refresh();
   }
 
@@ -417,7 +422,6 @@
     b.textContent = (PP_LANG.getLang() === "hi" ? "EN" : "HI");
   }
 
-  // ----- init -----
   async function loadOccasions() {
     const res = await fetch(OCC_PATH, { cache: "no-store" });
     if (!res.ok) throw new Error(`Failed to load ${OCC_PATH} (${res.status})`);
@@ -428,7 +432,6 @@
   async function init() {
     try {
       syncLangBtn();
-
       OCC = await loadOccasions();
 
       $("tabWeek").onclick = () => setViewMode(VIEW.WEEK);
@@ -445,13 +448,13 @@
         PP_LANG.setLang(PP_LANG.getLang() === "hi" ? "en" : "hi");
       };
 
-      // ✅ default view: WEEK starting today
+      // Default view: WEEK starting today
       base = new Date();
       setViewMode(VIEW.WEEK);
 
-      // initial day list = today
+      // Day list defaults to today
       const now = new Date();
-      const nowISO = iso(now.getFullYear(), now.getMonth()+1, now.getDate());
+      const nowISO = iso(now.getFullYear(), now.getMonth() + 1, now.getDate());
       const idx = buildIndex(OCC, now.getFullYear());
       renderDayList(idx.get(nowISO) || [], nowISO);
     } catch (e) {
@@ -463,14 +466,11 @@
   window.addEventListener("pp:langchange", () => {
     syncLangBtn();
 
-    // re-render current selected day list
     const dayISO = ($("dayLabel").textContent || "").trim();
-    if (dayISO) {
-      const d = parseISO(dayISO);
-      if (d) {
-        const idx = buildIndex(OCC, d.y);
-        renderDayList(idx.get(dayISO) || [], dayISO);
-      }
+    const d = parseISO(dayISO);
+    if (d) {
+      const idx = buildIndex(OCC, d.y);
+      renderDayList(idx.get(dayISO) || [], dayISO);
     }
 
     refresh();
