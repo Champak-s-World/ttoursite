@@ -289,6 +289,7 @@
       const msg = getItinerary()
         .map((p, i) => `${i + 1}. ${p.name}`)
         .join("\n");
+        // alert(PP_RENDER.wa("Hello"));
       window.open(PP_RENDER.wa("My Tour:\n" + msg));
     };
 

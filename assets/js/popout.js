@@ -67,7 +67,7 @@
   }
 function wa(text) {
   const cfg = window.PP_CONFIG?.contact?.primary;
-alert (cfg);
+// alert (cfg.whatsapp);
   const number = cfg?.whatsapp?.replace(/\D/g, "") || "";
   const base = number ? `https://wa.me/${number}` : "https://wa.me/";
   return base + "?text=" + encodeURIComponent(text || "");

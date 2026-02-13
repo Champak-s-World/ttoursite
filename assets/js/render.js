@@ -12,7 +12,12 @@
   }
 
   function wa(text) {
-    return "https://wa.me/?text=" + encodeURIComponent(text || "");
+    const cfg = window.PP_CONFIG?.contact?.primary;
+// alert (cfg.whatsapp);
+  const number = cfg?.whatsapp?.replace(/\D/g, "") || "";
+  const base = number ? `https://wa.me/${number}` : "https://wa.me/";
+ return base + "?text=" + encodeURIComponent(text || "");
+    // return "https://wa.me/?text=" + encodeURIComponent(text || "");
   }
 
   window.PP_RENDER = { esc, wa };
