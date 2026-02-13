@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Punya Yatra Image Placeholder">
+  <defs>
+    <!-- Background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7e6"/>
+      <stop offset="100%" stop-color="#ffe8bf"/>
+    </linearGradient>
+
+    <!-- River -->
+    <linearGradient id="river" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf2"/>
+      <stop offset="100%" stop-color="#ffd699"/>
+    </linearGradient>
+
+    <!-- Accent -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- Sun -->
+  <circle cx="650" cy="100" r="40" fill="#f59e0b" opacity="0.25"/>
+  <circle cx="650" cy="100" r="25" fill="#d97706" opacity="0.75"/>
+
+  <!-- Temple -->
+  <g opacity="0.85">
+    <!-- Base -->
+    <rect x="300" y="310" width="200" height="70" rx="8" fill="#1f2937" opacity="0.15"/>
+
+    <!-- Main -->
+    <rect x="330" y="250" width="140" height="80" rx="4" fill="#1f2937" opacity="0.18"/>
+
+    <!-- Door -->
+    <path d="M385 330 V280 Q385 265 400 260 Q415 265 415 280 V330 Z"
+          fill="#d97706" opacity="0.7"/>
+
+    <!-- Shikhar -->
+    <path d="M400 170 L450 250 L350 250 Z"
+          fill="#1f2937" opacity="0.22"/>
+
+    <!-- Kalash -->
+    <rect x="395" y="150" width="10" height="20" rx="4" fill="#d97706"/>
+    <circle cx="400" cy="140" r="8" fill="#f59e0b"/>
+  </g>
+
+  <!-- River -->
+  <path d="M0 360
+           C150 330, 250 420, 400 370
+           C550 320, 650 420, 800 360
+           L800 500 L0 500 Z"
+        fill="url(#river)" opacity="0.95"/>
+
+  <path d="M0 395
+           C150 360, 250 450, 400 400
+           C550 350, 650 450, 800 395"
+        fill="none"
+        stroke="url(#accent)"
+        stroke-width="5"
+        stroke-linecap="round"
+        opacity="0.35"/>
+
+  <!-- Center Text -->
+  <text x="400" y="470"
+        font-family="system-ui, Segoe UI, Arial"
+        font-size="18"
+        font-weight="600"
+        text-anchor="middle"
+        fill="#1f2937"
+        opacity="0.55">
+    Image coming soon
+  </text>
+
+  <!-- Watermark -->
+  <text x="640" y="485"
+        font-family="ui-monospace, monospace"
+        font-size="14"
+        font-weight="700"
+        fill="#1f2937"
+        opacity="0.35">
+    punyayatra.in
+  </text>
+</svg>

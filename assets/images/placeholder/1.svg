@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Punya Yatra loading placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff7e6"/>
+      <stop offset="1" stop-color="#fff1d6"/>
+    </linearGradient>
+
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#d97706"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <!-- Shimmer gradient that moves across -->
+    <linearGradient id="shimmer" x1="-1" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+      <animate attributeName="x1" from="-1" to="1" dur="1.6s" repeatCount="indefinite"/>
+      <animate attributeName="x2" from="0" to="2" dur="1.6s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#1f2937" flood-opacity="0.14"/>
+    </filter>
+
+    <clipPath id="clip">
+      <rect x="40" y="40" width="1120" height="620" rx="34"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="700" fill="#fff7e6"/>
+
+  <!-- Card -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="40" width="1120" height="620" rx="34" fill="url(#bg)" stroke="#1f2937" stroke-opacity="0.10"/>
+  </g>
+
+  <g clip-path="url(#clip)">
+    <!-- skeleton blocks -->
+    <g opacity="0.9">
+      <rect x="120" y="140" width="520" height="52" rx="18" fill="#1f2937" opacity="0.08"/>
+      <rect x="120" y="210" width="430" height="26" rx="13" fill="#1f2937" opacity="0.07"/>
+      <rect x="120" y="255" width="360" height="22" rx="11" fill="#1f2937" opacity="0.06"/>
+
+      <rect x="120" y="310" width="150" height="40" rx="18" fill="#d97706" opacity="0.10"/>
+      <rect x="286" y="310" width="170" height="40" rx="18" fill="#d97706" opacity="0.10"/>
+      <rect x="472" y="310" width="150" height="40" rx="18" fill="#d97706" opacity="0.10"/>
+
+      <!-- big visual area -->
+      <rect x="720" y="120" width="360" height="250" rx="26" fill="#1f2937" opacity="0.06"/>
+      <rect x="120" y="410" width="960" height="230" rx="28" fill="#1f2937" opacity="0.05"/>
+    </g>
+
+    <!-- faint decorative outline -->
+    <path d="M250 390 L320 320 L360 350 L400 295 L440 345 L480 310 L520 360 L570 325 L620 390"
+          fill="none" stroke="url(#accent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+
+    <!-- shimmer overlay sweeping across -->
+    <rect x="40" y="40" width="1120" height="620" fill="url(#shimmer)" opacity="1"/>
+  </g>
+
+  <rect x="40" y="40" width="1120" height="620" rx="34" fill="none" stroke="url(#accent)" stroke-opacity="0.22"/>
+
+  <!-- optional tiny label -->
+  <text x="80" y="640" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"
+        font-size="16" font-weight="700" fill="#1f2937" opacity="0.55">punyayatra.in • loading…</text>
+</svg>
