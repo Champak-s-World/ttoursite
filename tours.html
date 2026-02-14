@@ -213,14 +213,14 @@
   </head>
 
   <body>
-    <!-- (Optional) Your existing nav can sit here -->
+    <div data-include="includes/header.html"></div>
 
     <div class="wrap">
       <div class="hero">
         <h1>🧭 Tours & Circuits</h1>
         <p>
-          Choose a pre-built spiritual circuit. Each tour uses your <b>locations.json</b> and opens directly in
-          <b>route.html</b>.
+          Choose a pre-built spiritual circuit. Each tour uses your <b>data/master/locations.json</b> and opens directly
+          in <b>route.html</b>.
         </p>
 
         <div class="toolbar">
@@ -233,11 +233,17 @@
       <div id="empty" class="empty" style="display:none;">No tours found. Try a different keyword.</div>
     </div>
 
+    <div data-include="includes/footer.html"></div>
+
+    <script src="assets/js/includes.js"></script>
+    <script src="assets/js/pp-nav.js"></script>
+    <script src="assets/js/pp-theme.js"></script>
+
     <script>
       const $ = (id) => document.getElementById(id);
 
       const PATHS = {
-        tours: "data/tours.json",
+        tours: "data/master/tours.json",
         locations: "data/master/locations.json"
       };
 
@@ -252,9 +258,6 @@
       }
 
       function buildLocationsMap(locationsJSON) {
-        // Supports:
-        // - { locations: [...] }
-        // - or direct array [...]
         const arr = Array.isArray(locationsJSON) ? locationsJSON : (locationsJSON.locations || []);
         const map = new Map();
         for (const it of arr) {
@@ -323,7 +326,6 @@
       }
 
       function openRoute(tourId) {
-        // route.html will auto-load using this tour id
         const u = new URL("route.html", location.href);
         u.searchParams.set("tour", tourId);
         location.href = u.toString();
@@ -370,13 +372,8 @@
           const tourId = btn.getAttribute("data-id");
           const mode = btn.getAttribute("data-open");
 
-          if (mode === "route") {
-            openRoute(tourId);
-            return;
-          }
+          if (mode === "route") return openRoute(tourId);
 
-          // Simple view: scroll tour into URL hash (optional)
-          // You can later replace this with a modal.
           alert(`Tour: ${tourId}\n\nTip: Click "Open in Route" to start navigation.`);
         });
 
