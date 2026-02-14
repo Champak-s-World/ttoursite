@@ -14,7 +14,8 @@
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-<link rel="stylesheet" href="assets/css/pp-nav.css" />
+    <link rel="stylesheet" href="assets/css/pp-nav.css" />
+
     <style>
       .rm-layout {
         display: grid;
@@ -54,50 +55,45 @@
         flex-wrap: wrap;
         align-items: flex-end;
       }
+
       /* ===== Leaflet: ensure custom circular markers look correct ===== */
+      .leaflet-div-icon {
+        background: transparent !important;
+        border: none !important;
+      }
 
-/* If you use L.divIcon for circles */
-.leaflet-div-icon{
-  background: transparent !important;
-  border: none !important;
-}
+      .rm-pin,
+      .rm-circle,
+      .route-pin,
+      .route-circle {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        font-weight: 1000;
+        font-size: 14px;
+        line-height: 1;
+        color: #fff;
 
-/* Our circular marker (use this class in your divIcon HTML) */
-.rm-pin,
-.rm-circle,
-.route-pin,
-.route-circle {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-weight: 1000;
-  font-size: 14px;
-  line-height: 1;
-  color: #fff;
+        background: var(--brand);
+        border: 2px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
 
-  background: var(--brand);
-  border: 2px solid rgba(255,255,255,.95);
-  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+        transform: translate(-50%, -50%);
+      }
 
-  transform: translate(-50%, -50%); /* helps if positioned at latlng center */
-}
+      .leaflet-interactive {
+        stroke: var(--brand) !important;
+        fill: color-mix(in srgb, var(--brand2) 45%, transparent) !important;
+        stroke-width: 3 !important;
+        fill-opacity: 0.55 !important;
+      }
 
-/* If you draw circleMarker (SVG), force visible styling */
-.leaflet-interactive{
-  stroke: var(--brand) !important;
-  fill: color-mix(in srgb, var(--brand2) 45%, transparent) !important;
-  stroke-width: 3 !important;
-  fill-opacity: .55 !important;
-}
-
-/* Prevent theme transitions from glitching Leaflet layers */
-html.theme-animate .leaflet-container *,
-html.theme-animate .leaflet-container{
-  transition: none !important;
-}
-
+      html.theme-animate .leaflet-container *,
+      html.theme-animate .leaflet-container {
+        transition: none !important;
+      }
     </style>
   </head>
 
@@ -152,16 +148,12 @@ html.theme-animate .leaflet-container{
               </button>
             </div>
 
-            <div
-              style="margin-top: 12px"
-              class="rm-results"
-              id="rsResults"
-            ></div>
+            <div style="margin-top: 12px" class="rm-results" id="rsResults"></div>
           </section>
 
           <!-- Itinerary -->
           <section class="pp-card pp-pad" style="margin-top: 12px">
-            <div  class="rm-minihead">
+            <div class="rm-minihead">
               <div>
                 <div class="pp-h2">Itinerary</div>
                 <div class="pp-mini">Auto-updates map</div>
@@ -220,7 +212,6 @@ html.theme-animate .leaflet-container{
     <script src="assets/js/pp-nav.js"></script>
     <script src="assets/js/pp-theme.js"></script>
 
-
     <!-- Leaflet -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -229,44 +220,232 @@ html.theme-animate .leaflet-container{
     ></script>
 
     <!-- Data + render + popout -->
-     
-     <script src="assets/js/site-config.js"></script>
-
+    <script src="assets/js/site-config.js"></script>
     <script src="assets/js/data-store.js"></script>
     <script src="assets/js/render.js"></script>
     <script src="assets/js/popout.js"></script>
 
     <!-- NEW: combined editor + map -->
     <script src="assets/js/route-editor.js"></script>
+
+    <!-- ✅ NEW: Auto-load tour when opened as route.html?tour=<tourId> -->
     <script>
-(function(){
-  // Tries to find a Leaflet map instance exposed as window.map / window.rmMap / window._map
-  function getAnyMap(){
-    return window.rmMap || window.map || window._map || null;
-  }
+      (function () {
+        const STORE_KEY = "pp_tour_maker_v1";
+        const TOURS_URL = "data/tours.json";
+        const LOCATIONS_URL = "data/locations.json";
 
-  function invalidate(){
-    const m = getAnyMap();
-    if (m && typeof m.invalidateSize === "function") {
-      m.invalidateSize(true);
-    }
-  }
+        const qs = new URLSearchParams(location.search);
+        const tourId = qs.get("tour");
+        if (!tourId) return;
 
-  // After initial render + includes injection + any fonts/layout settle
-  window.addEventListener("load", () => setTimeout(invalidate, 250));
-  window.addEventListener("resize", () => setTimeout(invalidate, 120));
+        // Remove param after applying (optional; keeps URL clean)
+        // (comment out if you want to keep ?tour= in URL)
+        function cleanURL() {
+          try {
+            const u = new URL(location.href);
+            u.searchParams.delete("tour");
+            history.replaceState({}, "", u.toString());
+          } catch {}
+        }
 
-  // When burger opens (your header uses data-pp-burger)
-  document.addEventListener("click", (e)=>{
-    if (e.target.closest("[data-pp-burger], .pp-burger")) {
-      setTimeout(invalidate, 250);
-    }
-    if (e.target.closest("#ppThemeBtn")) {
-      setTimeout(invalidate, 250);
-    }
-  });
-})();
-</script>
+        function safeJSONParse(s) {
+          try { return JSON.parse(s); } catch { return null; }
+        }
 
+        function pickTitle(loc) {
+          return loc.title || loc.name || loc.label || loc.id || "Stop";
+        }
+
+        function pickLatLng(loc) {
+          // Supports multiple shapes
+          // - {lat,lng}
+          // - {latitude,longitude}
+          // - {geo:{lat,lng}} or {geo:{latitude,longitude}}
+          // - {coords:[lat,lng]}
+          const lat =
+            loc.lat ??
+            loc.latitude ??
+            loc.geo?.lat ??
+            loc.geo?.latitude ??
+            (Array.isArray(loc.coords) ? loc.coords[0] : undefined);
+
+          const lng =
+            loc.lng ??
+            loc.lon ??
+            loc.longitude ??
+            loc.geo?.lng ??
+            loc.geo?.lon ??
+            loc.geo?.longitude ??
+            (Array.isArray(loc.coords) ? loc.coords[1] : undefined);
+
+          const a = Number(lat);
+          const b = Number(lng);
+          if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+          return { lat: a, lng: b };
+        }
+
+        function makeItineraryItems(stops) {
+          // Keep schema simple; route-editor can ignore extra fields.
+          return stops.map((loc, idx) => {
+            const ll = pickLatLng(loc) || {};
+            return {
+              id: String(loc.id || loc.slug || ("stop_" + idx)),
+              title: pickTitle(loc),
+              lat: ll.lat,
+              lng: ll.lng,
+              source: "tour",
+              // Keep original in case your renderer uses it
+              _raw: loc
+            };
+          });
+        }
+
+        function writeToStoragePreservingShape(items, meta) {
+          const existingRaw = localStorage.getItem(STORE_KEY);
+          const existing = safeJSONParse(existingRaw);
+
+          // If existing is an array, store array.
+          if (Array.isArray(existing)) {
+            localStorage.setItem(STORE_KEY, JSON.stringify(items));
+            return;
+          }
+
+          // If existing is an object and has "items" or "itinerary", preserve that key.
+          if (existing && typeof existing === "object") {
+            const out = { ...existing };
+
+            if (Array.isArray(existing.items)) out.items = items;
+            else if (Array.isArray(existing.itinerary)) out.itinerary = items;
+            else out.items = items;
+
+            out.meta = { ...(existing.meta || {}), ...(meta || {}) };
+            out.updatedAt = new Date().toISOString();
+
+            localStorage.setItem(STORE_KEY, JSON.stringify(out));
+            return;
+          }
+
+          // Default: store as object with items
+          localStorage.setItem(
+            STORE_KEY,
+            JSON.stringify({
+              items,
+              meta: meta || {},
+              updatedAt: new Date().toISOString()
+            })
+          );
+        }
+
+        function pokeRouteEditorRefresh(meta) {
+          // Best-effort hooks (won't error if missing).
+          try {
+            window.dispatchEvent(new CustomEvent("pp:route:changed", { detail: meta || {} }));
+          } catch {}
+
+          // Common patterns you might have
+          try { window.RouteEditor?.loadFromStorage?.(); } catch {}
+          try { window.routeEditor?.loadFromStorage?.(); } catch {}
+          try { window.RouteEditor?.render?.(); } catch {}
+          try { window.routeEditor?.render?.(); } catch {}
+
+          // As a last resort, trigger a tiny UI nudge:
+          // some apps listen to input events or storage polling
+          try { document.getElementById("rmStatus")?.dispatchEvent(new Event("change")); } catch {}
+        }
+
+        async function fetchJSON(url) {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
+          return res.json();
+        }
+
+        async function applyTour() {
+          const rmStatus = document.getElementById("rmStatus");
+          if (rmStatus) rmStatus.textContent = "Loading tour…";
+
+          const [toursJSON, locationsJSON] = await Promise.all([
+            fetchJSON(TOURS_URL),
+            fetchJSON(LOCATIONS_URL)
+          ]);
+
+          const tours = toursJSON.tours || [];
+          const tour = tours.find((t) => String(t.id) === String(tourId));
+          if (!tour) throw new Error(`Tour not found: ${tourId}`);
+
+          const locArr = Array.isArray(locationsJSON)
+            ? locationsJSON
+            : (locationsJSON.locations || []);
+
+          const locMap = new Map(
+            locArr
+              .filter((x) => x && x.id)
+              .map((x) => [String(x.id), x])
+          );
+
+          const stops = (tour.location_ids || [])
+            .map((id) => locMap.get(String(id)))
+            .filter(Boolean);
+
+          if (!stops.length) {
+            throw new Error(`Tour "${tourId}" has no resolvable stops in locations.json`);
+          }
+
+          const items = makeItineraryItems(stops);
+
+          // Store and notify
+          writeToStoragePreservingShape(items, { tourId: tour.id, tourTitle: tour.title || "" });
+
+          if (rmStatus) rmStatus.textContent = `Loaded tour: ${tour.title || tour.id} (${items.length} stops)`;
+
+          // Ask route-editor to re-render (best effort)
+          pokeRouteEditorRefresh({ tourId: tour.id, tourTitle: tour.title || "" });
+
+          // Optional: clean URL so sharing doesn't always re-apply
+          // cleanURL();
+        }
+
+        // Wait a tick so route-editor has time to init listeners.
+        // (Works even if route-editor is already ready.)
+        setTimeout(() => {
+          applyTour().catch((err) => {
+            console.error(err);
+            const rmStatus = document.getElementById("rmStatus");
+            if (rmStatus) rmStatus.textContent = `Tour load error: ${err.message || err}`;
+          });
+        }, 250);
+      })();
+    </script>
+
+    <!-- Map invalidate-size fix -->
+    <script>
+      (function () {
+        // Tries to find a Leaflet map instance exposed as window.map / window.rmMap / window._map
+        function getAnyMap() {
+          return window.rmMap || window.map || window._map || null;
+        }
+
+        function invalidate() {
+          const m = getAnyMap();
+          if (m && typeof m.invalidateSize === "function") {
+            m.invalidateSize(true);
+          }
+        }
+
+        // After initial render + includes injection + any fonts/layout settle
+        window.addEventListener("load", () => setTimeout(invalidate, 250));
+        window.addEventListener("resize", () => setTimeout(invalidate, 120));
+
+        // When burger opens (your header uses data-pp-burger)
+        document.addEventListener("click", (e) => {
+          if (e.target.closest("[data-pp-burger], .pp-burger")) {
+            setTimeout(invalidate, 250);
+          }
+          if (e.target.closest("#ppThemeBtn")) {
+            setTimeout(invalidate, 250);
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
