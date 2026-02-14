@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#d97706" />
+    <title>Tours • Punya Yatra</title>
+
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/pp-nav.css" />
+
+    <style>
+      :root {
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --ink: #111827;
+        --muted: #6b7280;
+        --bg: #fff7e6;
+        --card: rgba(255, 255, 255, 0.9);
+        --border: rgba(31, 41, 55, 0.12);
+        --shadow: 0 12px 28px rgba(17, 24, 39, 0.12);
+      }
+
+      body {
+        background:
+          radial-gradient(1000px 520px at 15% 0%, rgba(245, 158, 11, 0.18), transparent 60%),
+          radial-gradient(900px 520px at 85% 10%, rgba(217, 119, 6, 0.14), transparent 55%),
+          var(--bg);
+        color: var(--ink);
+      }
+
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 18px 14px 60px;
+      }
+
+      .hero {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 16px;
+        display: grid;
+        gap: 10px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .toolbar {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .search {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.92);
+        outline: none;
+        font-size: 0.98rem;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px 12px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .grid {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 12px;
+      }
+      .card {
+        grid-column: span 12;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+      @media (min-width: 860px) {
+        .card {
+          grid-column: span 6;
+        }
+      }
+
+      .cardTop {
+        padding: 14px 14px 12px;
+        color: var(--ink);
+        position: relative;
+      }
+      .badgeRow {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .kicker {
+        font-size: 0.84rem;
+        color: rgba(17, 24, 39, 0.7);
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(31, 41, 55, 0.12);
+        background: rgba(255, 255, 255, 0.75);
+      }
+      .tag {
+        font-size: 0.82rem;
+        color: rgba(17, 24, 39, 0.72);
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px dashed rgba(217, 119, 6, 0.35);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .titleRow {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      .emoji {
+        font-size: 1.35rem;
+        filter: drop-shadow(0 6px 10px rgba(17, 24, 39, 0.18));
+      }
+      .title {
+        margin: 0;
+        font-size: 1.12rem;
+        letter-spacing: -0.015em;
+      }
+
+      .meta {
+        margin-top: 8px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        color: rgba(17, 24, 39, 0.7);
+        font-size: 0.92rem;
+      }
+      .meta b {
+        color: rgba(17, 24, 39, 0.86);
+      }
+
+      .stops {
+        padding: 12px 14px 12px;
+        border-top: 1px solid rgba(31, 41, 55, 0.08);
+        background: rgba(255, 255, 255, 0.75);
+      }
+      .stopLine {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 8px;
+        padding: 6px 0;
+        color: rgba(17, 24, 39, 0.78);
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(217, 119, 6, 0.75);
+        margin-top: 5px;
+        box-shadow: 0 6px 14px rgba(217, 119, 6, 0.25);
+      }
+
+      .actions {
+        padding: 12px 14px 14px;
+        border-top: 1px solid rgba(31, 41, 55, 0.08);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .btn {
+        border: 1px solid rgba(31, 41, 55, 0.12);
+        background: white;
+        color: var(--ink);
+        padding: 10px 12px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btnPrimary {
+        border-color: rgba(217, 119, 6, 0.35);
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.35), rgba(255, 255, 255, 0.95));
+      }
+
+      .empty {
+        margin-top: 14px;
+        padding: 14px;
+        border: 1px dashed rgba(217, 119, 6, 0.35);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.75);
+        color: rgba(17, 24, 39, 0.72);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- (Optional) Your existing nav can sit here -->
+
+    <div class="wrap">
+      <div class="hero">
+        <h1>🧭 Tours & Circuits</h1>
+        <p>
+          Choose a pre-built spiritual circuit. Each tour uses your <b>locations.json</b> and opens directly in
+          <b>route.html</b>.
+        </p>
+
+        <div class="toolbar">
+          <input id="q" class="search" placeholder="Search tours (Shiva, Ghats, Devi, …)" />
+          <div id="count" class="pill">0 tours</div>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty" style="display:none;">No tours found. Try a different keyword.</div>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      const PATHS = {
+        tours: "data/tours.json",
+        locations: "data/locations.json"
+      };
+
+      function norm(s) {
+        return String(s || "").toLowerCase().trim();
+      }
+
+      async function fetchJSON(url) {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
+        return res.json();
+      }
+
+      function buildLocationsMap(locationsJSON) {
+        // Supports:
+        // - { locations: [...] }
+        // - or direct array [...]
+        const arr = Array.isArray(locationsJSON) ? locationsJSON : (locationsJSON.locations || []);
+        const map = new Map();
+        for (const it of arr) {
+          if (it && it.id) map.set(String(it.id), it);
+        }
+        return map;
+      }
+
+      function resolveStops(locationIds, locMap) {
+        return (locationIds || []).map((id) => {
+          const loc = locMap.get(String(id));
+          return loc || { id, title: id, name: id };
+        });
+      }
+
+      function tourMatches(t, q, resolvedStops) {
+        if (!q) return true;
+        const hay = [
+          t.title, t.kicker, t.duration, t.best_time,
+          ...(t.tags || []),
+          ...resolvedStops.map(s => s.title || s.name || s.id)
+        ].join(" ");
+        return norm(hay).includes(q);
+      }
+
+      function cardHTML(tour, stops) {
+        const heroBG = (tour.hero && tour.hero.bg) ? tour.hero.bg : "";
+        const emoji = (tour.hero && tour.hero.emoji) ? tour.hero.emoji : "🧭";
+
+        return `
+          <article class="card">
+            <div class="cardTop" style="${heroBG ? `background:${heroBG};` : ""}">
+              <div class="badgeRow">
+                <span class="kicker">${tour.kicker || "Tour"}</span>
+                ${(tour.tags || []).slice(0, 4).map(x => `<span class="tag">${x}</span>`).join("")}
+              </div>
+
+              <div class="titleRow">
+                <span class="emoji">${emoji}</span>
+                <h3 class="title">${tour.title || "Untitled Tour"}</h3>
+              </div>
+
+              <div class="meta">
+                <span>⏱ <b>${tour.duration || "—"}</b></span>
+                <span>🗓 Best: <b>${tour.best_time || "—"}</b></span>
+                <span>📍 Stops: <b>${stops.length}</b></span>
+              </div>
+            </div>
+
+            <div class="stops">
+              ${stops.slice(0, 6).map(s => `
+                <div class="stopLine">
+                  <div class="dot"></div>
+                  <div>${(s.title || s.name || s.id || "Stop")}</div>
+                </div>
+              `).join("")}
+              ${stops.length > 6 ? `<div class="stopLine"><div></div><div>… +${stops.length - 6} more</div></div>` : ""}
+            </div>
+
+            <div class="actions">
+              <button class="btn" data-open="details" data-id="${tour.id}">View</button>
+              <button class="btn btnPrimary" data-open="route" data-id="${tour.id}">Open in Route</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function openRoute(tourId) {
+        // route.html will auto-load using this tour id
+        const u = new URL("route.html", location.href);
+        u.searchParams.set("tour", tourId);
+        location.href = u.toString();
+      }
+
+      async function main() {
+        const [toursJSON, locationsJSON] = await Promise.all([
+          fetchJSON(PATHS.tours),
+          fetchJSON(PATHS.locations)
+        ]);
+
+        const tours = toursJSON.tours || [];
+        const locMap = buildLocationsMap(locationsJSON);
+
+        const state = { q: "" };
+
+        function render() {
+          const q = norm(state.q);
+          const grid = $("grid");
+          grid.innerHTML = "";
+
+          let shown = 0;
+
+          for (const t of tours) {
+            const stops = resolveStops(t.location_ids, locMap);
+            if (!tourMatches(t, q, stops)) continue;
+
+            grid.insertAdjacentHTML("beforeend", cardHTML(t, stops));
+            shown++;
+          }
+
+          $("count").textContent = `${shown} tour${shown === 1 ? "" : "s"}`;
+          $("empty").style.display = shown === 0 ? "block" : "none";
+        }
+
+        $("q").addEventListener("input", (e) => {
+          state.q = e.target.value;
+          render();
+        });
+
+        $("grid").addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-open]");
+          if (!btn) return;
+          const tourId = btn.getAttribute("data-id");
+          const mode = btn.getAttribute("data-open");
+
+          if (mode === "route") {
+            openRoute(tourId);
+            return;
+          }
+
+          // Simple view: scroll tour into URL hash (optional)
+          // You can later replace this with a modal.
+          alert(`Tour: ${tourId}\n\nTip: Click "Open in Route" to start navigation.`);
+        });
+
+        render();
+      }
+
+      main().catch((err) => {
+        console.error(err);
+        $("grid").innerHTML = `
+          <div class="empty">
+            <b>Could not load tours.</b><br/>
+            ${String(err.message || err)}
+          </div>
+        `;
+        $("count").textContent = "0 tours";
+      });
+    </script>
+  </body>
+</html>
