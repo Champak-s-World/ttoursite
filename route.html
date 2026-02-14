@@ -228,29 +228,25 @@
     <!-- NEW: combined editor + map -->
     <script src="assets/js/route-editor.js"></script>
 
-    <!-- ✅ NEW: Auto-load tour when opened as route.html?tour=<tourId> -->
+    <!-- ✅ Auto-load tour when opened as route.html?tour=<tourId> -->
     <script>
       (function () {
         const STORE_KEY = "pp_tour_maker_v1";
-        const TOURS_URL = "data/tours.json";
-        const LOCATIONS_URL = "data/locations.json";
+
+        // ✅ Updated paths
+        const TOURS_URL = "data/master/tours.json";
+        const LOCATIONS_URL = "data/master/locations.json";
 
         const qs = new URLSearchParams(location.search);
         const tourId = qs.get("tour");
         if (!tourId) return;
 
-        // Remove param after applying (optional; keeps URL clean)
-        // (comment out if you want to keep ?tour= in URL)
-        function cleanURL() {
-          try {
-            const u = new URL(location.href);
-            u.searchParams.delete("tour");
-            history.replaceState({}, "", u.toString());
-          } catch {}
-        }
-
         function safeJSONParse(s) {
-          try { return JSON.parse(s); } catch { return null; }
+          try {
+            return JSON.parse(s);
+          } catch {
+            return null;
+          }
         }
 
         function pickTitle(loc) {
@@ -258,11 +254,6 @@
         }
 
         function pickLatLng(loc) {
-          // Supports multiple shapes
-          // - {lat,lng}
-          // - {latitude,longitude}
-          // - {geo:{lat,lng}} or {geo:{latitude,longitude}}
-          // - {coords:[lat,lng]}
           const lat =
             loc.lat ??
             loc.latitude ??
@@ -286,16 +277,14 @@
         }
 
         function makeItineraryItems(stops) {
-          // Keep schema simple; route-editor can ignore extra fields.
           return stops.map((loc, idx) => {
             const ll = pickLatLng(loc) || {};
             return {
-              id: String(loc.id || loc.slug || ("stop_" + idx)),
+              id: String(loc.id || loc.slug || "stop_" + idx),
               title: pickTitle(loc),
               lat: ll.lat,
               lng: ll.lng,
               source: "tour",
-              // Keep original in case your renderer uses it
               _raw: loc
             };
           });
@@ -305,13 +294,11 @@
           const existingRaw = localStorage.getItem(STORE_KEY);
           const existing = safeJSONParse(existingRaw);
 
-          // If existing is an array, store array.
           if (Array.isArray(existing)) {
             localStorage.setItem(STORE_KEY, JSON.stringify(items));
             return;
           }
 
-          // If existing is an object and has "items" or "itinerary", preserve that key.
           if (existing && typeof existing === "object") {
             const out = { ...existing };
 
@@ -326,7 +313,6 @@
             return;
           }
 
-          // Default: store as object with items
           localStorage.setItem(
             STORE_KEY,
             JSON.stringify({
@@ -338,20 +324,24 @@
         }
 
         function pokeRouteEditorRefresh(meta) {
-          // Best-effort hooks (won't error if missing).
           try {
-            window.dispatchEvent(new CustomEvent("pp:route:changed", { detail: meta || {} }));
+            window.dispatchEvent(
+              new CustomEvent("pp:route:changed", { detail: meta || {} })
+            );
           } catch {}
 
-          // Common patterns you might have
-          try { window.RouteEditor?.loadFromStorage?.(); } catch {}
-          try { window.routeEditor?.loadFromStorage?.(); } catch {}
-          try { window.RouteEditor?.render?.(); } catch {}
-          try { window.routeEditor?.render?.(); } catch {}
-
-          // As a last resort, trigger a tiny UI nudge:
-          // some apps listen to input events or storage polling
-          try { document.getElementById("rmStatus")?.dispatchEvent(new Event("change")); } catch {}
+          try {
+            window.RouteEditor?.loadFromStorage?.();
+          } catch {}
+          try {
+            window.routeEditor?.loadFromStorage?.();
+          } catch {}
+          try {
+            window.RouteEditor?.render?.();
+          } catch {}
+          try {
+            window.routeEditor?.render?.();
+          } catch {}
         }
 
         async function fetchJSON(url) {
@@ -375,7 +365,7 @@
 
           const locArr = Array.isArray(locationsJSON)
             ? locationsJSON
-            : (locationsJSON.locations || []);
+            : locationsJSON.locations || [];
 
           const locMap = new Map(
             locArr
@@ -388,30 +378,35 @@
             .filter(Boolean);
 
           if (!stops.length) {
-            throw new Error(`Tour "${tourId}" has no resolvable stops in locations.json`);
+            throw new Error(
+              `Tour "${tourId}" has no resolvable stops in locations.json`
+            );
           }
 
           const items = makeItineraryItems(stops);
 
-          // Store and notify
-          writeToStoragePreservingShape(items, { tourId: tour.id, tourTitle: tour.title || "" });
+          writeToStoragePreservingShape(items, {
+            tourId: tour.id,
+            tourTitle: tour.title || ""
+          });
 
-          if (rmStatus) rmStatus.textContent = `Loaded tour: ${tour.title || tour.id} (${items.length} stops)`;
+          if (rmStatus)
+            rmStatus.textContent = `Loaded tour: ${tour.title || tour.id} (${
+              items.length
+            } stops)`;
 
-          // Ask route-editor to re-render (best effort)
-          pokeRouteEditorRefresh({ tourId: tour.id, tourTitle: tour.title || "" });
-
-          // Optional: clean URL so sharing doesn't always re-apply
-          // cleanURL();
+          pokeRouteEditorRefresh({
+            tourId: tour.id,
+            tourTitle: tour.title || ""
+          });
         }
 
-        // Wait a tick so route-editor has time to init listeners.
-        // (Works even if route-editor is already ready.)
         setTimeout(() => {
           applyTour().catch((err) => {
             console.error(err);
             const rmStatus = document.getElementById("rmStatus");
-            if (rmStatus) rmStatus.textContent = `Tour load error: ${err.message || err}`;
+            if (rmStatus)
+              rmStatus.textContent = `Tour load error: ${err.message || err}`;
           });
         }, 250);
       })();
@@ -420,7 +415,6 @@
     <!-- Map invalidate-size fix -->
     <script>
       (function () {
-        // Tries to find a Leaflet map instance exposed as window.map / window.rmMap / window._map
         function getAnyMap() {
           return window.rmMap || window.map || window._map || null;
         }
@@ -432,11 +426,9 @@
           }
         }
 
-        // After initial render + includes injection + any fonts/layout settle
         window.addEventListener("load", () => setTimeout(invalidate, 250));
         window.addEventListener("resize", () => setTimeout(invalidate, 120));
 
-        // When burger opens (your header uses data-pp-burger)
         document.addEventListener("click", (e) => {
           if (e.target.closest("[data-pp-burger], .pp-burger")) {
             setTimeout(invalidate, 250);
