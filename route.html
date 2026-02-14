@@ -15,7 +15,6 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="assets/css/pp-nav.css" />
-
     <style>
       .rm-layout {
         display: grid;
@@ -25,9 +24,7 @@
         align-items: start;
       }
       @media (max-width: 980px) {
-        .rm-layout {
-          grid-template-columns: 1fr;
-        }
+        .rm-layout { grid-template-columns: 1fr; }
       }
 
       #rmMap {
@@ -38,15 +35,8 @@
         background: rgba(0, 0, 0, 0.03);
       }
 
-      .rm-sticky {
-        position: sticky;
-        top: 74px;
-      }
-
-      .rm-results {
-        display: grid;
-        gap: 10px;
-      }
+      .rm-sticky { position: sticky; top: 74px; }
+      .rm-results { display: grid; gap: 10px; }
 
       .rm-minihead {
         display: flex;
@@ -56,16 +46,9 @@
         align-items: flex-end;
       }
 
-      /* ===== Leaflet: ensure custom circular markers look correct ===== */
-      .leaflet-div-icon {
-        background: transparent !important;
-        border: none !important;
-      }
+      .leaflet-div-icon { background: transparent !important; border: none !important; }
 
-      .rm-pin,
-      .rm-circle,
-      .route-pin,
-      .route-circle {
+      .rm-pin, .rm-circle, .route-pin, .route-circle {
         width: 34px;
         height: 34px;
         border-radius: 999px;
@@ -75,25 +58,21 @@
         font-size: 14px;
         line-height: 1;
         color: #fff;
-
         background: var(--brand);
-        border: 2px solid rgba(255, 255, 255, 0.95);
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
-
+        border: 2px solid rgba(255,255,255,.95);
+        box-shadow: 0 10px 22px rgba(0,0,0,.25);
         transform: translate(-50%, -50%);
       }
 
-      .leaflet-interactive {
+      .leaflet-interactive{
         stroke: var(--brand) !important;
         fill: color-mix(in srgb, var(--brand2) 45%, transparent) !important;
         stroke-width: 3 !important;
-        fill-opacity: 0.55 !important;
+        fill-opacity: .55 !important;
       }
 
       html.theme-animate .leaflet-container *,
-      html.theme-animate .leaflet-container {
-        transition: none !important;
-      }
+      html.theme-animate .leaflet-container{ transition: none !important; }
     </style>
   </head>
 
@@ -102,25 +81,19 @@
 
     <main class="pp-container">
       <section class="pp-card pp-pad">
-        <div class="pp-mini">
-          Single page: Search → Itinerary → Map (auto sync)
-        </div>
+        <div class="pp-mini">Single page: Search → Itinerary → Map (auto sync)</div>
         <h1 class="pp-h1">Route Builder</h1>
         <div class="pp-muted">
-          Same storage key: <b>pp_tour_maker_v1</b>. Any change updates the map
-          immediately.
+          Same storage key: <b>pp_tour_maker_v1</b>. Any change updates the map immediately.
         </div>
       </section>
 
       <div class="rm-layout">
-        <!-- LEFT: Search + Itinerary -->
+        <!-- LEFT -->
         <div class="rm-sticky">
-          <!-- Search -->
           <section class="pp-card pp-pad">
             <div class="pp-h2">Search & Add</div>
-            <div class="pp-mini" id="rsStatus" style="margin-top: 6px">
-              Loading data…
-            </div>
+            <div class="pp-mini" id="rsStatus" style="margin-top: 6px">Loading data…</div>
 
             <div class="pp-actions" style="margin-top: 10px">
               <select id="rsSource" class="pp-input" title="Search source">
@@ -136,22 +109,13 @@
                 placeholder="Type 3+ characters…"
                 autocomplete="off"
               />
-              <button class="pp-btn" id="rsSearchBtn" type="button">
-                Search
-              </button>
-              <button
-                class="pp-btn pp-btn--ghost"
-                id="rsClearBtn"
-                type="button"
-              >
-                Clear
-              </button>
+              <button class="pp-btn" id="rsSearchBtn" type="button">Search</button>
+              <button class="pp-btn pp-btn--ghost" id="rsClearBtn" type="button">Clear</button>
             </div>
 
             <div style="margin-top: 12px" class="rm-results" id="rsResults"></div>
           </section>
 
-          <!-- Itinerary -->
           <section class="pp-card pp-pad" style="margin-top: 12px">
             <div class="rm-minihead">
               <div>
@@ -159,34 +123,17 @@
                 <div class="pp-mini">Auto-updates map</div>
               </div>
               <div class="pp-actions">
-                <button
-                  class="pp-btn pp-btn--ghost"
-                  id="rsDownloadBtn"
-                  type="button"
-                >
-                  Download
-                </button>
-                <button class="pp-btn" id="rsShareBtn" type="button">
-                  WhatsApp
-                </button>
-                <button
-                  class="pp-btn pp-btn--ghost"
-                  id="rsClearItBtn"
-                  type="button"
-                >
-                  Clear
-                </button>
+                <button class="pp-btn pp-btn--ghost" id="rsDownloadBtn" type="button">Download</button>
+                <button class="pp-btn" id="rsShareBtn" type="button">WhatsApp</button>
+                <button class="pp-btn pp-btn--ghost" id="rsClearItBtn" type="button">Clear</button>
               </div>
             </div>
 
-            <div
-              id="rsItinerary"
-              style="margin-top: 12px; display: grid; gap: 10px"
-            ></div>
+            <div id="rsItinerary" style="margin-top: 12px; display: grid; gap: 10px"></div>
           </section>
         </div>
 
-        <!-- RIGHT: Map -->
+        <!-- RIGHT -->
         <section class="pp-card pp-pad">
           <div class="rm-minihead">
             <div>
@@ -194,9 +141,7 @@
               <div class="pp-mini" id="rmStatus">Ready.</div>
             </div>
             <div class="pp-actions">
-              <a class="pp-btn pp-btn--ghost" href="routes.html"
-                >Open old Routes page</a
-              >
+              <a class="pp-btn pp-btn--ghost" href="routes.html">Open old Routes page</a>
             </div>
           </div>
 
@@ -232,8 +177,6 @@
     <script>
       (function () {
         const STORE_KEY = "pp_tour_maker_v1";
-
-        // ✅ Updated paths
         const TOURS_URL = "data/master/tours.json";
         const LOCATIONS_URL = "data/master/locations.json";
 
@@ -241,51 +184,58 @@
         const tourId = qs.get("tour");
         if (!tourId) return;
 
+        const norm = (s) => String(s || "").toLowerCase().trim();
+
         function safeJSONParse(s) {
-          try {
-            return JSON.parse(s);
-          } catch {
-            return null;
+          try { return JSON.parse(s); } catch { return null; }
+        }
+
+        function fetchJSON(url) {
+          return fetch(url, { cache: "no-store" }).then((res) => {
+            if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
+            return res.json();
+          });
+        }
+
+        // ✅ Extract places from { cities:[{places:[...]}] }
+        function extractPlaces(locJSON) {
+          if (!locJSON) return [];
+          if (Array.isArray(locJSON)) return locJSON;
+          if (Array.isArray(locJSON.locations)) return locJSON.locations;
+
+          const cities = Array.isArray(locJSON.cities) ? locJSON.cities : [];
+          const out = [];
+          for (const c of cities) {
+            const places = Array.isArray(c.places) ? c.places : [];
+            for (const p of places) out.push(p);
           }
+          return out;
         }
 
-        function pickTitle(loc) {
-          return loc.title || loc.name || loc.label || loc.id || "Stop";
+        function pickTitle(place) {
+          if (!place) return "Stop";
+          if (typeof place.name === "string") return place.name;
+          if (place.name && place.name.en) return place.name.en;
+          return place.title || place.id || "Stop";
         }
 
-        function pickLatLng(loc) {
-          const lat =
-            loc.lat ??
-            loc.latitude ??
-            loc.geo?.lat ??
-            loc.geo?.latitude ??
-            (Array.isArray(loc.coords) ? loc.coords[0] : undefined);
-
-          const lng =
-            loc.lng ??
-            loc.lon ??
-            loc.longitude ??
-            loc.geo?.lng ??
-            loc.geo?.lon ??
-            loc.geo?.longitude ??
-            (Array.isArray(loc.coords) ? loc.coords[1] : undefined);
-
-          const a = Number(lat);
-          const b = Number(lng);
+        function pickLatLng(place) {
+          const a = Number(place?.lat);
+          const b = Number(place?.lng);
           if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
           return { lat: a, lng: b };
         }
 
         function makeItineraryItems(stops) {
-          return stops.map((loc, idx) => {
-            const ll = pickLatLng(loc) || {};
+          return stops.map((p, idx) => {
+            const ll = pickLatLng(p) || {};
             return {
-              id: String(loc.id || loc.slug || "stop_" + idx),
-              title: pickTitle(loc),
+              id: String(p.id || "stop_" + idx),
+              title: pickTitle(p),
               lat: ll.lat,
               lng: ll.lng,
               source: "tour",
-              _raw: loc
+              _raw: p
             };
           });
         }
@@ -315,98 +265,73 @@
 
           localStorage.setItem(
             STORE_KEY,
-            JSON.stringify({
-              items,
-              meta: meta || {},
-              updatedAt: new Date().toISOString()
-            })
+            JSON.stringify({ items, meta: meta || {}, updatedAt: new Date().toISOString() })
           );
         }
 
         function pokeRouteEditorRefresh(meta) {
           try {
-            window.dispatchEvent(
-              new CustomEvent("pp:route:changed", { detail: meta || {} })
-            );
+            window.dispatchEvent(new CustomEvent("pp:route:changed", { detail: meta || {} }));
           } catch {}
 
-          try {
-            window.RouteEditor?.loadFromStorage?.();
-          } catch {}
-          try {
-            window.routeEditor?.loadFromStorage?.();
-          } catch {}
-          try {
-            window.RouteEditor?.render?.();
-          } catch {}
-          try {
-            window.routeEditor?.render?.();
-          } catch {}
-        }
-
-        async function fetchJSON(url) {
-          const res = await fetch(url, { cache: "no-store" });
-          if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
-          return res.json();
+          try { window.RouteEditor?.loadFromStorage?.(); } catch {}
+          try { window.routeEditor?.loadFromStorage?.(); } catch {}
+          try { window.RouteEditor?.render?.(); } catch {}
+          try { window.routeEditor?.render?.(); } catch {}
         }
 
         async function applyTour() {
           const rmStatus = document.getElementById("rmStatus");
           if (rmStatus) rmStatus.textContent = "Loading tour…";
 
-          const [toursJSON, locationsJSON] = await Promise.all([
+          const [toursJSON, locJSON] = await Promise.all([
             fetchJSON(TOURS_URL),
             fetchJSON(LOCATIONS_URL)
           ]);
 
           const tours = toursJSON.tours || [];
-          const tour = tours.find((t) => String(t.id) === String(tourId));
+          const tour = tours.find((t) => norm(t.id) === norm(tourId));
           if (!tour) throw new Error(`Tour not found: ${tourId}`);
 
-          const locArr = Array.isArray(locationsJSON)
-            ? locationsJSON
-            : locationsJSON.locations || [];
+          const places = extractPlaces(locJSON);
 
-          const locMap = new Map(
-            locArr
-              .filter((x) => x && x.id)
-              .map((x) => [String(x.id), x])
-          );
+          // Map places by id
+          const placeMap = new Map();
+          for (const p of places) {
+            if (p && p.id) placeMap.set(String(p.id), p);
+          }
 
+          const missing = [];
           const stops = (tour.location_ids || [])
-            .map((id) => locMap.get(String(id)))
+            .map((id) => {
+              const p = placeMap.get(String(id));
+              if (!p) missing.push(id);
+              return p || null;
+            })
             .filter(Boolean);
 
           if (!stops.length) {
-            throw new Error(
-              `Tour "${tourId}" has no resolvable stops in locations.json`
-            );
+            throw new Error(`Tour "${tourId}" has no resolvable stops in locations.json`);
           }
 
           const items = makeItineraryItems(stops);
 
-          writeToStoragePreservingShape(items, {
-            tourId: tour.id,
-            tourTitle: tour.title || ""
-          });
+          writeToStoragePreservingShape(items, { tourId: tour.id, tourTitle: tour.title || "" });
 
-          if (rmStatus)
-            rmStatus.textContent = `Loaded tour: ${tour.title || tour.id} (${
-              items.length
-            } stops)`;
+          if (rmStatus) {
+            rmStatus.textContent =
+              `Loaded tour: ${tour.title || tour.id} (${items.length} stops)` +
+              (missing.length ? ` • Missing: ${missing.join(", ")}` : "");
+          }
 
-          pokeRouteEditorRefresh({
-            tourId: tour.id,
-            tourTitle: tour.title || ""
-          });
+          pokeRouteEditorRefresh({ tourId: tour.id, tourTitle: tour.title || "" });
         }
 
         setTimeout(() => {
           applyTour().catch((err) => {
             console.error(err);
             const rmStatus = document.getElementById("rmStatus");
-            if (rmStatus)
-              rmStatus.textContent = `Tour load error: ${err.message || err}`;
+            if (rmStatus) rmStatus.textContent = `Tour load error: ${err.message || err}`;
           });
         }, 250);
       })();
@@ -414,28 +339,17 @@
 
     <!-- Map invalidate-size fix -->
     <script>
-      (function () {
-        function getAnyMap() {
-          return window.rmMap || window.map || window._map || null;
-        }
-
-        function invalidate() {
+      (function(){
+        function getAnyMap(){ return window.rmMap || window.map || window._map || null; }
+        function invalidate(){
           const m = getAnyMap();
-          if (m && typeof m.invalidateSize === "function") {
-            m.invalidateSize(true);
-          }
+          if (m && typeof m.invalidateSize === "function") m.invalidateSize(true);
         }
-
         window.addEventListener("load", () => setTimeout(invalidate, 250));
         window.addEventListener("resize", () => setTimeout(invalidate, 120));
-
-        document.addEventListener("click", (e) => {
-          if (e.target.closest("[data-pp-burger], .pp-burger")) {
-            setTimeout(invalidate, 250);
-          }
-          if (e.target.closest("#ppThemeBtn")) {
-            setTimeout(invalidate, 250);
-          }
+        document.addEventListener("click", (e)=>{
+          if (e.target.closest("[data-pp-burger], .pp-burger")) setTimeout(invalidate, 250);
+          if (e.target.closest("#ppThemeBtn")) setTimeout(invalidate, 250);
         });
       })();
     </script>
