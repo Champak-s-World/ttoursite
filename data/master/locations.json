@@ -8,9 +8,9 @@
       },
       "places": [
         {
-          "id": "kashi_vishwanath",
+          "id": "champak_roy",
           "name": {
-            "en": "Kashi Vishwanath Temple",
+            "en": "Champak's Home",
             "hi": "काशी विश्वनाथ मंदिर"
           },
           "lat": 25.3109,
@@ -22,15 +22,42 @@
             "hi": "सबसे लोकप्रिय तीर्थ स्थल"
           },
           "tags": ["temple", "shiv", "jyotirlinga"],
-"images": [
-  "assets/images/varanasi/kashi-viswanath/0.jpg",
-  "assets/images/varanasi/kashi-viswanath/1.jpg",
-  "assets/images/varanasi/kashi-viswanath/2.jpg",
-  "assets/images/varanasi/kashi-viswanath/3.jpg",
-  "assets/images/varanasi/kashi-viswanath/4.jpg",
-  "assets/images/varanasi/kashi-viswanath/5.jpg"
-
-],
+          "images": [
+            "assets/images/varanasi/kashi-viswanath/0.jpg",
+            "assets/images/varanasi/kashi-viswanath/1.jpg",
+            "assets/images/varanasi/kashi-viswanath/2.jpg",
+            "assets/images/varanasi/kashi-viswanath/3.jpg",
+            "assets/images/varanasi/kashi-viswanath/4.jpg",
+            "assets/images/varanasi/kashi-viswanath/5.jpg"
+          ],
+          "description": {
+            "en": "One of the 12 Jyotirlingas of Lord Shiva.",
+            "hi": "भगवान शिव के 12 ज्योतिर्लिंगों में से एक।"
+          }
+        },
+        {
+          "id": "kashi_vishwanath",
+          "name": {
+            "en": "Kashi Vishwanath Temple",
+            "hi": "काशी विश्वनाथ मंदिर"
+          },
+          "lat": 25.3109,
+          "lng": 83.0107,
+          "featured": true,
+          "featuredRank": 2,
+          "featuredNote": {
+            "en": "Most visited spiritual destination",
+            "hi": "सबसे लोकप्रिय तीर्थ स्थल"
+          },
+          "tags": ["temple", "shiv", "jyotirlinga"],
+          "images": [
+            "assets/images/varanasi/kashi-viswanath/0.jpg",
+            "assets/images/varanasi/kashi-viswanath/1.jpg",
+            "assets/images/varanasi/kashi-viswanath/2.jpg",
+            "assets/images/varanasi/kashi-viswanath/3.jpg",
+            "assets/images/varanasi/kashi-viswanath/4.jpg",
+            "assets/images/varanasi/kashi-viswanath/5.jpg"
+          ],
           "description": {
             "en": "One of the 12 Jyotirlingas of Lord Shiva.",
             "hi": "भगवान शिव के 12 ज्योतिर्लिंगों में से एक।"
@@ -42,13 +69,12 @@
           "lat": 25.3069,
           "lng": 83.0105,
           "tags": ["ghat", "ganga", "aarti"],
- "featured": true,
-  "featuredRank": 1,
-  "featuredNote": {
-    "en": "Most visited spiritual destination",
-    "hi": "सबसे लोकप्रिय तीर्थ स्थल"
-  },
-
+          "featured": true,
+          "featuredRank": 10,
+          "featuredNote": {
+            "en": "Most visited spiritual destination",
+            "hi": "सबसे लोकप्रिय तीर्थ स्थल"
+          },
 
           "images": ["assets/images/varanasi/dashashwamedh.jpg"],
           "description": {
@@ -209,41 +235,40 @@
           }
         }
       ]
-    }
-    ,{
-  "id": "vindhyachal",
-  "name": {
-    "en": "Vindhyachal",
-    "hi": "विंध्याचल"
-  },
-  "places": [
+    },
     {
-      "id": "vindhyavasini_temple",
+      "id": "vindhyachal",
       "name": {
-        "en": "Vindhyavasini Devi Temple",
-        "hi": "विंध्यवासिनी देवी मंदिर"
+        "en": "Vindhyachal",
+        "hi": "विंध्याचल"
       },
-      "lat": 25.1665,
-      "lng": 82.5030,
-      "featured": true,
-      "featuredRank": 1,
-      "featuredNote": {
-        "en": "Major Shakti Peetha near Varanasi",
-        "hi": "वाराणसी के पास प्रमुख शक्तिपीठ"
-      },
-      "tags": ["temple", "durga", "shakti_peeth"],
-      "images": [
-        "assets/images/vindhyachal/vindhyavasini/0.jpg",
-        "assets/images/vindhyachal/vindhyavasini/1.jpg",
-        "assets/images/vindhyachal/vindhyavasini/2.jpg"
-      ],
-      "description": {
-        "en": "Sacred temple dedicated to Goddess Vindhyavasini, one of the revered Shakti Peethas in India.",
-        "hi": "मां विंध्यवासिनी को समर्पित पवित्र मंदिर, भारत के प्रमुख शक्तिपीठों में से एक।"
-      }
+      "places": [
+        {
+          "id": "vindhyavasini_temple",
+          "name": {
+            "en": "Vindhyavasini Devi Temple",
+            "hi": "विंध्यवासिनी देवी मंदिर"
+          },
+          "lat": 25.1665,
+          "lng": 82.503,
+          "featured": true,
+          "featuredRank": 10,
+          "featuredNote": {
+            "en": "Major Shakti Peetha near Varanasi",
+            "hi": "वाराणसी के पास प्रमुख शक्तिपीठ"
+          },
+          "tags": ["temple", "durga", "shakti_peeth"],
+          "images": [
+            "assets/images/vindhyachal/vindhyavasini/0.jpg",
+            "assets/images/vindhyachal/vindhyavasini/1.jpg",
+            "assets/images/vindhyachal/vindhyavasini/2.jpg"
+          ],
+          "description": {
+            "en": "Sacred temple dedicated to Goddess Vindhyavasini, one of the revered Shakti Peethas in India.",
+            "hi": "मां विंध्यवासिनी को समर्पित पवित्र मंदिर, भारत के प्रमुख शक्तिपीठों में से एक।"
+          }
+        }
+      ]
     }
-  ]
-}
-
   ]
 }
