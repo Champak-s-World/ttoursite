@@ -1,5 +1,28 @@
 {
   "occasions": [
+        {
+      "id": "birthday",
+      "title": { "en": "Bar bar din ye aaye", "hi": "महाशिवरात्रि" },
+      "dateRule": { "type": "fixed", "month": 1, "day": 16 },
+      "summary": {
+        "en": "Special Shiva worship and Rudrabhishek.",
+        "hi": "शिव उपासना का महापर्व।"
+      },
+      "description": {
+        "en": "Rudrabhishek, chanting, and special puja arrangements.",
+        "hi": "रुद्राभिषेक, जाप और विशेष पूजन व्यवस्था।"
+      },
+      "tags": ["shiv", "festival", "fasting", "puja"],
+      "images": ["assets/images/placeholder/place.svg"],
+      "ctaText": { "en": "Book Shivratri Service", "hi": "शिवरात्रि सेवा बुक करें" },
+      "whatsappText": {
+        "en": "I want Shivratri puja arrangements.",
+        "hi": "मुझे शिवरात्रि पूजा की व्यवस्था चाहिए।"
+      },
+      "featured": true,
+      "featuredRank": 1
+    },
+
     {
       "id": "today",
       "title": { "en": "Today", "hi": "महाशिवरात्रि" },
