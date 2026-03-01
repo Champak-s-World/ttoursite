@@ -1,6 +1,74 @@
 {
   "rituals": [
     {
+      "id": "rahu-jaap ",
+      "featured": true,
+      "featuredRank": 1,
+      "featuredNote": {
+        "en": "rahu jaap .",
+        "hi": "राहु जाप।"
+      },
+
+      "tags": ["temple", "shiv", "jyotirlinga"],
+      "images": [
+        "assets/images/rituals/0.jpeg",
+        "assets/images/rituals/1.jpeg",
+        "assets/images/rituals/2.jpeg",
+        "assets/images/rituals/3.jpeg",
+        "assets/images/rituals/4.jpeg",
+        "assets/images/rituals/5.jpeg"
+      ],
+
+      "title": { "en": "rahu jaap .", "hi": "राहु जाप" }
+    },
+
+    {
+      "id": "dasmahavidya",
+      "featured": true,
+      "featuredRank": 4,
+      "featuredNote": {
+        "en": "dasmahavidya .",
+        "hi": "दसमहाविद्या।"
+      },
+      "title": { "en": "dasmahavidya .", "hi": "दसमहाविद्या।" }
+    },
+
+    {
+      "id": "mahamrityunjay-jaap-ewam-maharudrabhishek",
+      "featured": true,
+      "featuredRank": 3,
+      "featuredNote": {
+        "en": "maharudrabhishe .",
+        "hi": "महामृत्युंजय जाप एवं महारुद्राभिषेक।"
+      },
+      "title": {
+        "en": "mahamrityunjay jaap ewam maharudrabhishek .",
+        "hi": "महामृत्युंजय जाप एवं महारुद्राभिषेक।"
+      }
+    },
+
+    {
+      "id": "shatchandi-ygaya",
+      "featured": true,
+      "featuredRank": 1,
+      "featuredNote": {
+        "en": "satchandi yagya .",
+        "hi": "शतचंडी यज्ञ ।"
+      },
+      "title": { "en": "shatchandi ygaya .", "hi": "शतचंडी यज्ञ ।" }
+    },
+    {
+      "id": "sahastrachandi-ygaya",
+      "featured": true,
+      "featuredRank": 2,
+      "featuredNote": {
+        "en": "sahastrachandi ygaya .",
+        "hi": "सहस्र चंडी यज्ञ।"
+      },
+      "title": { "en": "sahastrachandi ygaya .", "hi": "सहस्र चंडी यज्ञ।" }
+    },
+
+    {
       "id": "rudrabhishek",
       "featured": true,
       "featuredRank": 1,
@@ -8,7 +76,7 @@
         "en": "Most requested in Kashi.",
         "hi": "काशी में सबसे अधिक मांग।"
       },
-      "title": { "en": "Rudrabhishek", "hi": "रुद्राभिषेक" }
+      "title": { "en": "Maha Rudrabhishek", "hi": "रुद्राभिषेक" }
     },
     {
       "id": "vivaha",
